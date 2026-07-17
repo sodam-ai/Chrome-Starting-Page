@@ -1,0 +1,9 @@
+# Force CRLF line endings for Windows batch and VBS files
+*.bat text eol=crlf
+*.vbs text eol=crlf
+
+# Keep LF for shell scripts (Mac/Linux)
+*.sh text eol=lf
+
+# Auto-detect for everything else
+* text=auto

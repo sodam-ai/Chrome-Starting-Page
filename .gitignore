@@ -1,0 +1,57 @@
+# === OS ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === IDE ===
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# === Local tool artifacts ===
+.omc/
+
+# === Environment ===
+.env
+.env.local
+.env*.local
+
+# === Node.js ===
+node_modules/
+node/
+
+# === Runtime ===
+.server.pid
+port.conf
+*.plist
+
+# === Logs ===
+server.log
+server.error.log
+*.log
+
+# === User Data (개인 데이터 제외) ===
+data/bookmarks.json
+data/config.json
+data/notes.json
+data/todos.json
+data/events.json
+data/ddays.json
+data/usage.json
+data/trash.json
+data/pomo-stats.json
+data/backups/
+data/icons/
+data/profiles/
+
+# === Assets (개인 파일) ===
+assets/background_custom.*
+assets/slide_*.*
+
+# Keep empty folders
+!data/.gitkeep
+!data/backups/.gitkeep
+!data/icons/.gitkeep
+!data/profiles/.gitkeep
+!assets/.gitkeep
