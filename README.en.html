@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chrome Starting Page Dashboard — README</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{color-scheme:light dark;--bg:#f7f7f8;--fg:#1a1a1a;--card:#ffffff;--border:#dcdcdc;--accent:#2563eb;--code-bg:#eef0f3;--muted:#5f6368;}
+@media (prefers-color-scheme: dark){:root{--bg:#0f1115;--fg:#e7e9ea;--card:#171a21;--border:#2a2e37;--accent:#7db0ff;--code-bg:#1d2129;--muted:#9aa1ab;}}
+:root[data-theme="dark"]{--bg:#0f1115;--fg:#e7e9ea;--card:#171a21;--border:#2a2e37;--accent:#7db0ff;--code-bg:#1d2129;--muted:#9aa1ab;}
+:root[data-theme="light"]{--bg:#f7f7f8;--fg:#1a1a1a;--card:#ffffff;--border:#dcdcdc;--accent:#2563eb;--code-bg:#eef0f3;--muted:#5f6368;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.7;}
+.wrap{max-width:920px;margin:0 auto;padding:2.5rem 1.25rem 6rem;overflow-wrap:break-word;}
+h1{font-size:1.9rem;margin:0 0 .3rem;}
+h2{font-size:1.4rem;margin-top:2.6rem;padding-top:1.1rem;border-top:1px solid var(--border);scroll-margin-top:1rem;}
+h3{font-size:1.12rem;margin-top:1.6rem;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.badge-line{color:var(--muted);font-size:.97rem;}
+.badge-line code{font-size:.92em;}
+blockquote{border-left:4px solid var(--accent);margin:1.1rem 0;padding:.5rem 1.1rem;background:var(--code-bg);border-radius:0 8px 8px 0;}
+table{border-collapse:collapse;width:100%;margin:1.1rem 0;display:block;overflow-x:auto;}
+th,td{border:1px solid var(--border);padding:.55rem .75rem;text-align:left;vertical-align:top;}
+th{background:var(--code-bg);}
+code{background:var(--code-bg);padding:.15em .42em;border-radius:5px;font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;font-size:.92em;}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;overflow-x:auto;}
+pre code{background:none;padding:0;font-size:.87em;line-height:1.55;}
+details{border:1px solid var(--border);border-radius:10px;padding:.7rem 1.1rem;margin:.7rem 0;background:var(--card);}
+summary{cursor:pointer;font-weight:600;}
+summary::marker{color:var(--accent);}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.6rem;}
+.toc ol{margin:0;padding-left:1.3rem;}
+.toc li{margin:.25rem 0;}
+hr{border:none;border-top:1px solid var(--border);margin:2.2rem 0;}
+ul,ol{padding-left:1.5rem;}
+li{margin:.25rem 0;}
+strong{color:var(--fg);}
+.lang-switch{font-size:.95rem;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Chrome Starting Page Dashboard</h1>
+<p><strong>A private Chrome new-tab / start-page dashboard that runs entirely on your own computer</strong></p>
+<p class="badge-line">
+Version: <code>v7.3.0</code> (as of 2026-07-17)<br>
+License: MIT (commercial use allowed)<br>
+Runs on: Windows 10/11, macOS<br>
+Required software: Node.js <code>&gt;= 18.0.0</code> (zero other external libraries)<br>
+Repository: <a href="https://github.com/sodam-ai/chrome-starting-page">https://github.com/sodam-ai/chrome-starting-page</a>
+</p>
+<blockquote>This document is the <strong>standard reference document</strong>, aimed at readers who are already reasonably comfortable with computers. If you are completely new to computers/terminals, read <a href="./GUIDE.en.html">GUIDE.en.html</a> first. Both documents cover the same content — only the level of hand-holding differs. <span class="lang-switch">한국어 사용자는 <a href="./README.html">README.html</a>를 확인하세요.</span></blockquote>
+
+<hr>
+
+<h2 id="toc">Table of Contents</h2>
+<div class="toc"><ol>
+<li><a href="#overview">Project Overview</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#requirements">Required Software</a></li>
+<li><a href="#download">How to Download</a></li>
+<li><a href="#install">How to Install</a></li>
+<li><a href="#quickstart">Quick Start</a></li>
+<li><a href="#run">How to Run</a></li>
+<li><a href="#usage">How to Use</a></li>
+<li><a href="#howitworks">How It Works</a></li>
+<li><a href="#commands">Command Reference</a></li>
+<li><a href="#changelog">Update / Changelog Summary</a></li>
+<li><a href="#files">File / Document Locations</a></li>
+<li><a href="#workflow">Workflow</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#security">Security / Data Flow</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#license">Legal / Copyright / License / Commercial Use</a></li>
+</ol></div>
+
+<h2 id="overview">1. Project Overview</h2>
+<p>Chrome Starting Page Dashboard replaces your Chrome "New Tab" / start page with a <strong>personal dashboard</strong> that brings together:</p>
+<ul>
+<li>Category-organized bookmark cards — drag-to-reorder, automatic favicon lookup, dead-link detection</li>
+<li>Notes — multiple independent note cards with lightweight Markdown (bold/links/code)</li>
+<li>To-do lists — priorities, due dates, recurring tasks, tags, a kanban board</li>
+<li>Calendar — month/week views, recurring events, reminders</li>
+<li>Pomodoro timer — automatic 25-minute focus / 5-minute break cycles</li>
+<li>Habit tracker — daily check-off with streak tracking</li>
+<li>Spotlight universal search (press <code>F</code>) — search bookmarks, todos, and notes at once, plus a <code>&gt;command</code> palette</li>
+</ul>
+<p><strong>The three things that matter most</strong></p>
+<ol>
+<li><strong>100% local-first.</strong> This project is a tiny web server (<code>server.js</code>) that runs only on your own machine, serving a single page (<code>index.html</code>). Every piece of data is stored purely as JSON files inside this project's own <code>data/</code> folder. There is no cloud backend, no account, no login.</li>
+<li><strong>Zero external dependencies.</strong> <code>package.json</code> has no <code>dependencies</code> field at all. The server is built entirely on Node.js's built-in modules — no <code>npm install</code> step is required.</li>
+<li><strong>MIT License — commercial use is allowed.</strong> This software may be used, modified, redistributed, and even sold, personally or commercially, for free. See <a href="#license">Section 18</a> for the exact terms.</li>
+</ol>
+
+<h2 id="prerequisites">2. Prerequisites</h2>
+<table>
+<tr><th>Item</th><th>Required?</th><th>Notes</th></tr>
+<tr><td>Windows 10/11 or macOS</td><td>Required</td><td>No official installer for Linux, but <code>node server.js</code> works manually if Node.js is present</td></tr>
+<tr><td>Free disk space</td><td>~100MB minimum</td><td>Slightly more if Windows needs to download the portable Node.js runtime (~30MB)</td></tr>
+<tr><td>Google Chrome</td><td>Recommended</td><td>The page opens fine in any browser — the "set as Chrome's new tab" instructions assume Chrome</td></tr>
+<tr><td>Comfort with a terminal</td><td>Helpful, not required</td><td>Windows install is a double-click; macOS needs one typed command</td></tr>
+<tr><td>Internet connection</td><td>Only sometimes, once</td><td>Needed only if Windows must download Node.js. After setup, daily use is mostly offline (see <a href="#security">Section 15</a>)</td></tr>
+<tr><td>(Optional) OpenWeatherMap account</td><td>Optional</td><td>Only for the weather widget — everything else works without it</td></tr>
+</table>
+
+<h2 id="requirements">3. Required Software</h2>
+<table>
+<tr><th>Software</th><th>Minimum version</th><th>Windows</th><th>macOS</th></tr>
+<tr><td>Node.js</td><td><code>&gt;= 18.0.0</code></td><td>If missing, <code>setup_windows.bat</code> <strong>automatically downloads</strong> a portable copy (<code>v22.19.0</code>, win-x64) from <code>https://nodejs.org</code>. If already installed, that copy is used instead</td><td><strong>Not installed automatically.</strong> <code>setup_mac.sh</code> only checks your <code>PATH</code> — install it yourself first using one of the methods below</td></tr>
+<tr><td>Git (optional)</td><td>Any</td><td>Only needed for <code>git clone</code>; not needed for the ZIP download</td><td>Same as Windows</td></tr>
+</table>
+<p><strong>Installing Node.js on macOS (pick one)</strong></p>
+<ul>
+<li>Official installer: <a href="https://nodejs.org">https://nodejs.org</a> → download the "LTS" version → run the installer</li>
+<li>Homebrew: run <code>brew install node</code> (see <a href="https://brew.sh">https://brew.sh</a> if you don't have Homebrew)</li>
+</ul>
+<p>Typing <code>node -v</code> should print <code>v18.0.0</code> or higher once installed.</p>
+
+<h2 id="download">4. How to Download</h2>
+<p>Pick whichever scenario applies to you.</p>
+<h3>A. Getting it from the GitHub repository</h3>
+<p>Repository: <strong><a href="https://github.com/sodam-ai/chrome-starting-page">https://github.com/sodam-ai/chrome-starting-page</a></strong></p>
+<p><strong>Option 1 — Download as ZIP (no Git knowledge needed)</strong></p>
+<ol>
+<li>Visit the URL above</li>
+<li>Click the green <strong>"Code"</strong> button → <strong>"Download ZIP"</strong></li>
+<li>Extract the downloaded <code>chrome-starting-page-main.zip</code></li>
+<li>Move the extracted folder wherever you'd like to keep it</li>
+</ol>
+<p><strong>Option 2 — Clone with Git</strong></p>
+<pre><code>git clone https://github.com/sodam-ai/chrome-starting-page.git
+cd chrome-starting-page</code></pre>
+<h3>B. If you received the folder / a ZIP file directly</h3>
+<ol>
+<li>If it's a <code>.zip</code>, extract it with your OS's built-in archive tool</li>
+<li>Move the extracted folder to wherever you want it to live</li>
+<li>If you see <code>index.html</code>, <code>server.js</code>, and <code>package.json</code> inside, continue to <a href="#install">5. How to Install</a></li>
+</ol>
+
+<h2 id="install">5. How to Install</h2>
+<h3>🪟 Windows</h3>
+<ol>
+<li>Open the downloaded folder.</li>
+<li><strong>Double-click</strong> <code>setup_windows.bat</code>. (No administrator rights needed, no system files touched.)</li>
+<li>A black console window runs through these steps automatically:</li>
+</ol>
+<table>
+<tr><th>Step</th><th>What the script does</th></tr>
+<tr><td>1</td><td>If you already have data, it's safely backed up first (<code>data\backups\safety-before-setup.json</code>). On a fresh install, it creates <code>data\</code>, <code>data\backups\</code>, <code>data\icons\</code>, <code>data\profiles\</code>, and <code>assets\</code></td></tr>
+<tr><td>2</td><td>Checks for Node.js: portable copy first, then system install; downloads a portable copy (v22.19.0) automatically if neither exists</td></tr>
+<tr><td>3</td><td>Safely stops any previously running instance, if one exists</td></tr>
+<tr><td>4</td><td>Registers auto-start at login (Windows registry key <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>; falls back to a Startup-folder shortcut)</td></tr>
+<tr><td>5</td><td>Starts the server hidden, with no visible window</td></tr>
+</table>
+<ol start="4">
+<li>The final message shows the real address (default <code>http://localhost:1111</code> — may shift to 1112, 1113, etc. if busy).</li>
+<li>You can close this window — the server keeps running in the background.</li>
+</ol>
+<blockquote><strong>Note:</strong> Aside from one login auto-start entry, this installer never touches system files or Chrome's own policies/registry. Pointing Chrome at this page is a separate step you do yourself — see step 4 of <a href="#quickstart">Quick Start</a>.</blockquote>
+<h3>🍎 macOS</h3>
+<ol>
+<li>Install Node.js first if needed (<a href="#requirements">Section 3</a>).</li>
+<li>Open <strong>Terminal</strong>.</li>
+<li>Navigate to the project folder:
+<pre><code>cd ~/Downloads/chrome-starting-page   # adjust to your actual path</code></pre></li>
+<li>Run the setup script:
+<pre><code>bash setup_mac.sh</code></pre></li>
+<li>This generates a LaunchAgent (<code>com.dashboard.startpage.plist</code>), installs it into <code>~/Library/LaunchAgents/</code>, loads it, and starts the server. The app <strong>starts automatically on login</strong> and <strong>restarts itself if it ever crashes</strong> (<code>KeepAlive</code> — not present on Windows).</li>
+<li>The final message shows the address to open (e.g. <code>http://localhost:1111</code>).</li>
+</ol>
+
+<h2 id="quickstart">6. Quick Start</h2>
+<pre><code>1) Download  → GitHub ZIP, git clone, or a folder someone handed you directly
+2) Install   → Windows: double-click setup_windows.bat / macOS: bash setup_mac.sh
+3) Open it   → type http://localhost:1111 into your browser's address bar
+4) (Optional) Set it as Chrome's start page
+   Chrome menu (⋮) → Settings → "On startup" → "Open a specific page"
+   → add http://localhost:1111
+   (Fully replacing Chrome's actual "New Tab" page requires a browser
+    extension — this project never modifies Chrome's settings for you.)</code></pre>
+
+<h2 id="run">7. How to Run</h2>
+<p>Once installed, the server starts <strong>automatically every time you log in</strong>. Use the table below only when you want manual control.</p>
+<table>
+<tr><th>Situation</th><th>Windows</th><th>macOS</th></tr>
+<tr><td>Run once, manually</td><td><code>npm start</code> or <code>node server.js</code></td><td><code>npm start</code> or <code>node server.js</code></td></tr>
+<tr><td>Different port</td><td><code>node server.js 8080</code></td><td><code>node server.js 8080</code></td></tr>
+<tr><td>Hidden background run</td><td>Double-click <code>run_server_background.bat</code></td><td>(already handled by the LaunchAgent)</td></tr>
+<tr><td>Restart</td><td>Double-click <code>restart.bat</code></td><td><code>launchctl unload</code>, then <code>launchctl load ~/Library/LaunchAgents/com.dashboard.startpage.plist</code></td></tr>
+<tr><td>Fully stop</td><td>Run <code>uninstall.bat</code>, or end <code>node.exe</code> in Task Manager</td><td>Run <code>uninstall_mac.sh</code></td></tr>
+</table>
+<p>You can also change the port or restart the server from Settings → Data tab.</p>
+
+<h2 id="usage">8. How to Use</h2>
+<h3>8.1 Search &amp; Spotlight</h3>
+<ul>
+<li>Type in the top search bar and press Enter to search with your default engine (configurable in Settings).</li>
+<li>Prefix with a keyword to jump to a specific engine: <code>yt cats</code>, <code>nv weather</code>, <code>gh react</code> (defaults: <code>yt</code>, <code>nv</code>, <code>gh</code>, <code>g</code>, <code>tw</code>, <code>map</code>).</li>
+<li>Press <code>F</code> to open <strong>Spotlight</strong>, searching bookmarks, todos, notes, and D-Days at once — including Korean chosung search.</li>
+<li>Inside Spotlight, type <code>&gt;</code> commands: <code>&gt;todo</code>, <code>&gt;timer 15</code>, <code>&gt;focus Work</code>, <code>&gt;add Name URL</code>, <code>&gt;habit</code>, <code>&gt;today</code>, <code>&gt;kanban</code>, <code>&gt;layout</code>, <code>&gt;settings</code>, <code>&gt;theme</code>, <code>&gt;export</code>.</li>
+</ul>
+<h3>8.2 Bookmarks</h3>
+<ul>
+<li>Add/edit/delete inside category cards, drag to reorder or move between categories/pages.</li>
+<li>Right-click for: pin to top, edit, open in new tab, open whole category, move to page, delete.</li>
+<li>Drag a URL out of the address bar onto a card to add it instantly.</li>
+<li>Paste (<code>Ctrl+V</code>) a copied link anywhere to get a "which category?" popup.</li>
+<li>Items added in the last 7 days get a "NEW" badge; frequently/recently used ones can auto-sort to top.</li>
+<li>Dead links are flagged after 3 consecutive failed checks.</li>
+<li>Deleted items go to Trash for 30 days.</li>
+</ul>
+<h3>8.3 Notes</h3>
+<ul>
+<li>Independent note cards, rename by double-clicking.</li>
+<li>Auto-linkifies URLs; supports <code>**bold**</code>, <code>`code`</code>, <code>[text](url)</code> preview.</li>
+</ul>
+<h3>8.4 To-do</h3>
+<ul>
+<li>Multiple cards, 4 priority levels, due dates, tags, subtasks.</li>
+<li>Recurring todos (daily/weekdays/weekly/monthly).</li>
+<li>Kanban board or full list view.</li>
+<li>100% completion triggers confetti; streaks are tracked.</li>
+</ul>
+<h3>8.5 Calendar</h3>
+<ul>
+<li>Month/week views; click a date to add an event; prefix <code>!</code> to add a to-do instead.</li>
+<li>Recurring events (weekly/biweekly/monthly); browser reminders 10 minutes ahead.</li>
+</ul>
+<h3>8.6 Pomodoro &amp; Habit Tracker</h3>
+<ul>
+<li>Optional 25 min focus / 5 min break auto-cycle (15-min break every 4th session); can start from a to-do item.</li>
+<li>7-day focus chart.</li>
+<li>Habit tracker: list habits in Settings, check off daily, streaks tracked.</li>
+</ul>
+<h3>8.7 Personalizing the Look (⚙ Settings → Visual)</h3>
+<ul>
+<li>Dark/light toggle or "follow system"; 6 accent colors.</li>
+<li>Background slideshow (1 min–24h interval); 3 glass presets; adjustable blur/opacity.</li>
+<li>4 layout presets; sanitized custom CSS injection (see <a href="#security">Section 15</a>).</li>
+</ul>
+<h3>8.8 Settings Screen (5 tabs)</h3>
+<table>
+<tr><th>Tab</th><th>Contents</th></tr>
+<tr><td>General</td><td>World clocks, search engines, usage sorting, theme mode, accent color, shortcuts, weather API key</td></tr>
+<tr><td>Visual</td><td>Background/slideshow, overlay darkness, blur/glass, card opacity, custom CSS, reduced motion</td></tr>
+<tr><td>Widgets</td><td>D-Day list, page manager, card size/color, calendar options, Pomodoro auto-cycle, habit list, layout, search shortcuts</td></tr>
+<tr><td>Data</td><td>Export/import (JSON/Markdown/HTML), auto-backup interval, browse/restore backups, duplicate finder, profiles, trash, port change &amp; restart</td></tr>
+<tr><td>Stats</td><td>Completion streak, 90-day heatmap, Pomodoro chart, top-10 bookmarks, per-category chart</td></tr>
+</table>
+<h3>8.9 Keyboard Shortcuts</h3>
+<table>
+<tr><th>Key</th><th>Action</th><th>Customizable?</th></tr>
+<tr><td><code>/</code></td><td>Focus search bar</td><td>Yes</td></tr>
+<tr><td><code>E</code></td><td>Toggle edit mode</td><td>Yes</td></tr>
+<tr><td><code>S</code></td><td>Open Settings</td><td>Yes</td></tr>
+<tr><td><code>F</code></td><td>Open Spotlight</td><td>Yes</td></tr>
+<tr><td><code>?</code></td><td>Show shortcut cheat sheet</td><td>Yes</td></tr>
+<tr><td><code>1</code>–<code>9</code></td><td>Jump to that category</td><td>Fixed</td></tr>
+<tr><td><code>Ctrl/Cmd + Z</code></td><td>Undo last change</td><td>Fixed</td></tr>
+<tr><td><code>Esc</code></td><td>Close whatever's open</td><td>Fixed</td></tr>
+<tr><td><code>Tab</code> / <code>Shift+Tab</code></td><td>Move focus between tiles, <code>Enter</code> opens</td><td>Fixed</td></tr>
+</table>
+
+<h2 id="howitworks">9. How It Works</h2>
+<p>In one sentence: <strong>the browser asks a small server running on your own machine to "save this" or "load that," and the server writes/reads it as JSON files under <code>data/</code>.</strong></p>
+<ol>
+<li><strong>Opening it</strong>: your browser requests <code>http://localhost:&lt;port&gt;/</code> → the server serves the page → it immediately requests its own data via <code>/api/bookmarks</code>, <code>/api/notes</code>, <code>/api/config</code>, etc.</li>
+<li><strong>Changing something</strong>: the page waits ~0.3–1s (batching rapid changes) before saving. The server writes to a temp file then renames it into place (atomic write) so files never end up half-written.</li>
+<li><strong>If the connection drops</strong>: an "offline mode" banner appears; changes are held in <code>localStorage</code> and auto-saved once reconnected. Nothing is lost.</li>
+<li><strong>Multiple tabs</strong>: saving in one tab broadcasts a refresh signal to others via <code>BroadcastChannel</code>.</li>
+<li><strong>Offline loading</strong>: a service worker (<code>sw.js</code>) pre-caches the 4 static files; <code>/api/...</code> requests are never cached and always go live.</li>
+<li><strong>Self-management</strong>: integrity checks and auto-recovery on boot, daily automatic backups (30-day retention, 50 max), automatic port fallback if busy.</li>
+</ol>
+
+<h2 id="commands">10. Command Reference</h2>
+<table>
+<tr><th>Command / File</th><th>Where</th><th>What it does</th></tr>
+<tr><td><code>npm start</code></td><td>Project folder</td><td>Same as <code>node server.js</code>, default port</td></tr>
+<tr><td><code>node server.js</code></td><td>Project folder</td><td>Runs with a visible console</td></tr>
+<tr><td><code>node server.js &lt;port&gt;</code></td><td>Project folder</td><td>Runs on a specific port</td></tr>
+<tr><td><code>setup_windows.bat</code></td><td>Windows, double-click</td><td>First-time setup</td></tr>
+<tr><td><code>bash setup_mac.sh</code></td><td>macOS Terminal</td><td>First-time setup</td></tr>
+<tr><td><code>run_server_background.bat</code></td><td>Windows, double-click</td><td>Restarts just the server, hidden</td></tr>
+<tr><td><code>restart.bat</code></td><td>Windows, double-click</td><td>Safely stops and restarts</td></tr>
+<tr><td><code>set-port.bat</code></td><td>Windows, double-click</td><td>Prompts for a new port</td></tr>
+<tr><td><code>set-port.bat 8080</code></td><td>Windows, Command Prompt</td><td>Sets port directly</td></tr>
+<tr><td><code>uninstall.bat</code></td><td>Windows, double-click</td><td>Stops server, removes auto-start, optional data delete</td></tr>
+<tr><td><code>uninstall_mac.sh</code></td><td>macOS Terminal</td><td>Same, on macOS</td></tr>
+</table>
+<blockquote><code>start_hidden.vbs</code> is used internally by the Windows auto-start registration — not meant to be run by hand.</blockquote>
+
+<h2 id="changelog">11. Update / Changelog Summary</h2>
+<p>Major changes per version — click to expand. (Source: <code>CHANGELOG.md</code>, newest first.)</p>
+
+<details><summary>v7.3 (2025-03-19) — Background slideshow, data-safety net, security hardening</summary>
+<ul>
+<li>Multi-image background slideshow (1 min–24h interval, manual prev/next, fade transitions)</li>
+<li>Pin bookmarks to top; drag a card onto a page tab to move it</li>
+<li>Drag-to-sort to-do cards</li>
+<li>Data safety: startup integrity check across 9 JSON files with auto-recovery, backup list/restore UI, import preview, export-complete toast, 10-level undo</li>
+<li>Server stability: automatic port fallback (1111→1112…1120), auto-stops previous instance, cleans stale PID files, fixed double-start bug, fixed <code>.bat</code>/<code>.vbs</code> CRLF encoding</li>
+<li>Networking: reconnect interval 15s→5s with a toast, offline banner, multi-tab sync, SW checks for updates every 30 min</li>
+<li>Accessibility/UX: keyboard focus styles, 8 new aria-labels, print stylesheet, mobile-responsive layout</li>
+<li>Security: blocked <code>..</code>/<code>~</code> path-traversal, blocked a Windows case-insensitivity bypass, custom CSS blocks <code>expression()</code>/<code>javascript:</code>/external <code>@import</code>/<code>behavior:</code></li>
+<li>Docs/meta: README files were later lost from this repository and have now been rewritten from scratch as this document set</li>
+</ul>
+</details>
+<details><summary>v7.2 — Multiple to-do cards</summary>
+<ul><li>Several independent to-do cards, drag-to-move between them</li></ul>
+</details>
+<details><summary>v7.1 — Card-based notes, widget visibility toggles</summary>
+<ul><li>Notes as independent cards with Markdown preview</li><li>To-do/Calendar/Habit cards can be hidden and restored</li></ul>
+</details>
+<details><summary>v7.0 — Habit tracker, layout presets, Pomodoro auto-cycle</summary>
+<ul><li>Habit tracker, 4 layout presets, Pomodoro auto-cycle, search keyword shortcuts, event reminders, glass presets, time-of-day tinting</li></ul>
+</details>
+<details><summary>v6.0 — Calendar, Pomodoro, profiles, universal search</summary>
+<ul><li>Calendar, Pomodoro, saved profiles, multi-select, Spotlight search, dead-link detection, weekly report, offline queue</li></ul>
+</details>
+<details><summary>v5.0 — Multiple pages, D-Day, world clock, weather</summary>
+<ul><li>Multiple pages, D-Day, world clock, weather widget, auto theme, atomic writes, retention-policy backups</li></ul>
+</details>
+<details><summary>v4.0 — Category reorder, trash, undo</summary>
+<ul><li>Category reorder/collapse, resizable cards, trash with 30-day recovery, undo toast, upload parser</li></ul>
+</details>
+<details><summary>v3.0 — To-do priorities/recurrence, notes</summary>
+<ul><li>Priority levels, due dates, tags, recurrence, subtasks, notes/memo cards</li></ul>
+</details>
+<details><summary>v2.0 — Dark/light theme, search engine switching</summary>
+<ul><li>Theme toggle, glass-morphism UI, multiple search engines, gzip/ETag caching, graceful shutdown</li></ul>
+</details>
+<details><summary>v1.0 — Initial release</summary>
+<ul><li>Zero-dependency Node.js HTTP server, category bookmark cards, configurable port bound to <code>127.0.0.1</code>, offline support, Windows/macOS auto-start, JSON file storage</li></ul>
+</details>
+
+<h2 id="files">12. File / Document Locations</h2>
+<pre><code>chrome-starting-page/
+├── README.md            ← Korean reference document
+├── README.en.md         ← This document (English reference)
+├── GUIDE.md              ← Korean absolute-beginner guide
+├── GUIDE.en.md           ← English absolute-beginner guide
+├── README.html / README.en.html / GUIDE.html / GUIDE.en.html  ← browser-friendly versions (same content)
+├── CHANGELOG.md          ← the original version history
+├── LICENSE               ← the full MIT license text
+├── package.json          ← project metadata, run scripts, minimum Node.js version
+├── manifest.webmanifest  ← PWA configuration
+├── index.html / script.js / style.css / sw.js  ← frontend
+├── server.js               ← the local backend server (Node.js)
+├── port.conf                ← the currently configured port (default 1111)
+├── .server.pid               ← records the running server's PID/port
+├── setup_windows.bat / setup_mac.sh   ← installer scripts
+├── restart.bat / run_server_background.bat / set-port.bat / start_hidden.vbs
+├── uninstall.bat / uninstall_mac.sh
+├── data/                      ← ★ where ALL of your user data lives
+│   ├── bookmarks.json / notes.json / config.json / todos.json
+│   ├── ddays.json / events.json / usage.json / trash.json / pomo-stats.json
+│   ├── backups/ / icons/ / profiles/
+└── assets/                       ← icons, uploaded background images</code></pre>
+
+<h2 id="workflow">13. Workflow</h2>
+<pre><code>[One time]
+  Download → run the installer → auto-start registration is done
+       ↓
+[Every day after that]
+  Turn on your computer
+       ↓ (Windows: registry Run key / macOS: LaunchAgent starts the server)
+  The server waits quietly in the background
+       ↓
+  Open a new Chrome tab, or visit http://localhost:1111
+       ↓
+  Use bookmarks/todos/notes/calendar as normal
+       ↓ (auto-saved after a short debounce)
+  Server writes to data/*.json (atomic writes + automatic backups)
+       ↓
+[Shutting down]
+  The server shuts down too (a final backup runs on a clean exit)</code></pre>
+<pre><code>Data looks wrong
+   → Settings → Data tab → pick a backup → Restore
+   (or) integrity checks on every boot often self-heal a corrupted file</code></pre>
+
+<h2 id="architecture">14. Architecture</h2>
+<pre><code>┌───────────────────────────┐        HTTP (127.0.0.1:port)         ┌──────────────────────────────┐
+│   Browser (Chrome, etc.)   │ ───────────────────────────────▶  │  Local server (server.js, Node) │
+│  index.html / script.js     │ ◀─────────────────────────────── │  Node built-in http module only  │
+│  style.css / sw.js            │      static files + /api/* replies  │  zero npm dependencies             │
+│  localStorage (offline cache) │                                    │  bound to 127.0.0.1 only           │
+└───────────────────────────┘                                    └───────────────┬────────────────┘
+                                                                                    ▼
+                                                                     ┌───────────────────────────┐
+                                                                     │   data/*.json (file storage) │
+                                                                     │   atomic writes + auto backups│
+                                                                     └───────────────────────────┘</code></pre>
+<ul>
+<li><strong>Frontend</strong>: plain HTML/CSS/JavaScript, no framework. Reads/writes through <code>/api/*</code>, falling back to <code>localStorage</code> only when unreachable.</li>
+<li><strong>Backend</strong>: a single Node.js process on the built-in <code>http</code> module. No database — every piece of data is a JSON file.</li>
+<li><strong>Auto-start layer</strong>: a Windows registry Run key or macOS LaunchAgent — purely OS-level auto-launch, never touches Chrome.</li>
+<li><strong>Offline layer</strong>: the service worker caches only 4 static files; <code>/api/*</code> is always network-first.</li>
+</ul>
+
+<h2 id="security">15. Security / Data Flow</h2>
+<h3>15.1 Every external destination this app talks to</h3>
+<table>
+<tr><th>Destination</th><th>When</th><th>Why</th></tr>
+<tr><td><code>fonts.googleapis.com</code>, <code>fonts.gstatic.com</code></td><td>Every page load</td><td>UI fonts</td></tr>
+<tr><td><code>google.com/s2/favicons</code>, <code>icons.duckduckgo.com</code>, <code>icon.horse</code>, the site's own favicon</td><td>When a bookmark scrolls into view</td><td>4-step favicon fallback chain</td></tr>
+<tr><td><code>api.openweathermap.org</code></td><td><strong>Only if you entered a weather API key</strong></td><td>Weather widget</td></tr>
+<tr><td>Your own bookmark URLs</td><td>Periodically (dead-link check)</td><td><code>HEAD</code> request only, checking reachability</td></tr>
+<tr><td>Google/Naver/YouTube/etc.</td><td>Only when you search</td><td>Normal browser behavior</td></tr>
+</table>
+<p><strong>That list is exhaustive.</strong> No ads, analytics, tracking, or "phone-home" telemetry exists. The only automatic internet access anywhere is the Windows installer's one-time official Node.js download when Node.js isn't present.</p>
+<h3>15.2 Security properties of the server itself</h3>
+<ul>
+<li><strong>Only accepts connections on <code>127.0.0.1</code></strong> — no other device can ever reach it.</li>
+<li><strong>Never makes outbound calls to the wider internet</strong> — the only "network activity" is a loopback shutdown call to a previous instance of itself.</li>
+<li><strong>No authentication</strong> — by design, for a single-user local tool; other local programs on the same machine could reach the port.</li>
+<li>Path-traversal blocked on every upload/import/export path.</li>
+<li>Custom CSS is sanitized before it's applied.</li>
+<li>Upload requests capped at 10MB.</li>
+</ul>
+<h3>15.3 Where exactly is my data?</h3>
+<p>Entirely inside this project's own <code>data/</code> folder, as plain JSON. Nothing auto-syncs anywhere; copy the folder to move it, delete it and the data is gone (hence the automatic backups).</p>
+
+<h2 id="troubleshooting">16. Troubleshooting</h2>
+<table>
+<tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>"Server error/disconnected" top-left</td><td>Server died or still starting</td><td>Wait (auto-rechecks every 15s) → <code>restart.bat</code> on Windows, or reload the LaunchAgent on macOS</td></tr>
+<tr><td>Page won't load at all</td><td>Server off, or wrong port</td><td>Check <code>port.conf</code> / <code>.server.pid</code>, visit the correct port</td></tr>
+<tr><td><code>setup_windows.bat</code> hangs on Node.js download</td><td>No internet, or firewall/AV blocking</td><td>Check connection, retry, or install Node.js yourself</td></tr>
+<tr><td>macOS "Node.js is not installed"</td><td>macOS never auto-installs it</td><td>Install per <a href="#requirements">Section 3</a>, re-run</td></tr>
+<tr><td>Updated files but page looks old</td><td>Service worker cached old static files</td><td>Hard refresh (<code>Ctrl+Shift+R</code> / <code>Cmd+Shift+R</code>); else clear storage in DevTools</td></tr>
+<tr><td>Port already in use / actual port isn't 1111</td><td>Auto-fallback to next port</td><td>Check the real port from the setup message or <code>.server.pid</code>; pin one via <code>set-port.bat</code></td></tr>
+<tr><td>Changed port in Settings, nothing happened</td><td>Needs a restart to apply</td><td>Run <code>restart.bat</code> or use the Settings restart button</td></tr>
+<tr><td>"⚠ Save failed"</td><td>Brief connection drop</td><td>No action needed — auto-saves once reconnected</td></tr>
+<tr><td>Data looks wrong / missing</td><td>Corruption or accidental deletion</td><td>Restore from Settings → Data → backups, or check Trash (30-day retention)</td></tr>
+<tr><td>Want to remove it completely</td><td>–</td><td>Windows: <code>uninstall.bat</code> (asks about data twice). macOS: <code>bash uninstall_mac.sh</code></td></tr>
+</table>
+
+<h2 id="faq">17. FAQ</h2>
+<p><strong>Q. Can I use this commercially?</strong><br>A. Yes — MIT-licensed. Use, modify, redistribute, even sell it, as long as you keep the copyright notice. See <a href="#license">Section 18</a>. (Plain-language summary — the <code>LICENSE</code> file is authoritative.)</p>
+<p><strong>Q. Does it work offline?</strong><br>A. Yes, fully, except fonts/icons/weather which need internet to display.</p>
+<p><strong>Q. Is my data sent anywhere?</strong><br>A. No. <a href="#security">Section 15</a> lists every external contact this app ever makes.</p>
+<p><strong>Q. Does this replace Chrome's actual New Tab page?</strong><br>A. Not automatically — you register it yourself under <code>chrome://settings/onStartup</code>.</p>
+<p><strong>Q. Can I access it from my phone or another PC?</strong><br>A. No — it only binds to <code>127.0.0.1</code>, by design.</p>
+<p><strong>Q. How do I move my data?</strong><br>A. Export (JSON) from Settings → Data, then Import on the new machine, or copy the <code>data/</code> folder directly.</p>
+<p><strong>Q. Do I need to understand Node.js?</strong><br>A. Not on Windows (auto-installed). On macOS, install it once and forget about it.</p>
+<p><strong>Q. Can I recover something I deleted?</strong><br>A. Yes — <code>Ctrl+Z</code> right after, or Trash (30-day retention) later.</p>
+<p><strong>Q. How do updates work?</strong><br>A. No auto-update check exists — download the newer version and keep your <code>data/</code> folder.</p>
+
+<h2 id="license">18. Legal / Copyright / License / Commercial Use</h2>
+<blockquote>The following is a plain-language summary. <strong>The <code>LICENSE</code> file is the legally authoritative text.</strong> Review it directly before any significant commercial decision.</blockquote>
+<h3>18.1 License text (MIT License, quoted verbatim)</h3>
+<pre><code>MIT License
+
+Copyright (c) 2026 소담 AI 스튜디오
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</code></pre>
+<p><em>(Copyright holder "소담 AI 스튜디오" romanizes to "Sodam AI Studio.")</em></p>
+<h3>18.2 Plain-language breakdown</h3>
+<table>
+<tr><th>Item</th><th>Detail</th></tr>
+<tr><td>License type</td><td>MIT License (one of the most permissive open-source licenses)</td></tr>
+<tr><td>Copyright holder</td><td>Sodam AI Studio (소담 AI 스튜디오), 2026</td></tr>
+<tr><td><strong>Commercial use</strong></td><td>✅ <strong>Allowed.</strong> Use as-is or modified, in a business or bundled into a paid product, or resold</td></tr>
+<tr><td><strong>Modification</strong></td><td>✅ Allowed</td></tr>
+<tr><td><strong>Redistribution</strong></td><td>✅ Allowed</td></tr>
+<tr><td><strong>Obligations</strong></td><td>⚠️ Include the copyright notice and full license text with any copy/substantial portion distributed</td></tr>
+<tr><td><strong>Warranty</strong></td><td>❌ None — provided "AS IS"</td></tr>
+<tr><td><strong>Liability</strong></td><td>❌ The copyright holder bears no liability</td></tr>
+<tr><td><strong>Trademarks</strong></td><td>"Chrome" is a trademark of Google LLC — this is an unofficial, unaffiliated project</td></tr>
+</table>
+<h3>18.3 One-line summary</h3>
+<p><strong>"Keep the copyright notice, and anyone may use, modify, and even sell this freely; but if something goes wrong, the author isn't liable."</strong></p>
+
+</div>
+</body>
+</html>
