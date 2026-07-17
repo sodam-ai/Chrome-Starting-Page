@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chrome Starting Page Dashboard — README</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{color-scheme:light dark;--bg:#f7f7f8;--fg:#1a1a1a;--card:#ffffff;--border:#dcdcdc;--accent:#2563eb;--code-bg:#eef0f3;--muted:#5f6368;}
+@media (prefers-color-scheme: dark){:root{--bg:#0f1115;--fg:#e7e9ea;--card:#171a21;--border:#2a2e37;--accent:#7db0ff;--code-bg:#1d2129;--muted:#9aa1ab;}}
+:root[data-theme="dark"]{--bg:#0f1115;--fg:#e7e9ea;--card:#171a21;--border:#2a2e37;--accent:#7db0ff;--code-bg:#1d2129;--muted:#9aa1ab;}
+:root[data-theme="light"]{--bg:#f7f7f8;--fg:#1a1a1a;--card:#ffffff;--border:#dcdcdc;--accent:#2563eb;--code-bg:#eef0f3;--muted:#5f6368;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",Roboto,Helvetica,Arial,sans-serif;line-height:1.7;}
+.wrap{max-width:920px;margin:0 auto;padding:2.5rem 1.25rem 6rem;overflow-wrap:break-word;}
+h1{font-size:1.9rem;margin:0 0 .3rem;}
+h2{font-size:1.4rem;margin-top:2.6rem;padding-top:1.1rem;border-top:1px solid var(--border);scroll-margin-top:1rem;}
+h3{font-size:1.12rem;margin-top:1.6rem;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.badge-line{color:var(--muted);font-size:.97rem;}
+.badge-line code{font-size:.92em;}
+blockquote{border-left:4px solid var(--accent);margin:1.1rem 0;padding:.5rem 1.1rem;background:var(--code-bg);border-radius:0 8px 8px 0;}
+table{border-collapse:collapse;width:100%;margin:1.1rem 0;display:block;overflow-x:auto;}
+th,td{border:1px solid var(--border);padding:.55rem .75rem;text-align:left;vertical-align:top;}
+th{background:var(--code-bg);}
+code{background:var(--code-bg);padding:.15em .42em;border-radius:5px;font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;font-size:.92em;}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;overflow-x:auto;}
+pre code{background:none;padding:0;font-size:.87em;line-height:1.55;}
+details{border:1px solid var(--border);border-radius:10px;padding:.7rem 1.1rem;margin:.7rem 0;background:var(--card);}
+summary{cursor:pointer;font-weight:600;}
+summary::marker{color:var(--accent);}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.6rem;}
+.toc ol{margin:0;padding-left:1.3rem;}
+.toc li{margin:.25rem 0;}
+hr{border:none;border-top:1px solid var(--border);margin:2.2rem 0;}
+ul,ol{padding-left:1.5rem;}
+li{margin:.25rem 0;}
+strong{color:var(--fg);}
+.lang-switch{font-size:.95rem;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Chrome Starting Page Dashboard</h1>
+<p><strong>내 컴퓨터에서만 돌아가는, 개인정보 유출 없는 크롬 새 탭(시작 페이지) 대시보드</strong></p>
+<p class="badge-line">
+버전: <code>v7.3.0</code> (2026-07-17 기준)<br>
+라이선스: MIT (상업적 이용 가능)<br>
+실행 환경: Windows 10/11, macOS<br>
+필요 프로그램: Node.js <code>&gt;= 18.0.0</code> (그 외 외부 라이브러리 0개)<br>
+저장소: <a href="https://github.com/sodam-ai/chrome-starting-page">https://github.com/sodam-ai/chrome-starting-page</a>
+</p>
+<blockquote>이 문서는 컴퓨터 사용에 어느 정도 익숙한 분을 위한 <strong>표준 레퍼런스 문서</strong>입니다. 컴퓨터/터미널이 정말 처음이라 한 걸음씩 손을 잡고 안내받고 싶다면 <a href="./GUIDE.html">GUIDE.html</a>(왕초보 가이드)을 먼저 읽어보세요. 두 문서는 다루는 내용은 같고, 설명의 친절함/상세도만 다릅니다. <span class="lang-switch">English speakers: see <a href="./README.en.html">README.en.html</a>.</span></blockquote>
+
+<hr>
+
+<h2 id="toc">목차</h2>
+<div class="toc"><ol>
+<li><a href="#overview">프로젝트 한눈에 보기</a></li>
+<li><a href="#prerequisites">사전 준비물</a></li>
+<li><a href="#requirements">필요 프로그램</a></li>
+<li><a href="#download">다운로드 방법</a></li>
+<li><a href="#install">설치 방법</a></li>
+<li><a href="#quickstart">빠른 시작</a></li>
+<li><a href="#run">실행 방법</a></li>
+<li><a href="#usage">사용 방법</a></li>
+<li><a href="#howitworks">작동 방법 (동작 원리)</a></li>
+<li><a href="#commands">명령어 모음</a></li>
+<li><a href="#changelog">업데이트 내용 요약</a></li>
+<li><a href="#files">파일 / 문서 위치</a></li>
+<li><a href="#workflow">워크플로우</a></li>
+<li><a href="#architecture">아키텍처</a></li>
+<li><a href="#security">보안 / 데이터 흐름</a></li>
+<li><a href="#troubleshooting">문제 / 오류 대처 방법</a></li>
+<li><a href="#faq">FAQ (자주 묻는 질문)</a></li>
+<li><a href="#license">법률 / 저작권 / 라이선스 / 상업적 용도</a></li>
+</ol></div>
+
+<h2 id="overview">1. 프로젝트 한눈에 보기</h2>
+<p>Chrome Starting Page Dashboard는 크롬(Chrome) 브라우저의 "새 탭" 또는 "시작 페이지"를 대체하는 <strong>개인용 대시보드</strong>입니다. 다음 기능을 한 화면에서 씁니다.</p>
+<ul>
+<li>카테고리별 북마크(즐겨찾기) 카드 — 드래그로 정렬, 아이콘 자동 표시, 죽은 링크 감지</li>
+<li>메모(노트) 카드 — 여러 개 만들기, 간단한 마크다운(굵게/링크/코드) 지원</li>
+<li>할 일(To-do) 목록 — 우선순위, 마감일, 반복 일정, 태그, 칸반 보드</li>
+<li>캘린더 — 월/주 보기, 반복 일정, 알림</li>
+<li>뽀모도로(Pomodoro) 타이머 — 25분 집중/5분 휴식 자동 반복</li>
+<li>습관 트래커 — 매일 체크, 연속 기록(스트릭)</li>
+<li>통합 검색(Spotlight, <code>F</code> 키) — 북마크·할 일·메모를 한 번에 검색 + 명령어 실행</li>
+</ul>
+<p><strong>가장 중요한 특징 3가지</strong></p>
+<ol>
+<li><strong>100% 로컬(Local-first)</strong> — 이 프로그램은 여러분의 컴퓨터 안에서만 실행되는 작은 웹 서버(<code>server.js</code>)와, 그 서버가 돌려주는 화면(<code>index.html</code>)으로 이루어져 있습니다. 북마크·메모·할 일 등 모든 데이터는 이 프로젝트 폴더 안 <code>data/</code> 폴더에 JSON 파일로만 저장됩니다. 클라우드 서버나 회원가입, 로그인이 전혀 없습니다.</li>
+<li><strong>외부 의존성 0개</strong> — <code>package.json</code>에 <code>dependencies</code> 항목이 아예 없습니다. Node.js에 기본으로 들어있는 기능만으로 서버를 만들었습니다. <code>npm install</code>이 필요 없습니다.</li>
+<li><strong>MIT 라이선스 — 상업적 이용 가능</strong> — 이 소프트웨어는 개인, 팀, 회사 어디서든 무료로 쓰고, 고치고, 재배포하고, 판매할 수 있습니다. 자세한 조건은 <a href="#license">18. 법률/저작권/라이선스/상업적 용도</a>를 확인하세요.</li>
+</ol>
+
+<h2 id="prerequisites">2. 사전 준비물</h2>
+<table>
+<tr><th>항목</th><th>필요 여부</th><th>비고</th></tr>
+<tr><td>Windows 10/11 또는 macOS</td><td>필수</td><td>Linux는 공식 설치 스크립트가 없지만, Node.js가 있으면 <code>node server.js</code>로 수동 실행은 가능합니다</td></tr>
+<tr><td>디스크 여유 공간</td><td>최소 약 100MB</td><td>Windows에서 Node.js를 새로 받는 경우 포터블 Node.js(약 30MB)까지 포함한 여유분</td></tr>
+<tr><td>Google Chrome 브라우저</td><td>권장</td><td>다른 브라우저(Edge, Whale 등)에서도 페이지 자체는 동일하게 열립니다. "크롬 새 탭으로 지정"하는 안내만 Chrome 기준입니다</td></tr>
+<tr><td>터미널/명령 프롬프트 사용 경험</td><td>권장(필수 아님)</td><td>Windows는 <code>.bat</code> 파일을 더블클릭만 해도 설치가 끝나므로 터미널을 몰라도 됩니다. Mac은 터미널에서 명령어 한 줄을 입력해야 합니다</td></tr>
+<tr><td>인터넷 연결</td><td>설치 시 1회만 필요할 수 있음</td><td>Windows에서 Node.js가 이미 없으면 설치 스크립트가 자동으로 내려받습니다. 설치가 끝난 뒤 평소 사용은 인터넷 없이도 대부분 동작합니다(글꼴/파비콘/날씨 등 일부만 예외, <a href="#security">15장</a> 참고)</td></tr>
+<tr><td>(선택) OpenWeatherMap 계정</td><td>선택</td><td>날씨 위젯을 쓰고 싶을 때만 필요한 무료 API 키. 없어도 나머지 기능은 전부 정상 작동합니다</td></tr>
+</table>
+
+<h2 id="requirements">3. 필요 프로그램</h2>
+<table>
+<tr><th>프로그램</th><th>최소 버전</th><th>Windows</th><th>macOS</th></tr>
+<tr><td>Node.js</td><td><code>&gt;= 18.0.0</code></td><td>없으면 <code>setup_windows.bat</code>가 <strong>자동으로</strong> 포터블 버전(<code>v22.19.0</code>, win-x64)을 <code>https://nodejs.org</code>에서 내려받아 프로젝트 폴더 안 <code>node\</code> 폴더에 설치합니다. 시스템에 Node.js가 이미 있으면 그걸 그대로 사용합니다</td><td><strong>자동 설치되지 않습니다.</strong> <code>setup_mac.sh</code>는 <code>which node</code>로 시스템에 Node.js가 있는지만 확인하고, 없으면 오류를 내고 멈춥니다. 아래 방법 중 하나로 먼저 설치하세요</td></tr>
+<tr><td>Git (선택)</td><td>아무 버전</td><td>GitHub에서 <code>git clone</code>으로 받을 때만 필요. ZIP 다운로드만 할 거라면 불필요</td><td>위와 동일</td></tr>
+</table>
+<p><strong>Mac에서 Node.js를 직접 설치하는 방법 (택 1)</strong></p>
+<ul>
+<li>공식 사이트에서 설치: <a href="https://nodejs.org">https://nodejs.org</a> → "LTS" 버전 다운로드 → 설치 파일 실행</li>
+<li>Homebrew 사용: 터미널에서 <code>brew install node</code> 실행 (Homebrew가 없다면 <a href="https://brew.sh">https://brew.sh</a> 참고)</li>
+</ul>
+<p>설치 후 터미널에서 <code>node -v</code>를 입력했을 때 <code>v18.0.0</code> 이상 숫자가 나오면 준비 완료입니다.</p>
+
+<h2 id="download">4. 다운로드 방법</h2>
+<p>두 가지 경우 중 해당하는 방법을 따르세요.</p>
+<h3>A. GitHub 저장소에서 받는 경우</h3>
+<p>저장소 주소: <strong><a href="https://github.com/sodam-ai/chrome-starting-page">https://github.com/sodam-ai/chrome-starting-page</a></strong></p>
+<p><strong>방법 1 — ZIP으로 받기 (Git을 몰라도 됨, 초보자 추천)</strong></p>
+<ol>
+<li>위 주소로 접속</li>
+<li>초록색 <strong>"Code"</strong> 버튼 클릭 → <strong>"Download ZIP"</strong> 클릭</li>
+<li>내려받은 <code>chrome-starting-page-main.zip</code> 파일 압축 해제</li>
+<li>원하는 위치(예: <code>문서</code> 폴더나 <code>D:\</code> 드라이브)로 폴더 이동</li>
+</ol>
+<p><strong>방법 2 — <code>git clone</code>으로 받기</strong></p>
+<pre><code>git clone https://github.com/sodam-ai/chrome-starting-page.git
+cd chrome-starting-page</code></pre>
+<h3>B. 폴더(ZIP 파일)를 직접 전달받은 경우</h3>
+<ol>
+<li>전달받은 파일이 <code>.zip</code>이면 압축 해제 프로그램(Windows 기본 압축 풀기, Mac Finder 등)으로 압축 해제</li>
+<li>압축을 풀어 나온 폴더를 원하는 위치로 이동/복사</li>
+<li>폴더 안에 <code>index.html</code>, <code>server.js</code>, <code>package.json</code>이 보이면 정상적으로 받은 것입니다 → <a href="#install">5. 설치 방법</a>으로 이동</li>
+</ol>
+
+<h2 id="install">5. 설치 방법</h2>
+<h3>🪟 Windows</h3>
+<ol>
+<li>다운로드한 폴더를 엽니다.</li>
+<li><code>setup_windows.bat</code> 파일을 <strong>더블클릭</strong>합니다. (관리자 권한 필요 없음, 시스템 파일을 건드리지 않습니다)</li>
+<li>검은 화면(명령 프롬프트 창)이 열리고 아래 순서로 자동 진행됩니다.</li>
+</ol>
+<table>
+<tr><th>단계</th><th>스크립트가 하는 일</th></tr>
+<tr><td>1</td><td>기존에 쓰던 데이터(<code>data\bookmarks.json</code> 등)가 있으면 안전하게 백업(<code>data\backups\safety-before-setup.json</code>) 후 진행. 처음 설치라면 <code>data\</code>, <code>data\backups\</code>, <code>data\icons\</code>, <code>data\profiles\</code>, <code>assets\</code> 폴더를 새로 만듭니다</td></tr>
+<tr><td>2</td><td>Node.js 확인: 포터블 Node(<code>node\node.exe</code>) → 시스템 Node 순서로 찾고, 둘 다 없으면 <code>nodejs.org</code>에서 포터블 버전(v22.19.0)을 자동 다운로드</td></tr>
+<tr><td>3</td><td>혹시 이미 실행 중인 이전 서버가 있다면 안전하게 종료</td></tr>
+<tr><td>4</td><td>로그인 시 자동 실행되도록 등록 (Windows 레지스트리의 <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code> 항목 1개 추가. 실패 시 시작프로그램 폴더에 바로가기 생성)</td></tr>
+<tr><td>5</td><td>서버를 창 없이(숨김 상태로) 시작</td></tr>
+</table>
+<ol start="4">
+<li>완료 메시지에 실제 접속 주소(기본 <code>http://localhost:1111</code>, 포트가 사용 중이면 자동으로 1112, 1113…으로 바뀔 수 있음)가 표시됩니다.</li>
+<li>이 안내창은 확인만 하고 닫아도 됩니다 — 서버는 뒤에서 계속 실행됩니다.</li>
+</ol>
+<blockquote><strong>참고</strong>: 이 설치 과정은 Windows 로그인 자동 시작 항목 1개를 추가하는 것 외에는 어떤 시스템 파일도, Chrome의 정책/레지스트리도 건드리지 않습니다. Chrome을 이 페이지로 여는 설정은 사용자가 직접 해야 하며, 이는 자동화되어 있지 않습니다(<a href="#quickstart">6. 빠른 시작</a> 4단계 참고).</blockquote>
+<h3>🍎 macOS</h3>
+<ol>
+<li>Node.js가 없다면 <a href="#requirements">3장</a> 안내대로 먼저 설치하세요.</li>
+<li><strong>터미널</strong>(Terminal.app)을 엽니다.</li>
+<li>프로젝트 폴더로 이동합니다.
+<pre><code>cd ~/Downloads/chrome-starting-page   # 실제 폴더 위치에 맞게 수정</code></pre></li>
+<li>설치 스크립트를 실행합니다.
+<pre><code>bash setup_mac.sh</code></pre></li>
+<li>스크립트가 하는 일: <code>com.dashboard.startpage.plist</code>라는 자동 시작 설정 파일을 만들어 <code>~/Library/LaunchAgents/</code>에 등록하고(<code>launchctl load</code>), 서버를 바로 시작합니다. 이 방식은 <strong>컴퓨터를 다시 켜도 자동 시작</strong>되고, <strong>서버가 죽으면 자동으로 다시 살아납니다</strong>(<code>KeepAlive</code> 설정, Windows에는 없는 기능).</li>
+<li>완료 메시지에 접속 주소(<code>http://localhost:1111</code> 등)가 표시됩니다.</li>
+</ol>
+
+<h2 id="quickstart">6. 빠른 시작</h2>
+<p>이미 위 단계를 다 아는 분을 위한 요약입니다.</p>
+<pre><code>1) 다운로드   → GitHub ZIP 또는 git clone, 혹은 전달받은 폴더 압축 해제
+2) 설치       → Windows: setup_windows.bat 더블클릭 / Mac: bash setup_mac.sh
+3) 접속       → 브라우저 주소창에 http://localhost:1111 입력
+4) (선택) Chrome 새 탭으로 지정
+   Chrome 우측 상단 점 3개 → 설정 → 시작 그룹 → "특정 페이지 열기"
+   → http://localhost:1111 추가
+   (크롬 "새 탭 페이지" 자체를 완전히 바꾸려면 확장 프로그램이 필요하며,
+    이 프로젝트는 크롬 설정을 자동으로 바꾸지 않습니다 — 직접 설정하는 항목입니다)</code></pre>
+
+<h2 id="run">7. 실행 방법</h2>
+<p>설치 스크립트를 한 번 실행하면 <strong>로그인할 때마다 자동으로 서버가 켜지므로</strong>, 평소에는 아래 명령어를 직접 칠 일이 거의 없습니다. 아래는 수동으로 다루고 싶을 때를 위한 방법입니다.</p>
+<table>
+<tr><th>상황</th><th>Windows</th><th>macOS</th></tr>
+<tr><td>수동으로 한 번 실행</td><td>프로젝트 폴더에서 <code>npm start</code> 또는 <code>node server.js</code></td><td>터미널에서 <code>npm start</code> 또는 <code>node server.js</code></td></tr>
+<tr><td>다른 포트로 실행</td><td><code>node server.js 8080</code></td><td><code>node server.js 8080</code></td></tr>
+<tr><td>창 없이 백그라운드 실행</td><td><code>run_server_background.bat</code> 더블클릭</td><td>(LaunchAgent가 이미 담당)</td></tr>
+<tr><td>재시작 (껐다 켜기)</td><td><code>restart.bat</code> 더블클릭</td><td><code>launchctl unload</code> 후 <code>launchctl load ~/Library/LaunchAgents/com.dashboard.startpage.plist</code></td></tr>
+<tr><td>완전 종료</td><td><code>uninstall.bat</code> 실행 또는 작업 관리자에서 <code>node.exe</code> 종료</td><td><code>uninstall_mac.sh</code> 실행</td></tr>
+</table>
+<p>설정 화면(⚙ 설정 → 데이터 탭)에서도 포트 변경과 서버 재시작을 버튼 클릭만으로 할 수 있습니다.</p>
+
+<h2 id="usage">8. 사용 방법</h2>
+<h3>8.1 검색 &amp; 통합 검색(Spotlight)</h3>
+<ul>
+<li>화면 상단 검색창에 입력 후 Enter — 기본 검색엔진(Google/Naver/YouTube 등, 설정에서 변경 가능)으로 이동</li>
+<li>검색어 앞에 단축 키워드를 붙이면 해당 서비스로 바로 검색: <code>yt 고양이</code> → YouTube 검색, <code>nv 날씨</code> → 네이버 검색, <code>gh react</code> → GitHub 검색 (기본 키워드: <code>yt</code>, <code>nv</code>, <code>gh</code>, <code>g</code>, <code>tw</code>, <code>map</code>, 설정에서 변경 가능)</li>
+<li><code>F</code> 키를 누르면 <strong>Spotlight</strong> 통합 검색창이 뜨며 북마크·할 일·메모·디데이를 한 번에 검색합니다. 한글 초성 검색도 지원(예: <code>ㄴㅇㅂ</code> → "네이버")</li>
+<li>Spotlight에서 <code>&gt;</code>로 시작하는 명령어 입력 가능: <code>&gt;todo</code>, <code>&gt;timer 15</code>, <code>&gt;focus 업무</code>, <code>&gt;add 이름 URL</code>, <code>&gt;habit</code>, <code>&gt;today</code>, <code>&gt;kanban</code>, <code>&gt;layout</code>, <code>&gt;settings</code>, <code>&gt;theme</code>, <code>&gt;export</code></li>
+</ul>
+<h3>8.2 북마크</h3>
+<ul>
+<li>카테고리별 카드에 북마크 추가/수정/삭제, 드래그로 순서 변경, 다른 카테고리·다른 페이지로 드래그 이동</li>
+<li>우클릭(컨텍스트 메뉴): 상단 고정, 수정, 새 탭에서 열기, 카테고리 전체 열기, 페이지 이동, 삭제</li>
+<li>브라우저 주소창의 URL을 그대로 드래그해서 카드에 놓으면 바로 추가됨</li>
+<li>링크를 복사한 상태에서 <code>Ctrl+V</code>(붙여넣기) → 어느 카테고리에 넣을지 묻는 팝업</li>
+<li>30일 이내 추가한 항목엔 "NEW" 표시, 자주/최근 방문한 북마크는 자동으로 위로 정렬(설정에서 켜고 끌 수 있음)</li>
+<li>끊긴 링크(죽은 링크)는 자동으로 감지되어 표시됨(연속 3회 실패 시)</li>
+<li>삭제한 항목은 휴지통에 30일간 보관되며 복구 가능</li>
+</ul>
+<h3>8.3 메모(노트)</h3>
+<ul>
+<li>카드마다 독립된 메모장, 여러 개 생성 가능, 이름 변경(더블클릭)</li>
+<li>자동 링크 감지(URL을 적으면 클릭 가능한 링크가 됨), 간단한 마크다운(<code>**굵게**</code>, <code>`코드`</code>, <code>[글자](주소)</code>) 미리보기 지원</li>
+</ul>
+<h3>8.4 할 일(To-do)</h3>
+<ul>
+<li>여러 개의 독립된 할 일 카드, 우선순위(4단계), 마감일, 태그, 하위 작업(서브태스크)</li>
+<li>반복 할 일(매일/평일/매주/매달) 지원</li>
+<li>칸반 보드 보기 / 전체 목록 보기 전환 가능(펼쳐보기 버튼)</li>
+<li>완료율 100% 달성 시 축하 효과(컨페티) 표시, 연속 완료 스트릭 기록</li>
+</ul>
+<h3>8.5 캘린더</h3>
+<ul>
+<li>월간/주간 보기 전환</li>
+<li>일정 클릭 추가, <code>!</code>를 앞에 붙이면 일정 대신 할 일로 추가됨</li>
+<li>반복 일정(매주/격주/매달), 브라우저 알림 권한을 허용하면 일정 10분 전 알림</li>
+</ul>
+<h3>8.6 뽀모도로 타이머 &amp; 습관 트래커</h3>
+<ul>
+<li>25분 집중 → 5분 휴식(4회마다 15분 긴 휴식) 자동 반복 옵션, 특정 할 일에서 바로 타이머 시작 가능</li>
+<li>최근 7일 집중 통계 차트</li>
+<li>습관 트래커: 설정에서 줄바꿈으로 습관 목록 입력 → 매일 체크박스로 기록, 연속 기록(스트릭) 표시</li>
+</ul>
+<h3>8.7 화면 꾸미기 (⚙ 설정 → 외관)</h3>
+<ul>
+<li>다크/라이트 테마 수동 전환 또는 "시스템 설정 따르기"</li>
+<li>강조 색상 6종(블루/퍼플/로즈/에메랄드/앰버/시안)</li>
+<li>배경 이미지 업로드(여러 장 슬라이드쇼, 1분~24시간 간격 설정), 유리(glass) 효과 3단계, 흐림/불투명도 조절</li>
+<li>레이아웃 4종(기본/컴팩트/와이드/매거진), 사용자 지정 CSS 삽입(보안 검사 후 적용, <a href="#security">15장</a> 참고)</li>
+</ul>
+<h3>8.8 설정 화면 구성 (5개 탭)</h3>
+<table>
+<tr><th>탭</th><th>내용</th></tr>
+<tr><td>일반</td><td>세계시계, 검색엔진, 사용 빈도 정렬, 테마 모드, 강조 색상, 단축키 관리, 날씨 API 키</td></tr>
+<tr><td>외관</td><td>배경 이미지/슬라이드쇼, 오버레이 밝기, 블러/유리 효과, 카드 투명도, 사용자 CSS, 모션 줄이기</td></tr>
+<tr><td>위젯</td><td>디데이 목록, 페이지 관리, 카드 크기/색상, 캘린더 옵션, 뽀모도로 자동 반복, 습관 목록, 레이아웃, 검색 키워드 단축어</td></tr>
+<tr><td>데이터</td><td>JSON/마크다운/HTML 내보내기·가져오기, 자동 백업 주기, 백업 찾아보기/복원, 중복 북마크 찾기, 프로필 관리, 휴지통, 포트 변경·서버 재시작</td></tr>
+<tr><td>통계</td><td>할 일 완료 스트릭, 90일 사용량 히트맵, 뽀모도로 차트, 가장 많이 클릭한 북마크 Top 10, 카테고리별 클릭 도넛 차트</td></tr>
+</table>
+<h3>8.9 키보드 단축키</h3>
+<table>
+<tr><th>키</th><th>동작</th><th>변경 가능 여부</th></tr>
+<tr><td><code>/</code></td><td>검색창 포커스</td><td>설정에서 변경 가능</td></tr>
+<tr><td><code>E</code></td><td>편집 모드 켜기/끄기</td><td>설정에서 변경 가능</td></tr>
+<tr><td><code>S</code></td><td>설정 열기</td><td>설정에서 변경 가능</td></tr>
+<tr><td><code>F</code></td><td>Spotlight 통합 검색 열기</td><td>설정에서 변경 가능</td></tr>
+<tr><td><code>?</code></td><td>단축키 안내창 표시</td><td>설정에서 변경 가능</td></tr>
+<tr><td><code>1</code>~<code>9</code></td><td>해당 순서 카테고리로 이동</td><td>고정</td></tr>
+<tr><td><code>Ctrl/Cmd + Z</code></td><td>방금 한 작업 되돌리기(실행취소)</td><td>고정</td></tr>
+<tr><td><code>Esc</code></td><td>열려 있는 창/검색창 닫기</td><td>고정</td></tr>
+<tr><td><code>Tab</code> / <code>Shift+Tab</code></td><td>북마크 카드 간 이동, <code>Enter</code>로 열기</td><td>고정</td></tr>
+</table>
+
+<h2 id="howitworks">9. 작동 방법 (동작 원리)</h2>
+<p>한 문장 요약: <strong>브라우저(화면)가 내 컴퓨터 안의 작은 서버에게 "저장해줘/불러와줘"라고 요청하고, 서버는 그 내용을 <code>data/</code> 폴더의 JSON 파일에 그대로 쓰고 읽습니다.</strong></p>
+<ol>
+<li><strong>처음 열면</strong>: 브라우저가 <code>http://localhost:포트번호/</code>에 접속 → 서버가 <code>index.html</code>, <code>style.css</code>, <code>script.js</code>를 내려줌 → 화면 스크립트가 곧바로 <code>/api/bookmarks</code>, <code>/api/notes</code>, <code>/api/config</code> 등 자기 자신의 서버에 데이터를 요청해서 화면을 채웁니다.</li>
+<li><strong>뭔가 바꾸면(북마크 추가, 할 일 체크 등)</strong>: 화면은 0.3~1초 정도 기다렸다가(짧은 시간 내 여러 번 바뀌는 걸 한 번에 모아 저장하기 위함) 서버에 저장 요청을 보냅니다. 서버는 임시 파일에 먼저 쓰고 이름을 바꾸는 방식(원자적 쓰기)으로 파일이 도중에 깨지는 것을 막습니다.</li>
+<li><strong>인터넷/서버 연결이 끊기면</strong>: 화면 좌측 상단에 "오프라인 모드" 배너가 뜨고, 바뀐 내용은 브라우저의 <code>localStorage</code>(임시 보관함)에 저장해 두었다가, 연결이 돌아오면 자동으로 서버에 다시 저장합니다. 데이터가 사라지지 않습니다.</li>
+<li><strong>여러 탭을 열어두면</strong>: 한 탭에서 저장하면 <code>BroadcastChannel</code>이라는 브라우저 기능으로 다른 탭에도 "새로고침 해!"라는 신호를 보내 화면이 서로 어긋나지 않게 맞춰줍니다.</li>
+<li><strong>오프라인에서도 화면이 뜨는 이유</strong>: 서비스워커(<code>sw.js</code>)가 정적 파일(<code>index.html</code>, <code>style.css</code>, <code>script.js</code>) 4개를 미리 저장해 두기 때문입니다. 단, 저장된 데이터를 다루는 <code>/api/...</code> 요청은 절대 캐시하지 않고 항상 실시간으로 서버와 통신합니다.</li>
+<li><strong>서버가 스스로 관리하는 것들</strong>: 부팅 시 데이터 파일이 깨졌는지 검사해서 자동으로 백업본에서 복구, 하루(기본값)에 한 번 자동 백업, 30일 넘은 백업 자동 정리(최대 50개까지만 보관), 포트가 이미 사용 중이면 자동으로 다음 포트(1112, 1113…)로 재시도.</li>
+</ol>
+
+<h2 id="commands">10. 명령어 모음</h2>
+<table>
+<tr><th>명령어 / 파일</th><th>실행 위치</th><th>설명</th></tr>
+<tr><td><code>npm start</code></td><td>프로젝트 폴더</td><td><code>node server.js</code>와 동일. 기본 포트(1111 또는 <code>port.conf</code> 값)로 서버 실행</td></tr>
+<tr><td><code>node server.js</code></td><td>프로젝트 폴더</td><td>서버를 화면(터미널)이 보이는 상태로 실행</td></tr>
+<tr><td><code>node server.js &lt;포트번호&gt;</code></td><td>프로젝트 폴더</td><td>지정한 포트로 실행 (예: <code>node server.js 8080</code>)</td></tr>
+<tr><td><code>setup_windows.bat</code></td><td>Windows, 더블클릭</td><td>최초 설치: Node 확인/설치, 자동 시작 등록, 서버 시작</td></tr>
+<tr><td><code>bash setup_mac.sh</code></td><td>macOS 터미널</td><td>최초 설치: LaunchAgent 등록, 서버 시작</td></tr>
+<tr><td><code>run_server_background.bat</code></td><td>Windows, 더블클릭</td><td>창 없이 서버만 다시 시작 (자동 시작 등록은 건드리지 않음)</td></tr>
+<tr><td><code>restart.bat</code></td><td>Windows, 더블클릭</td><td>실행 중인 서버를 안전하게 종료 후 재시작</td></tr>
+<tr><td><code>set-port.bat</code></td><td>Windows, 더블클릭</td><td>실행하면 새 포트 번호를 물어봄 (대화형)</td></tr>
+<tr><td><code>set-port.bat 8080</code></td><td>Windows, 명령 프롬프트</td><td>포트를 8080으로 바로 저장 (재시작해야 적용)</td></tr>
+<tr><td><code>uninstall.bat</code></td><td>Windows, 더블클릭</td><td>서버 종료, 자동 시작 등록 해제, 데이터 삭제 여부 선택(Y/N), 로그 파일 정리</td></tr>
+<tr><td><code>uninstall_mac.sh</code></td><td>macOS 터미널 (<code>bash uninstall_mac.sh</code>)</td><td>서버 종료, LaunchAgent 해제, 데이터 삭제 여부 선택, 로그 파일 정리</td></tr>
+</table>
+<blockquote><code>start_hidden.vbs</code>는 사용자가 직접 실행하는 파일이 아니라, Windows 자동 시작 등록이 내부적으로 사용하는 파일입니다.</blockquote>
+
+<h2 id="changelog">11. 업데이트 내용 요약</h2>
+<p>버전별 주요 변경 사항입니다. 각 항목을 클릭하면 펼쳐집니다. (출처: <code>CHANGELOG.md</code>, 최신 버전이 맨 위)</p>
+
+<details><summary>v7.3 (2025-03-19) — 배경 슬라이드쇼, 데이터 안전장치, 보안 강화</summary>
+<ul>
+<li>배경 이미지 여러 장 슬라이드쇼(간격 1분~24시간, 수동 이전/다음, 페이드 전환)</li>
+<li>북마크 상단 고정, 카드를 페이지 탭으로 드래그해서 이동</li>
+<li>할 일 카드 드래그 정렬</li>
+<li>데이터 안전: 부팅 시 JSON 9종 무결성 검사 + 백업 자동 복구, 백업 목록/복원 UI, 가져오기 미리보기, 내보내기 완료 토스트, 10단계 실행취소</li>
+<li>서버 안정성: 포트 자동 대체(1111→1112…1120), 새로 시작할 때 기존 서버 자동 종료, 오래된 PID 파일 정리, 이중 시작 버그 수정, <code>.bat/.vbs</code> 줄바꿈(CRLF) 인코딩 문제 수정</li>
+<li>네트워크: 재연결 시도 간격 15초→5초 단축 + 토스트 알림, 오프라인 배너, 여러 탭 동기화(에코 루프 방지 포함), 서비스워커 30분마다 업데이트 확인</li>
+<li>접근성/UX: 키보드 포커스 스타일, 8개 항목 aria-label 추가, 인쇄용 스타일시트, 모바일(768px) 반응형 레이아웃</li>
+<li>보안: 가져오기 경로에서 <code>..</code>/<code>~</code> 상위 경로 탈출 차단, Windows 대소문자 우회 차단, 사용자 지정 CSS에서 <code>expression()</code>/<code>javascript:</code>/외부 <code>@import</code>/<code>behavior:</code> 등 위험 패턴 차단</li>
+<li>문서/메타: README·CHANGELOG·package.json·manifest 정비 (단, 이후 이 저장소에서 README 파일 자체가 유실되어 현재 문서 세트로 새로 작성됨)</li>
+</ul>
+</details>
+
+<details><summary>v7.2 — 할 일 카드 다중화</summary>
+<ul><li>여러 개의 독립된 할 일 카드 생성, 카드별 제목/이름변경/삭제, 카드 간 드래그 이동</li></ul>
+</details>
+
+<details><summary>v7.1 — 카드형 메모, 위젯 표시/숨김</summary>
+<ul>
+<li>메모를 여러 개의 독립 카드로 관리(제목/줄 수/드래그 정렬), 굵게·코드·링크 마크다운 미리보기</li>
+<li>할 일/캘린더/습관 카드 표시·숨김 전환, 실행취소로 복구</li>
+</ul>
+</details>
+
+<details><summary>v7.0 — 습관 트래커, 레이아웃 프리셋, 뽀모도로 자동 반복</summary>
+<ul>
+<li>습관 트래커(매일 체크, 자정 초기화)</li>
+<li>레이아웃 4종(기본/컴팩트/와이드/매거진)</li>
+<li>뽀모도로 자동 반복(25분 집중 → 5분 휴식), 검색 키워드 단축어(<code>yt 고양이</code>, <code>nv 날씨</code>, <code>gh react</code>)</li>
+<li>일정 10분 전 알림, 카테고리 강조 색상</li>
+<li>유리(glass) 효과 3단계, 블러 0~40px 조절, 시간대별 배경 색조 변화</li>
+</ul>
+</details>
+
+<details><summary>v6.0 — 캘린더, 뽀모도로, 프로필 관리, 통합 검색</summary>
+<ul>
+<li>캘린더 카드(월/주 보기), 뽀모도로 타이머, 여러 설정을 프로필로 저장/전환</li>
+<li>다중 선택(Ctrl+클릭) 일괄 이동/삭제, 더블클릭 이름 변경, 포커스 모드</li>
+<li>스마트 붙여넣기(<code>Ctrl+V</code> → 카테고리 선택), 주소창 URL 드래그 추가, JSON 드래그 가져오기</li>
+<li>통합 Spotlight 검색(<code>F</code> 키), 한글 초성 검색, <code>&gt;명령어</code> 모드</li>
+<li>할 일 연속 완료 기록, 죽은 링크 감지(3회 실패), 주간 리포트, 오프라인 대기열</li>
+</ul>
+</details>
+
+<details><summary>v5.0 — 다중 페이지, 디데이, 세계시계, 날씨</summary>
+<ul>
+<li>여러 페이지(탭)로 구분(예: 업무/개인/공부), 디데이 카운트다운, 세계시계, 날씨 위젯(OpenWeatherMap)</li>
+<li>시스템 설정 따라가는 자동 테마, 강조 색상 6종, 사용자 CSS 삽입</li>
+<li>서버: 원자적 쓰기, 보관기간 정책이 있는 자동 백업, 포트/재시작 API, 헬스체크 API, 에러 로그 10MB 제한 회전</li>
+</ul>
+</details>
+
+<details><summary>v4.0 — 카테고리 정렬, 휴지통, 실행취소</summary>
+<ul>
+<li>카테고리 드래그 정렬/접기·펼치기, 카드 크기 조절, 우클릭 메뉴, "NEW" 배지(7일)</li>
+<li>휴지통(30일 복구), <code>Ctrl+Z</code> 5초 실행취소 토스트</li>
+<li>서버: 파일 업로드 파서 직접 구현, 아이콘/배경 이미지 업로드, 동시 저장 충돌 방지 잠금</li>
+</ul>
+</details>
+
+<details><summary>v3.0 — 할 일 우선순위/반복, 메모</summary>
+<ul>
+<li>할 일 우선순위(상/중/하), 마감일, 태그, 반복(매일/매주/격주/매달), 하위 작업</li>
+<li>메모/노트 카드(자동 링크 감지)</li>
+<li>서버: 휴지통 API(30일 정리), 사용량 추적 API, 뽀모도로 통계 API</li>
+</ul>
+</details>
+
+<details><summary>v2.0 — 다크/라이트 테마, 검색엔진 전환</summary>
+<ul>
+<li>다크/라이트 테마 전환(원형 애니메이션), 유리 질감 UI, 커스텀 단축키</li>
+<li>다중 검색엔진(Google/Naver/YouTube), 사용 빈도 기반 정렬</li>
+<li>서버: gzip 압축, ETag 캐싱, 메모리 캐시, 정상 종료 처리(마지막 백업 포함)</li>
+</ul>
+</details>
+
+<details><summary>v1.0 — 최초 릴리스</summary>
+<ul>
+<li>Node.js 내장 모듈만 사용하는 HTTP 서버(외부 의존성 0개)</li>
+<li>카테고리별 북마크 카드(드래그 정렬)</li>
+<li>포트 설정 가능(<code>port.conf</code>/명령줄 인자/화면 UI), <code>127.0.0.1</code> 전용 바인딩</li>
+<li>오프라인 지원(서비스워커), Windows 자동 시작(레지스트리+숨김 실행), Mac 자동 시작(LaunchAgent)</li>
+<li>Windows용 포터블 Node.js 다운로드 옵션(시스템 설치 불필요)</li>
+<li>PID 기반 프로세스 관리(다른 프로그램을 건드리지 않고 안전하게 재시작)</li>
+<li><code>data/</code> 폴더에 JSON 파일 기반 저장</li>
+</ul>
+</details>
+
+<h2 id="files">12. 파일 / 문서 위치</h2>
+<p>프로젝트 최상위 폴더(예: <code>D:\Test_Dev\test9\Chrome_Starting-Page\</code> 또는 여러분이 옮긴 위치) 기준입니다.</p>
+<pre><code>chrome-starting-page/
+├── README.md            ← 이 문서 (국문 레퍼런스)
+├── README.en.md         ← 영문 레퍼런스
+├── GUIDE.md              ← 국문 왕초보 가이드
+├── GUIDE.en.md           ← 영문 왕초보 가이드
+├── README.html / README.en.html / GUIDE.html / GUIDE.en.html  ← 위 4개 문서의 브라우저용 버전(내용 동일)
+├── CHANGELOG.md          ← 버전별 변경 이력 원본
+├── LICENSE               ← MIT 라이선스 원문
+├── package.json          ← 프로젝트 정보, 실행 스크립트, Node.js 최소 버전
+├── manifest.webmanifest  ← PWA(앱처럼 설치) 설정
+├── index.html            ← 화면 구조
+├── script.js              ← 화면 동작 로직 (프론트엔드)
+├── style.css               ← 디자인/테마
+├── sw.js                    ← 서비스워커(오프라인 캐시)
+├── server.js               ← 로컬 서버 (백엔드, Node.js)
+├── port.conf                ← 현재 사용 포트 번호 (기본 1111)
+├── .server.pid               ← 실행 중인 서버의 PID/포트 기록 (자동 생성/삭제)
+├── setup_windows.bat / setup_mac.sh   ← 설치 스크립트
+├── restart.bat / run_server_background.bat / set-port.bat / start_hidden.vbs  ← Windows 운영 스크립트
+├── uninstall.bat / uninstall_mac.sh   ← 제거 스크립트
+├── data/                      ← ★ 모든 사용자 데이터가 저장되는 곳
+│   ├── bookmarks.json / notes.json / config.json / todos.json
+│   ├── ddays.json / events.json / usage.json / trash.json / pomo-stats.json
+│   ├── backups/                ← 자동/수동 백업 JSON
+│   ├── icons/                    ← 업로드한 북마크 아이콘
+│   └── profiles/                  ← 저장한 설정 프로필
+└── assets/                       ← 아이콘(icon-192.svg 등), 업로드한 배경 이미지</code></pre>
+
+<h2 id="workflow">13. 워크플로우</h2>
+<p>사용자 입장에서 이 프로그램과 함께하는 하루/설치 흐름은 다음과 같습니다.</p>
+<pre><code>[최초 1회]
+  다운로드 → 설치 스크립트 실행 → 자동 시작 등록 완료
+       ↓
+[그 이후, 매일]
+  컴퓨터 켜기
+       ↓ (Windows: 레지스트리 Run 키 / Mac: LaunchAgent가 자동으로 서버 실행)
+  서버가 조용히 백그라운드에서 대기 (창 없음)
+       ↓
+  Chrome에서 새 탭 열기 또는 http://localhost:1111 접속
+       ↓
+  대시보드 화면 표시 → 북마크/할 일/메모/캘린더 등 평소처럼 사용
+       ↓ (사용 중 변경사항은 0.3~1초 debounce 후 자동 저장)
+  서버가 data/*.json에 저장 (원자적 쓰기 + 자동 백업)
+       ↓
+[컴퓨터 끄기]
+  서버 프로세스도 함께 종료 (정상 종료 시 마지막 백업 1회 수행)</code></pre>
+<p>문제가 생겨 되돌리고 싶을 때의 흐름:</p>
+<pre><code>데이터가 이상해짐
+   → 설정 → 데이터 탭 → 백업 목록에서 원하는 시점 선택 → 복원
+   (또는) 서버 자체가 부팅 시 자동으로 무결성 검사를 하므로
+   파일이 깨져 있었다면 재시작만 해도 자동 복구되는 경우가 많음</code></pre>
+
+<h2 id="architecture">14. 아키텍처</h2>
+<pre><code>┌───────────────────────────┐        HTTP (127.0.0.1:포트)        ┌──────────────────────────────┐
+│   브라우저 (Chrome 등)      │ ───────────────────────────────▶  │  로컬 서버 (server.js, Node)   │
+│                            │                                    │                                │
+│  index.html                │ ◀─────────────────────────────── │  Node 내장 http 모듈만 사용        │
+│  script.js  (화면 로직)      │       정적 파일 + /api/* 응답        │  외부 npm 패키지 0개               │
+│  style.css                  │                                    │  127.0.0.1 전용 바인딩(외부 차단)   │
+│  sw.js (서비스워커, 정적 캐시)  │                                    │  포트: port.conf → CLI 인자 → 1111 │
+│  localStorage (오프라인 캐시)  │                                    └───────────────┬────────────────┘
+└───────────────────────────┘                                                     │
+                                                                                    ▼
+                                                                     ┌───────────────────────────┐
+                                                                     │   data/*.json  (파일 저장)   │
+                                                                     │   원자적 쓰기 + 쓰기 잠금       │
+                                                                     │   자동 백업 (data/backups/)   │
+                                                                     └───────────────────────────┘</code></pre>
+<ul>
+<li><strong>프론트엔드</strong>: 순수 HTML/CSS/JavaScript(프레임워크 없음). 모든 상태는 서버의 <code>/api/*</code>를 통해 읽고 쓰며, 실패 시에만 <code>localStorage</code>를 임시 캐시로 사용합니다.</li>
+<li><strong>백엔드</strong>: Node.js 내장 <code>http</code> 모듈로 만든 단일 프로세스 서버. 데이터베이스가 없고, 모든 데이터는 JSON 파일입니다.</li>
+<li><strong>자동화 계층</strong>: Windows 레지스트리 Run 키 또는 macOS LaunchAgent가 "컴퓨터 켜면 서버도 켜지게" 만들어 줍니다. 이 계층은 순수하게 OS 수준의 "프로그램 자동 실행" 기능이며, Chrome 자체를 건드리지 않습니다.</li>
+<li><strong>오프라인 계층</strong>: 서비스워커(<code>sw.js</code>)가 정적 파일 4종만 캐시하고, <code>/api/*</code> 요청은 항상 네트워크 우선으로 서버와 직접 통신합니다.</li>
+</ul>
+
+<h2 id="security">15. 보안 / 데이터 흐름</h2>
+<h3>15.1 이 프로그램이 접속하는 곳 (전수 목록)</h3>
+<table>
+<tr><th>목적지</th><th>언제 호출되나</th><th>왜 필요한가</th></tr>
+<tr><td><code>fonts.googleapis.com</code>, <code>fonts.gstatic.com</code> (Google Fonts)</td><td>화면을 열 때마다 항상</td><td>한글/영문 글꼴(IBM Plex Sans KR, JetBrains Mono) 표시용</td></tr>
+<tr><td><code>google.com/s2/favicons</code>, <code>icons.duckduckgo.com</code>, <code>icon.horse</code>, 북마크한 사이트 자체의 <code>/favicon.ico</code></td><td>북마크 카드가 화면에 보일 때(스크롤 도달 시)</td><td>북마크 아이콘을 예쁘게 보여주기 위한 4단계 대체 경로</td></tr>
+<tr><td><code>api.openweathermap.org</code></td><td><strong>사용자가 설정에서 날씨 API 키를 직접 입력했을 때만</strong></td><td>날씨 위젯. 키를 넣지 않으면 이 요청 자체가 발생하지 않음</td></tr>
+<tr><td>사용자가 등록한 북마크의 실제 주소</td><td>30초 후 및 주기적으로 (죽은 링크 검사, 설정에서 끌 수 있음)</td><td>북마크가 아직 살아있는 사이트인지 확인(사이트에 <code>HEAD</code> 요청만 보냄)</td></tr>
+<tr><td>검색창에 입력 후 검색 실행 시 Google/Naver/YouTube 등</td><td>사용자가 직접 검색할 때만</td><td>일반적인 브라우저 검색과 동일한 동작</td></tr>
+</table>
+<p><strong>이 목록이 전부입니다.</strong> 코드 전체를 조사한 결과, 사용자 동의 없이 자동으로 실행되는 광고/분석/추적(telemetry) 코드나, 개발자에게 사용 데이터를 보내는 "전화 걸기(phone-home)" 기능은 <strong>없습니다.</strong> 유일하게 있는 자동 인터넷 접속은 Windows 설치 스크립트가 Node.js가 없을 때 <strong>딱 1회</strong> <code>nodejs.org</code>의 공식 배포 파일을 받는 것뿐입니다.</p>
+<h3>15.2 서버(<code>server.js</code>) 자체의 보안 특징</h3>
+<ul>
+<li><strong><code>127.0.0.1</code>(localhost)에만 연결을 받습니다</strong> — 같은 와이파이/네트워크에 있는 다른 컴퓨터나 휴대폰에서는 이 서버에 절대 접속할 수 없습니다.</li>
+<li>서버가 스스로 외부 인터넷에 나가는 요청은 <strong>없습니다.</strong> 유일한 "네트워크 통신"은 재시작할 때 자기 자신의 이전 실행 인스턴스에게(역시 <code>127.0.0.1</code>로) "종료해줘" 신호를 보내는 것뿐입니다.</li>
+<li><strong>인증(로그인)이 없습니다.</strong> 개인용 단일 사용자 로컬 도구이기 때문입니다. 즉, 같은 컴퓨터에서 실행되는 다른 프로그램이 이 서버의 포트에 접속하면 데이터를 읽거나 쓸 수 있다는 뜻이므로, 신뢰할 수 없는 프로그램을 함께 실행하는 컴퓨터에서는 주의가 필요합니다.</li>
+<li>파일 경로 조작(<code>../</code> 같은 상위 폴더 접근) 시도를 차단하는 안전장치가 파일 업로드/가져오기/내보내기 경로마다 적용되어 있습니다.</li>
+<li>사용자 지정 CSS는 <code>expression()</code>, <code>javascript:</code> 주소, 외부 <code>@import</code>, <code>behavior:</code> 같은 위험한 패턴을 걸러낸 뒤에만 적용됩니다.</li>
+<li>업로드 요청 크기는 10MB로 제한되어 있어 비정상적으로 큰 요청은 자동 차단됩니다.</li>
+</ul>
+<h3>15.3 내 데이터는 어디에 있나요?</h3>
+<p>전부 이 프로젝트 폴더 안 <code>data/</code> 폴더의 일반 텍스트(JSON) 파일입니다. 클라우드에 올라가지 않고, 다른 컴퓨터와 자동 동기화되지 않습니다. 폴더째로 복사하면 그대로 다른 컴퓨터로 옮길 수 있고, 폴더를 지우면 데이터도 함께 사라집니다(그래서 자동 백업 기능이 있습니다).</p>
+
+<h2 id="troubleshooting">16. 문제 / 오류 대처 방법</h2>
+<table>
+<tr><th>증상</th><th>원인</th><th>해결 방법</th></tr>
+<tr><td>화면 좌측 상단에 "서버 응답 오류" 또는 "서버 연결 끊김" 표시</td><td>서버 프로세스가 죽었거나 아직 켜지는 중</td><td>잠깐 기다려보기(15초마다 자동 재확인) → 안 되면 Windows는 <code>restart.bat</code>, Mac은 터미널에서 <code>launchctl load ~/Library/LaunchAgents/com.dashboard.startpage.plist</code> 실행</td></tr>
+<tr><td>브라우저에서 페이지가 아예 안 열림 (<code>이 사이트에 연결할 수 없음</code>)</td><td>서버가 꺼져 있거나 포트가 다름</td><td><code>port.conf</code> 파일을 열어 실제 포트 확인, 또는 <code>.server.pid</code> 파일 안의 <code>port</code> 값 확인 후 <code>http://localhost:해당포트</code>로 접속</td></tr>
+<tr><td><code>setup_windows.bat</code> 실행 시 Node.js 다운로드에서 멈추거나 실패</td><td>인터넷 연결 문제, 방화벽/백신이 다운로드 차단</td><td>인터넷 연결 확인 후 재실행. 계속 실패하면 <a href="https://nodejs.org">nodejs.org</a>에서 Node.js를 직접 설치한 뒤 다시 실행(스크립트가 시스템 Node를 자동으로 감지해 사용)</td></tr>
+<tr><td>Mac에서 <code>setup_mac.sh</code> 실행 시 "Node.js is not installed" 오류</td><td>Mac은 Node.js 자동 설치를 하지 않음(Windows와 다른 점)</td><td><a href="#requirements">3장</a> 안내대로 Node.js를 먼저 설치한 후 다시 실행</td></tr>
+<tr><td>코드/파일을 최신 버전으로 바꿨는데 화면이 그대로임</td><td>서비스워커(<code>sw.js</code>)가 이전 화면 파일을 캐시해 둔 상태</td><td>브라우저를 완전히 새로고침(Windows: <code>Ctrl+Shift+R</code>, Mac: <code>Cmd+Shift+R</code>)해도 안 되면, 개발자 도구 → Application(또는 저장공간) 탭 → "캐시 삭제/지우기" 실행 후 새로고침</td></tr>
+<tr><td>포트가 이미 사용 중이라는 메시지 / 실제 포트가 1111이 아님</td><td>다른 프로그램이 1111번 포트를 이미 쓰고 있어 서버가 자동으로 1112, 1113…으로 넘어감</td><td>완료 메시지나 <code>.server.pid</code> 파일에서 실제 포트를 확인해 그 주소로 접속. 특정 포트를 고정하고 싶다면 <code>set-port.bat</code>으로 변경</td></tr>
+<tr><td>설정에서 "포트 변경"을 눌렀는데 안 바뀜</td><td>포트 변경은 재시작해야 적용됨</td><td><code>restart.bat</code> 실행 또는 설정 화면의 "서버 재시작" 버튼 사용</td></tr>
+<tr><td>저장이 안 되고 "⚠ 저장 실패" 표시</td><td>서버 연결이 잠깐 끊김</td><td>걱정하지 않아도 됩니다. 변경 내용은 브라우저에 임시 저장되어 있다가 연결이 복구되면 자동으로 다시 저장됩니다</td></tr>
+<tr><td>데이터가 이상해졌거나 사라진 것 같음</td><td>파일 손상 또는 실수로 삭제</td><td>설정 → 데이터 탭 → 백업 목록에서 원하는 시점으로 복원. 최근 삭제한 항목은 휴지통(30일 보관)에서도 복구 가능</td></tr>
+<tr><td>완전히 삭제하고 싶음</td><td>-</td><td>Windows: <code>uninstall.bat</code> 실행 → 데이터 삭제 여부를 직접 선택(Y/N, 두 번 확인). Mac: <code>bash uninstall_mac.sh</code> 실행 → 동일하게 선택</td></tr>
+</table>
+
+<h2 id="faq">17. FAQ (자주 묻는 질문)</h2>
+<p><strong>Q. 상업적으로(회사에서, 유료 제품에 포함해서) 써도 되나요?</strong><br>
+A. 네, 가능합니다. MIT 라이선스이므로 사용·수정·배포·판매 모두 허용됩니다. 단, 원저작권 고지 문구는 유지해야 합니다. 자세한 내용은 <a href="#license">18장</a>을 확인하세요. (참고용 요약이며, 정확한 법적 해석은 <code>LICENSE</code> 원문이 우선합니다.)</p>
+<p><strong>Q. 인터넷이 없어도 쓸 수 있나요?</strong><br>
+A. 네. 서버·데이터 저장·북마크/할 일/메모/캘린더/뽀모도로/습관 기능은 전부 오프라인에서 작동합니다. 다만 글꼴(Google Fonts), 북마크 아이콘, (설정한 경우) 날씨 위젯처럼 외부 이미지/정보를 가져오는 일부 요소는 인터넷이 있어야 정상적으로 보입니다.</p>
+<p><strong>Q. 제 북마크/일정이 어딘가로 전송되나요?</strong><br>
+A. 아니요. 모든 데이터는 이 컴퓨터의 <code>data/</code> 폴더 안에만 저장됩니다. <a href="#security">15장 보안/데이터 흐름</a>에 이 프로그램이 접속하는 모든 외부 주소를 빠짐없이 정리해 두었습니다.</p>
+<p><strong>Q. 실제로 크롬의 "새 탭"이 이 화면으로 바뀌나요?</strong><br>
+A. 자동으로는 바뀌지 않습니다. 설치 스크립트는 서버를 켜고 자동 실행을 등록할 뿐, Chrome의 설정을 직접 바꾸지 않습니다. <code>chrome://settings/onStartup</code>(시작 그룹)에서 이 페이지 주소를 직접 추가해야 합니다. 크롬의 "새 탭 페이지" 자체를 이 화면으로 완전히 대체하려면 별도의 확장 프로그램이 필요합니다.</p>
+<p><strong>Q. 다른 컴퓨터에서도 접속할 수 있나요(휴대폰, 다른 PC)?</strong><br>
+A. 안 됩니다(의도된 동작입니다). 서버가 <code>127.0.0.1</code>(이 컴퓨터 자기 자신)에만 연결을 받도록 만들어져 있어, 같은 와이파이의 다른 기기에서도 접속이 되지 않습니다. 이는 보안을 위한 설계입니다.</p>
+<p><strong>Q. 데이터를 다른 컴퓨터로 옮기고 싶어요.</strong><br>
+A. 설정 → 데이터 탭 → "내보내기(JSON)"로 백업 파일을 받은 뒤, 새 컴퓨터에 설치를 마치고 같은 화면에서 "가져오기"로 불러오면 됩니다. 또는 <code>data/</code> 폴더 전체를 복사해서 옮겨도 됩니다.</p>
+<p><strong>Q. Node.js가 뭔지 몰라도 되나요?</strong><br>
+A. Windows는 몰라도 됩니다 — 설치 스크립트가 필요하면 알아서 받아줍니다. Mac은 최초 1회 Node.js를 직접 설치해야 합니다(<a href="#requirements">3장</a> 참고). 그 이후로는 다시 신경 쓸 일이 없습니다.</p>
+<p><strong>Q. 실수로 지운 북마크나 할 일을 복구할 수 있나요?</strong><br>
+A. 네. 삭제 후 바로라면 <code>Ctrl+Z</code>(실행취소), 시간이 좀 지났다면 설정 → 데이터 탭의 휴지통(30일 보관)에서 복구할 수 있습니다.</p>
+<p><strong>Q. 업데이트는 어떻게 하나요?</strong><br>
+A. 이 프로젝트는 자동 업데이트 확인 기능이 없습니다. 최신 버전을 새로 받아 기존 폴더의 <code>data/</code> 폴더만 그대로 옮기거나 덮어써서 유지하면 됩니다(설치 스크립트도 실행 전 자동으로 안전 백업을 만듭니다).</p>
+
+<h2 id="license">18. 법률 / 저작권 / 라이선스 / 상업적 용도</h2>
+<blockquote>아래 내용은 이해를 돕기 위한 요약이며, <strong>법적으로 정확한 기준은 프로젝트에 포함된 <code>LICENSE</code> 파일 원문</strong>입니다. 상업적 활용 등 중요한 의사결정 전에는 원문을 직접 확인하시기 바랍니다.</blockquote>
+<h3>18.1 라이선스 원문 (MIT License, 그대로 인용)</h3>
+<pre><code>MIT License
+
+Copyright (c) 2026 소담 AI 스튜디오
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</code></pre>
+<h3>18.2 쉬운 말로 풀이</h3>
+<table>
+<tr><th>항목</th><th>내용</th></tr>
+<tr><td>라이선스 종류</td><td>MIT License (오픈소스 라이선스 중 가장 관대한 축)</td></tr>
+<tr><td>저작권자</td><td>소담 AI 스튜디오 (Sodam AI Studio), 2026년</td></tr>
+<tr><td><strong>상업적 이용</strong></td><td>✅ <strong>허용됩니다.</strong> 이 소프트웨어를 그대로, 혹은 수정해서 회사/개인 사업에 쓰거나, 유료 제품/서비스의 일부로 포함하거나, 재판매하는 것까지 전부 가능합니다</td></tr>
+<tr><td><strong>수정</strong></td><td>✅ 허용. 코드를 자유롭게 고쳐서 써도 됩니다</td></tr>
+<tr><td><strong>재배포</strong></td><td>✅ 허용. 원본이든 수정본이든 다른 사람에게 다시 배포해도 됩니다</td></tr>
+<tr><td><strong>의무 사항 (지켜야 할 것)</strong></td><td>⚠️ 소프트웨어 원본 또는 상당 부분을 배포할 때, 위 저작권 고지("Copyright (c) 2026 소담 AI 스튜디오")와 라이선스 전문을 <strong>함께 포함</strong>해야 합니다</td></tr>
+<tr><td><strong>보증</strong></td><td>❌ <strong>없음.</strong> "있는 그대로(AS IS)" 제공되며, 특정 목적에 적합하다거나 오류가 없다는 보증을 하지 않습니다</td></tr>
+<tr><td><strong>책임 제한</strong></td><td>❌ 저작권자는 이 소프트웨어의 사용으로 발생하는 어떠한 손해·클레임에 대해서도 법적 책임을 지지 않습니다</td></tr>
+<tr><td><strong>상표권</strong></td><td>이 라이선스는 코드에 대한 권리이며, "Chrome"은 Google LLC의 상표입니다. 이 프로젝트는 Google과 관련이 없는 비공식 개인 프로젝트입니다</td></tr>
+</table>
+<h3>18.3 요약 한 줄</h3>
+<p><strong>"저작권 고지만 유지하면, 개인이든 회사든 마음대로 쓰고 고치고 팔아도 되지만, 문제가 생겨도 만든 사람은 책임지지 않는다"</strong> — 이것이 MIT 라이선스의 핵심입니다.</p>
+
+</div>
+</body>
+</html>

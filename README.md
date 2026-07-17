@@ -1,833 +1,618 @@
-<p align="center">
-  <img src="assets/icon-512.svg" width="80" alt="Dashboard icon">
-</p>
+# Chrome Starting Page Dashboard
 
-<h1 align="center">Chrome Starting Page Dashboard</h1>
+**내 컴퓨터에서만 돌아가는, 개인정보 유출 없는 크롬 새 탭(시작 페이지) 대시보드**
 
-<p align="center">
-  <strong>Your personal homepage that lives on your computer -- beautiful, private, and truly yours.</strong>
-</p>
+- 버전: `v7.3.0` (2026-07-17 기준)
+- 라이선스: MIT (상업적 이용 가능)
+- 실행 환경: Windows 10/11, macOS
+- 필요 프로그램: Node.js `>= 18.0.0` (그 외 외부 라이브러리 0개)
+- 저장소: <https://github.com/sodam-ai/chrome-starting-page>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/version-7.3-blue?style=flat-square" alt="Version 7.3">
-  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Linux-lightgrey?style=flat-square" alt="Platform">
-  <img src="https://img.shields.io/badge/dependencies-zero-brightgreen?style=flat-square" alt="Zero Dependencies">
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT License">
-  <img src="https://img.shields.io/badge/data-100%25%20local-orange?style=flat-square" alt="100% Local Data">
-  <img src="https://img.shields.io/badge/coding-not%20required-purple?style=flat-square" alt="No Coding Required">
-</p>
-
-<p align="center">
-  <a href="README.ko.md">한국어 버전 (Korean)</a>
-</p>
+> 이 문서는 컴퓨터 사용에 어느 정도 익숙한 분을 위한 **표준 레퍼런스 문서**입니다. 컴퓨터/터미널이 정말 처음이라 한 걸음씩 손을 잡고 안내받고 싶다면 [`GUIDE.md`](./GUIDE.md)(왕초보 가이드)를 먼저 읽어보세요. 두 문서는 다루는 내용은 같고, 설명의 친절함/상세도만 다릅니다. English speakers: see [`README.en.md`](./README.en.md).
 
 ---
 
-## What Is This?
+## <a id="toc"></a>목차
 
-Every time you open your web browser (a program like Google Chrome that lets you visit websites), it shows a **start page** (the first page you see when the browser opens). Usually, that is just Google's search page or something the browser chose for you.
-
-**This project replaces that page with your own custom dashboard** -- a beautiful, personal homepage where you can organize your bookmarks (favorite websites), write notes, manage to-do lists, track habits, and more.
-
-The dashboard runs as a tiny **server** (a small program running quietly in the background on your computer, like a helpful assistant waiting for requests). It uses something called **Node.js** (explained later in the Requirements section) as its engine. Your data stays private -- nothing is ever sent to any company or server on the internet. You do not need to know how to code. You do not need to install complicated software. Just run one setup file, and you are done.
-
-> **Three key points:**
-> - **No coding knowledge required** -- double-click one file and the installation is done (this includes people who only use natural language or "vibe coding" to build software)
-> - **Your data stays on your computer only** -- nothing is ever sent to any external server
-> - **No extra software to install** -- it downloads what it needs and runs independently
-
----
-
-## Preview
-
-> Replace these placeholders with actual screenshots of your dashboard.
-
-| Dark Theme | Light Theme |
-|:----------:|:-----------:|
-| ![Dark theme screenshot](https://via.placeholder.com/600x380?text=Dark+Theme+Screenshot) | ![Light theme screenshot](https://via.placeholder.com/600x380?text=Light+Theme+Screenshot) |
-
-| Bookmarks & Cards | Settings Panel |
-|:------------------:|:--------------:|
-| ![Bookmarks screenshot](https://via.placeholder.com/600x380?text=Bookmarks+and+Cards) | ![Settings screenshot](https://via.placeholder.com/600x380?text=Settings+Panel) |
+1. [프로젝트 한눈에 보기](#overview)
+2. [사전 준비물](#prerequisites)
+3. [필요 프로그램](#requirements)
+4. [다운로드 방법](#download)
+5. [설치 방법](#install)
+6. [빠른 시작](#quickstart)
+7. [실행 방법](#run)
+8. [사용 방법](#usage)
+9. [작동 방법 (동작 원리)](#howitworks)
+10. [명령어 모음](#commands)
+11. [업데이트 내용 요약](#changelog)
+12. [파일 / 문서 위치](#files)
+13. [워크플로우](#workflow)
+14. [아키텍처](#architecture)
+15. [보안 / 데이터 흐름](#security)
+16. [문제 / 오류 대처 방법](#troubleshooting)
+17. [FAQ (자주 묻는 질문)](#faq)
+18. [법률 / 저작권 / 라이선스 / 상업적 용도](#license)
 
 ---
 
-## Features
+## <a id="overview"></a>1. 프로젝트 한눈에 보기
 
-### :bookmark_tabs: Bookmarks & Organization
+Chrome Starting Page Dashboard는 크롬(Chrome) 브라우저의 "새 탭" 또는 "시작 페이지"를 대체하는 **개인용 대시보드**입니다. 다음 기능을 한 화면에서 씁니다.
 
-- **Bookmark cards** -- group your favorite websites into neat categories (Work, Social, Shopping, etc.)
-- **Multiple pages** -- split bookmarks across separate tabs when one page is not enough (e.g., "Work", "Personal", "Study")
-- **Unified search** -- search your bookmarks, notes, to-dos, and events all at once with one keystroke
-- **Smart paste** -- copy a website address (URL) and press Ctrl+V anywhere on the page; a category picker appears automatically
-- **Drag and drop** -- drag links from Chrome's address bar directly onto a card
-- **Dead link detection** -- automatically finds bookmarks that no longer work
-- **Multi-select** -- hold Ctrl and click to select several bookmarks at once, then move or delete them together
-- **Pin to top** -- pin your most important bookmarks so they always appear at the top of their card
+- 카테고리별 북마크(즐겨찾기) 카드 — 드래그로 정렬, 아이콘 자동 표시, 죽은 링크 감지
+- 메모(노트) 카드 — 여러 개 만들기, 간단한 마크다운(굵게/링크/코드) 지원
+- 할 일(To-do) 목록 — 우선순위, 마감일, 반복 일정, 태그, 칸반 보드
+- 캘린더 — 월/주 보기, 반복 일정, 알림
+- 뽀모도로(Pomodoro) 타이머 — 25분 집중/5분 휴식 자동 반복
+- 습관 트래커 — 매일 체크, 연속 기록(스트릭)
+- 통합 검색(Spotlight, `F` 키) — 북마크·할 일·메모를 한 번에 검색 + 명령어 실행
 
-### :mag: Search
+**가장 중요한 특징 3가지**
 
-- **Web search** -- type in the search bar at the top and press Enter to search the web
-- **Multi-search engine** -- switch between Google, YouTube, Naver, and others with one click
-- **Unified search (Spotlight)** -- press `F` to search bookmarks, to-dos, notes, and calendar events all at once
-- **Korean initial consonant search** -- type just the first consonants (e.g., "ㄴㅇㅂ") and matching bookmarks like "네이버" appear
-- **Keyword shortcuts** -- type `yt cats` to search YouTube for "cats" directly
-- **Command mode** -- in unified search, type `>settings`, `>theme`, `>timer`, etc. to run commands instantly
-
-### :white_check_mark: Productivity Tools
-
-- **To-do list** -- tasks with priority levels (high / medium / low), tags, due dates, and recurring schedules; drag to reorder; completed items automatically move to the bottom
-- **Notes** -- create as many note cards as you need for simple text notes (multiple cards supported)
-- **Calendar** -- monthly or weekly view with event creation and browser notifications
-- **Pomodoro timer** -- a 25-minute focus timer with optional automatic 5-minute breaks (auto-session continues cycles)
-- **Habit tracker** -- daily checklist that resets every midnight
-
-### :art: Appearance & Customization
-
-- **Dark / Light theme** -- switch with one click (with a smooth circle transition animation), or automatically follow your computer's setting
-- **6 accent colors** -- blue, purple, rose, emerald, amber, cyan
-- **Custom backgrounds** -- upload your own images; with 1 image it stays fixed, with 2 or more they become a slideshow (ON/OFF toggle, adjustable interval, manual previous/next buttons)
-- **Glass-morphism UI** -- adjustable card transparency (blur slider) and opacity (opacity slider) for a modern frosted-glass look
-- **Layout presets** -- 4 types: Default, Compact, Wide, or Magazine
-- **Custom CSS** -- for advanced users who want to write their own styling rules
-
-### :cloud: Weather & Clock
-
-- **Weather widget** -- shows current weather for your city using [OpenWeatherMap](https://openweathermap.org/api) (requires a free API key -- explained below)
-- **World clock** -- display multiple time zones at the top of the dashboard (e.g., New York, London, Tokyo)
-
-### :calendar: D-Day Countdown
-
-- Track important dates with "D-7", "D-3", "D-Day", "D+1" style countdowns
-- Displayed at the top of the dashboard for quick reference
-- Past dates show how many days have passed
-
-### :keyboard: Keyboard Shortcuts
-
-| Key | What it does |
-|-----|-------------|
-| `/` | Move cursor to the search bar |
-| `F` | Open unified search (bookmarks + to-dos + notes + events) |
-| `S` | Open settings |
-| `E` | Toggle edit mode (shows card management buttons) |
-| `1` through `9` | Jump to the 1st, 2nd, ... 9th card |
-| `Esc` | Close any open popup or modal |
-| `Ctrl+Z` | Undo the last action (delete, move, etc.) |
-
-### :shield: Safety & Privacy
-
-- **100% local** -- your data never leaves your computer; no accounts, no cloud, no tracking
-- **Automatic backups** -- the server creates backups on a smart retention schedule, keeping up to 50 files
-- **Full export / import** -- download everything (bookmarks, notes, settings, icons, backgrounds) as one JSON, Markdown, or HTML file
-- **Trash with undo** -- accidentally deleted something? Press Ctrl+Z to bring it back (10-level undo stack -- you can undo up to 10 actions in a row)
-- **Localhost only** -- the server only listens on `127.0.0.1` (your computer); nobody else on your network can access it
-- **Zero dependencies** -- the server uses only built-in features of Node.js; nothing extra to download or update
-- **Offline support** -- the dashboard works even without an internet connection (except weather)
-- **Profiles** -- save and switch between different dashboard setups
-- **Backup list and restore UI** -- browse all your backups with dates and sizes, and restore any one with a single click
-- **Import preview** -- before applying an import, see a summary of exactly how many bookmarks, notes, and other items will be imported
-- **Tab sync** -- if you have the dashboard open in multiple browser tabs, changes sync instantly between them (uses BroadcastChannel API)
+1. **100% 로컬(Local-first)** — 이 프로그램은 여러분의 컴퓨터 안에서만 실행되는 작은 웹 서버(`server.js`)와, 그 서버가 돌려주는 화면(`index.html`)으로 이루어져 있습니다. 북마크·메모·할 일 등 모든 데이터는 이 프로젝트 폴더 안 `data/` 폴더에 JSON 파일로만 저장됩니다. 클라우드 서버나 회원가입, 로그인이 전혀 없습니다.
+2. **외부 의존성 0개** — `package.json`에 `dependencies` 항목이 아예 없습니다. Node.js에 기본으로 들어있는 기능만으로 서버를 만들었습니다. `npm install`이 필요 없습니다.
+3. **MIT 라이선스 — 상업적 이용 가능** — 이 소프트웨어는 개인, 팀, 회사 어디서든 무료로 쓰고, 고치고, 재배포하고, 판매할 수 있습니다. 자세한 조건은 [18. 법률/저작권/라이선스/상업적 용도](#license)를 확인하세요.
 
 ---
 
-## Requirements
+## <a id="prerequisites"></a>2. 사전 준비물
 
-> "Requirements" means the things you need before you can start.
+설치를 시작하기 전에 아래 항목을 확인하세요.
 
-| What | Why | How to get it |
-|------|-----|---------------|
-| **A computer** | Windows 10/11, macOS, or Linux | You probably already have this |
-| **Google Chrome** (or any browser) | To view the dashboard | [Download Chrome](https://www.google.com/chrome/) |
-| **Internet connection** | Only needed for the first-time setup | After setup, the dashboard works offline |
-| **Node.js** | A small program that runs the dashboard in the background | **Windows:** the setup file downloads it for you automatically. **Mac/Linux:** install from [nodejs.org](https://nodejs.org) |
+| 항목 | 필요 여부 | 비고 |
+|---|---|---|
+| Windows 10/11 또는 macOS | 필수 | Linux는 공식 설치 스크립트가 없지만, Node.js가 있으면 `node server.js`로 수동 실행은 가능합니다 |
+| 디스크 여유 공간 | 최소 약 100MB | Windows에서 Node.js를 새로 받는 경우 포터블 Node.js(약 30MB)까지 포함한 여유분 |
+| Google Chrome 브라우저 | 권장 | 다른 브라우저(Edge, Whale 등)에서도 페이지 자체는 동일하게 열립니다. "크롬 새 탭으로 지정"하는 안내만 Chrome 기준입니다 |
+| 터미널/명령 프롬프트 사용 경험 | 권장(필수 아님) | Windows는 `.bat` 파일을 더블클릭만 해도 설치가 끝나므로 터미널을 몰라도 됩니다. Mac은 터미널에서 명령어 한 줄을 입력해야 합니다 |
+| 인터넷 연결 | 설치 시 1회만 필요할 수 있음 | Windows에서 Node.js가 이미 없으면 설치 스크립트가 자동으로 내려받습니다. 설치가 끝난 뒤 평소 사용은 인터넷 없이도 대부분 동작합니다(글꼴/파비콘/날씨 등 일부만 예외, [15장](#security) 참고) |
+| (선택) OpenWeatherMap 계정 | 선택 | 날씨 위젯을 쓰고 싶을 때만 필요한 무료 API 키. 없어도 나머지 기능은 전부 정상 작동합니다 |
 
-> **What is Node.js?** Think of it as a tiny engine that powers the dashboard behind the scenes. If the dashboard is a "car", Node.js is the "engine" that makes it go. It runs quietly in the background and uses very little memory (about 15 MB -- less than a single browser tab). On Windows, the setup file (`setup_windows.bat`) downloads a portable copy of Node.js automatically, so you do not need to install anything yourself. If Node.js is already installed on your system, it will use that; if not, it downloads a private copy just for this project.
-
----
-
-## Installation
-
-### :computer: Windows (Easiest -- No Coding Needed)
-
-> **Time needed:** About 2-5 minutes.
-
-**Step 1: Download the project**
-
-Download this project folder and place it anywhere you like.
-
-Example: `C:\Users\YourName\Dashboard`
-
-> Your Desktop, Documents folder, or any location is fine. Just avoid system folders like `C:\Windows` or `C:\Program Files`. Remember: if you delete this folder later, the dashboard goes with it, so put it somewhere safe.
-
-**Step 2: Run the setup**
-
-Open the folder and find the file called **`setup_windows.bat`**. It has a gear-like icon and looks like a small script file. **Double-click** it.
-
-A black window (called "Command Prompt" -- a text-based way to give instructions to your computer) will appear with progress messages:
-1. It checks if Node.js (the engine) is already on your computer
-2. If not, it automatically downloads a portable copy (~30 MB -- this only happens once)
-3. If Node.js is already installed system-wide, it uses that instead
-4. The dashboard server starts in the background (no visible window)
-5. Auto-start is registered so it launches every time you turn on your computer
-
-Wait until you see **"Setup Complete!"** -- then the black window is safe to close.
-
-**Step 3: Open it in Chrome**
-
-Open Chrome and type this address in the **address bar** (the long text box at the very top of the browser window where you normally see website addresses):
-
-```
-http://localhost:1111
-```
-
-Then press **Enter**.
-
-> **What does `localhost:1111` mean?** "localhost" means "this computer" -- you are telling Chrome to look at your own computer instead of the internet. "1111" is the **port** number (think of it as a door number -- explained more in the Settings section).
-
-**You are done!** From now on, the dashboard starts automatically every time you turn on your computer -- no popups, no extra windows.
-
-<details>
-<summary>What does setup_windows.bat actually do? (click to read)</summary>
-
-1. Checks if you already have data and creates a safety backup first (`safety-before-setup.json`)
-2. Downloads a portable copy of Node.js into the `node/` folder (if not already there and no system Node.js is found)
-3. Stops any previously running dashboard server
-4. Registers auto-start so the dashboard launches when you log in (no admin rights needed)
-5. Starts the server silently in the background (no visible window)
-
-It does NOT install anything system-wide. It does NOT modify your Windows settings beyond a single auto-start entry. Everything stays inside the project folder.
-
-</details>
+> **환경 변수(environment variables)**: 이 프로젝트는 `.env` 파일이나 환경 변수를 전혀 사용하지 않습니다. 포트 번호는 `port.conf` 파일로, 날씨 API 키는 화면의 설정(⚙ 설정 → 일반) 안에서 직접 관리합니다. 별도의 환경변수 설정 단계가 없습니다.
 
 ---
 
-### :apple: Mac
+## <a id="requirements"></a>3. 필요 프로그램
 
-> **Time needed:** About 3 minutes. You will need to type a few commands.
+| 프로그램 | 최소 버전 | Windows | macOS |
+|---|---|---|---|
+| Node.js | `>= 18.0.0` | 없으면 `setup_windows.bat`가 **자동으로** 포터블 버전(`v22.19.0`, win-x64)을 `https://nodejs.org`에서 내려받아 프로젝트 폴더 안 `node\` 폴더에 설치합니다. 시스템에 Node.js가 이미 있으면 그걸 그대로 사용합니다 | **자동 설치되지 않습니다.** `setup_mac.sh`는 `which node`로 시스템에 Node.js가 있는지만 확인하고, 없으면 오류를 내고 멈춥니다. 아래 방법 중 하나로 먼저 설치하세요 |
+| Git (선택) | 아무 버전 | GitHub에서 `git clone`으로 받을 때만 필요. ZIP 다운로드만 할 거라면 불필요 | 위와 동일 |
 
-**Step 1: Install Node.js**
+**Mac에서 Node.js를 직접 설치하는 방법 (택 1)**
 
-Go to [nodejs.org](https://nodejs.org) and click the big green button on the website. Follow the instructions to install it.
+- 공식 사이트에서 설치: <https://nodejs.org> → "LTS" 버전 다운로드 → 설치 파일 실행
+- Homebrew 사용: 터미널에서 `brew install node` 실행 (Homebrew가 없다면 <https://brew.sh> 참고)
 
-**Step 2: Open Terminal**
+설치 후 터미널에서 `node -v`를 입력했을 때 `v18.0.0` 이상 숫자가 나오면 준비 완료입니다.
 
-You need to open an app called **Terminal** (a text-based window where you type commands to control your computer -- think of it as talking to your computer by typing instead of clicking):
+---
 
-- Press `Cmd + Space` on your keyboard (this opens Spotlight search)
-- Type `Terminal` and press Enter
-- A window with a text prompt will appear -- this is where you type commands
+## <a id="download"></a>4. 다운로드 방법
 
-**Step 3: Navigate to the project folder**
+두 가지 경우 중 해당하는 방법을 따르세요.
 
-Type the following command and press Enter. This tells Terminal to "go to" the folder where you put the project:
+### A. GitHub 저장소에서 받는 경우
 
+- 저장소 주소: **<https://github.com/sodam-ai/chrome-starting-page>**
+
+**방법 1 — ZIP으로 받기 (Git을 몰라도 됨, 초보자 추천)**
+1. 위 주소로 접속
+2. 초록색 **"Code"** 버튼 클릭 → **"Download ZIP"** 클릭
+3. 내려받은 `chrome-starting-page-main.zip` 파일 압축 해제
+4. 원하는 위치(예: `문서` 폴더나 `D:\` 드라이브)로 폴더 이동
+
+**방법 2 — `git clone`으로 받기**
 ```bash
-cd ~/Dashboard
+git clone https://github.com/sodam-ai/chrome-starting-page.git
+cd chrome-starting-page
 ```
 
-> Replace `~/Dashboard` with the actual path to where you put the project folder. The `cd` command means "change directory" (go to a folder). The `~` symbol means your home folder.
+### B. 폴더(ZIP 파일)를 직접 전달받은 경우
 
-**Step 4: Give the setup file permission to run**
-
-```bash
-chmod +x setup_mac.sh
-```
-
-> The `chmod` command gives the setup file permission to run. Mac requires this step for security.
-
-**Step 5: Run the setup**
-
-```bash
-./setup_mac.sh
-```
-
-> The `./` prefix means "run this file in the current folder".
-
-**Step 6: Open it in Chrome**
-
-Open Chrome and go to:
-
-```
-http://localhost:1111
-```
-
-**Step 7: Done!**
-
-The dashboard will auto-start every time you log in. You can close Terminal now.
+1. 전달받은 파일이 `.zip`이면 압축 해제 프로그램(Windows 기본 압축 풀기, Mac Finder 등)으로 압축 해제
+2. 압축을 풀어 나온 폴더를 원하는 위치로 이동/복사
+3. 폴더 안에 `index.html`, `server.js`, `package.json`이 보이면 정상적으로 받은 것입니다 → [5. 설치 방법](#install)으로 이동
 
 ---
 
-### :penguin: Linux
+## <a id="install"></a>5. 설치 방법
 
-1. Install Node.js from [nodejs.org](https://nodejs.org) or your package manager (e.g., `sudo apt install nodejs`)
-2. Open a **terminal** (a text window for typing commands -- most Linux systems open it with `Ctrl+Alt+T`)
-3. Navigate to the project folder and run the server:
+### 🪟 Windows
+
+1. 다운로드한 폴더를 엽니다.
+2. `setup_windows.bat` 파일을 **더블클릭**합니다. (관리자 권한 필요 없음, 시스템 파일을 건드리지 않습니다)
+3. 검은 화면(명령 프롬프트 창)이 열리고 아래 순서로 자동 진행됩니다.
+
+| 단계 | 스크립트가 하는 일 |
+|---|---|
+| 1 | 기존에 쓰던 데이터(`data\bookmarks.json` 등)가 있으면 안전하게 백업(`data\backups\safety-before-setup.json`) 후 진행. 처음 설치라면 `data\`, `data\backups\`, `data\icons\`, `data\profiles\`, `assets\` 폴더를 새로 만듭니다 |
+| 2 | Node.js 확인: 포터블 Node(`node\node.exe`) → 시스템 Node 순서로 찾고, 둘 다 없으면 `nodejs.org`에서 포터블 버전(v22.19.0)을 자동 다운로드 |
+| 3 | 혹시 이미 실행 중인 이전 서버가 있다면 안전하게 종료 |
+| 4 | 로그인 시 자동 실행되도록 등록 (Windows 레지스트리의 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` 항목 1개 추가. 실패 시 시작프로그램 폴더에 바로가기 생성) |
+| 5 | 서버를 창 없이(숨김 상태로) 시작 |
+
+4. 완료 메시지에 실제 접속 주소(기본 `http://localhost:1111`, 포트가 사용 중이면 자동으로 1112, 1113…으로 바뀔 수 있음)가 표시됩니다.
+5. 이 안내창은 확인만 하고 닫아도 됩니다 — 서버는 뒤에서 계속 실행됩니다.
+
+> **참고**: 이 설치 과정은 Windows 로그인 자동 시작 항목 1개를 추가하는 것 외에는 어떤 시스템 파일도, Chrome의 정책/레지스트리도 건드리지 않습니다. Chrome을 이 페이지로 여는 설정은 사용자가 직접 해야 하며, 이는 자동화되어 있지 않습니다([6. 빠른 시작](#quickstart) 4단계 참고).
+
+### 🍎 macOS
+
+1. Node.js가 없다면 [3장](#requirements) 안내대로 먼저 설치하세요.
+2. **터미널**(Terminal.app)을 엽니다.
+3. 프로젝트 폴더로 이동합니다.
    ```bash
-   cd ~/Dashboard
-   node server.js
+   cd ~/Downloads/chrome-starting-page   # 실제 폴더 위치에 맞게 수정
    ```
-4. Open Chrome and go to `http://localhost:1111`
+4. 설치 스크립트를 실행합니다.
+   ```bash
+   bash setup_mac.sh
+   ```
+5. 스크립트가 하는 일: `com.dashboard.startpage.plist`라는 자동 시작 설정 파일을 만들어 `~/Library/LaunchAgents/`에 등록하고(`launchctl load`), 서버를 바로 시작합니다. 이 방식은 **컴퓨터를 다시 켜도 자동 시작**되고, **서버가 죽으면 자동으로 다시 살아납니다**(`KeepAlive` 설정, Windows에는 없는 기능).
+6. 완료 메시지에 접속 주소(`http://localhost:1111` 등)가 표시됩니다.
 
-<details>
-<summary>Set up auto-start with systemd (click to read)</summary>
+---
 
-**systemd** is a tool built into most Linux systems that can automatically start programs when your computer boots. Create a systemd "service" so the dashboard starts automatically:
+## <a id="quickstart"></a>6. 빠른 시작
 
-```bash
-sudo tee /etc/systemd/system/dashboard.service << EOF
-[Unit]
-Description=Chrome Starting Page Dashboard
-After=network.target
+이미 위 단계를 다 아는 분을 위한 요약입니다.
 
-[Service]
-Type=simple
-User=$USER
-WorkingDirectory=$HOME/Dashboard
-ExecStart=$(which node) server.js
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-sudo systemctl enable dashboard
-sudo systemctl start dashboard
+```text
+1) 다운로드   → GitHub ZIP 또는 git clone, 혹은 전달받은 폴더 압축 해제
+2) 설치       → Windows: setup_windows.bat 더블클릭 / Mac: bash setup_mac.sh
+3) 접속       → 브라우저 주소창에 http://localhost:1111 입력
+4) (선택) Chrome 새 탭으로 지정
+   Chrome 우측 상단 점 3개 → 설정 → 시작 그룹 → "특정 페이지 열기"
+   → http://localhost:1111 추가
+   (크롬 "새 탭 페이지" 자체를 완전히 바꾸려면 확장 프로그램이 필요하며,
+    이 프로젝트는 크롬 설정을 자동으로 바꾸지 않습니다 — 직접 설정하는 항목입니다)
 ```
 
-> Replace `$HOME/Dashboard` with the actual path to your project folder if different.
+---
 
-</details>
+## <a id="run"></a>7. 실행 방법
+
+설치 스크립트를 한 번 실행하면 **로그인할 때마다 자동으로 서버가 켜지므로**, 평소에는 아래 명령어를 직접 칠 일이 거의 없습니다. 아래는 수동으로 다루고 싶을 때를 위한 방법입니다.
+
+| 상황 | Windows | macOS |
+|---|---|---|
+| 수동으로 한 번 실행 | 프로젝트 폴더에서 `npm start` 또는 `node server.js` | 터미널에서 `npm start` 또는 `node server.js` |
+| 다른 포트로 실행 | `node server.js 8080` | `node server.js 8080` |
+| 창 없이 백그라운드 실행 | `run_server_background.bat` 더블클릭 | (LaunchAgent가 이미 담당) |
+| 재시작 (껐다 켜기) | `restart.bat` 더블클릭 | `launchctl unload` 후 `launchctl load ~/Library/LaunchAgents/com.dashboard.startpage.plist` |
+| 완전 종료 | `uninstall.bat` 실행 또는 작업 관리자에서 `node.exe` 종료 | `uninstall_mac.sh` 실행 |
+
+설정 화면(⚙ 설정 → 데이터 탭)에서도 포트 변경과 서버 재시작을 버튼 클릭만으로 할 수 있습니다.
 
 ---
 
-## How to Use
+## <a id="usage"></a>8. 사용 방법
 
-### Setting It as Your Chrome Start Page
+### 8.1 검색 & 통합 검색(Spotlight)
+- 화면 상단 검색창에 입력 후 Enter — 기본 검색엔진(Google/Naver/YouTube 등, 설정에서 변경 가능)으로 이동
+- 검색어 앞에 단축 키워드를 붙이면 해당 서비스로 바로 검색: `yt 고양이` → YouTube 검색, `nv 날씨` → 네이버 검색, `gh react` → GitHub 검색 (기본 키워드: `yt`, `nv`, `gh`, `g`, `tw`, `map`, 설정에서 변경 가능)
+- `F` 키를 누르면 **Spotlight** 통합 검색창이 뜨며 북마크·할 일·메모·디데이를 한 번에 검색합니다. 한글 초성 검색도 지원(예: `ㄴㅇㅂ` → "네이버")
+- Spotlight에서 `>`로 시작하는 명령어 입력 가능: `>todo`, `>timer 15`, `>focus 업무`, `>add 이름 URL`, `>habit`, `>today`, `>kanban`, `>layout`, `>settings`, `>theme`, `>export`
 
-This makes the dashboard appear every time you open Chrome:
+### 8.2 북마크
+- 카테고리별 카드에 북마크 추가/수정/삭제, 드래그로 순서 변경, 다른 카테고리·다른 페이지로 드래그 이동
+- 우클릭(컨텍스트 메뉴): 상단 고정, 수정, 새 탭에서 열기, 카테고리 전체 열기, 페이지 이동, 삭제
+- 브라우저 주소창의 URL을 그대로 드래그해서 카드에 놓으면 바로 추가됨
+- 링크를 복사한 상태에서 `Ctrl+V`(붙여넣기) → 어느 카테고리에 넣을지 묻는 팝업
+- 30일 이내 추가한 항목엔 "NEW" 표시, 자주/최근 방문한 북마크는 자동으로 위로 정렬(설정에서 켜고 끌 수 있음)
+- 끊긴 링크(죽은 링크)는 자동으로 감지되어 표시됨(연속 3회 실패 시)
+- 삭제한 항목은 휴지통에 30일간 보관되며 복구 가능
 
-1. Open Chrome
-2. Type `chrome://settings/onStartup` in the address bar and press **Enter**
-3. Select **"Open a specific page or set of pages"**
-4. Click **"Add a new page"**
-5. Type `http://localhost:1111` and click **Add**
+### 8.3 메모(노트)
+- 카드마다 독립된 메모장, 여러 개 생성 가능, 이름 변경(더블클릭)
+- 자동 링크 감지(URL을 적으면 클릭 가능한 링크가 됨), 간단한 마크다운(`**굵게**`, `` `코드` ``, `[글자](주소)`) 미리보기 지원
 
-> Now every time you open Chrome, your dashboard will greet you.
+### 8.4 할 일(To-do)
+- 여러 개의 독립된 할 일 카드, 우선순위(4단계), 마감일, 태그, 하위 작업(서브태스크)
+- 반복 할 일(매일/평일/매주/매달) 지원
+- 칸반 보드 보기 / 전체 목록 보기 전환 가능(펼쳐보기 버튼)
+- 완료율 100% 달성 시 축하 효과(컨페티) 표시, 연속 완료 스트릭 기록
 
-### Setting It as Your New Tab Page (Optional)
+### 8.5 캘린더
+- 월간/주간 보기 전환
+- 일정 클릭 추가, `!`를 앞에 붙이면 일정 대신 할 일로 추가됨
+- 반복 일정(매주/격주/매달), 브라우저 알림 권한을 허용하면 일정 10분 전 알림
 
-If you also want to see the dashboard when you open a **new tab** (not just when Chrome starts):
+### 8.6 뽀모도로 타이머 & 습관 트래커
+- 25분 집중 → 5분 휴식(4회마다 15분 긴 휴식) 자동 반복 옵션, 특정 할 일에서 바로 타이머 시작 가능
+- 최근 7일 집중 통계 차트
+- 습관 트래커: 설정에서 줄바꿈으로 습관 목록 입력 → 매일 체크박스로 기록, 연속 기록(스트릭) 표시
 
-1. Install the free Chrome extension [New Tab Redirect](https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna)
-2. Set the redirect URL to `http://localhost:1111`
+### 8.7 화면 꾸미기 (⚙ 설정 → 외관)
+- 다크/라이트 테마 수동 전환 또는 "시스템 설정 따르기"
+- 강조 색상 6종(블루/퍼플/로즈/에메랄드/앰버/시안)
+- 배경 이미지 업로드(여러 장 슬라이드쇼, 1분~24시간 간격 설정), 유리(glass) 효과 3단계, 흐림/불투명도 조절
+- 레이아웃 4종(기본/컴팩트/와이드/매거진), 사용자 지정 CSS 삽입(보안 검사 후 적용, [15장](#security) 참고)
 
----
+### 8.8 설정 화면 구성 (5개 탭)
+| 탭 | 내용 |
+|---|---|
+| 일반 | 세계시계, 검색엔진, 사용 빈도 정렬, 테마 모드, 강조 색상, 단축키 관리, 날씨 API 키 |
+| 외관 | 배경 이미지/슬라이드쇼, 오버레이 밝기, 블러/유리 효과, 카드 투명도, 사용자 CSS, 모션 줄이기 |
+| 위젯 | 디데이 목록, 페이지 관리, 카드 크기/색상, 캘린더 옵션, 뽀모도로 자동 반복, 습관 목록, 레이아웃, 검색 키워드 단축어 |
+| 데이터 | JSON/마크다운/HTML 내보내기·가져오기, 자동 백업 주기, 백업 찾아보기/복원, 중복 북마크 찾기, 프로필 관리, 휴지통, 포트 변경·서버 재시작 |
+| 통계 | 할 일 완료 스트릭, 90일 사용량 히트맵, 뽀모도로 차트, 가장 많이 클릭한 북마크 Top 10, 카테고리별 클릭 도넛 차트 |
 
-### Basic Usage Guide
+### 8.9 키보드 단축키
 
-| What you want to do | How to do it |
-|----------------------|--------------|
-| **Add a bookmark** | Type or paste a URL in the input box at the bottom of any card, press Enter |
-| **Add by dragging** | Drag a URL from Chrome's address bar and drop it on a card |
-| **Add by pasting** | Copy a URL, then press Ctrl+V anywhere on the page -- a category picker appears |
-| **Rename a bookmark** | Double-click on a bookmark's name |
-| **Edit a bookmark** | Right-click on a bookmark > "Edit" |
-| **Delete a bookmark** | Hover over a bookmark and click the X button (you can undo with Ctrl+Z) |
-| **Reorder bookmarks** | Drag a bookmark up or down within a card |
-| **Move to another card** | Drag a bookmark from one card to another |
-| **Move to another page** | Right-click on a bookmark > "Move to another page" |
-| **Pin a bookmark to top** | Right-click on a bookmark > "Pin to top" |
-| **Select multiple** | Hold Ctrl and click several bookmarks, then use the action bar |
-| **Add a new card** | Click the **"+ Add Card"** button at the bottom of the page |
-| **Open settings** | Press the `S` key or click the settings icon |
-
-### Pages
-
-If you have many bookmarks, split them across multiple **pages** (like having separate tabs for "Work", "Personal", "Study"):
-
-- **Add a page:** Settings > Widgets > Page Management > "+ Add Page"
-- **Switch pages:** Click the tabs at the top of the dashboard
-- **Move a category to another page:** In edit mode (press `E`), click the page button on a card's title bar
-- **Move a bookmark to another page:** Right-click on a bookmark > "Move to another page"
-
-### Cards
-
-Your dashboard is made of **cards**. Each card serves a different purpose. Think of them like different sections on your desk -- one for links, one for notes, one for tasks, and so on.
-
-| Card | What it does |
-|------|-------------|
-| **Bookmarks** | A collection of links organized by category |
-| **Notes** | Simple text notes -- create as many note cards as you need |
-| **To-do** | Task list with priority levels, tags, due dates, recurring tasks, and drag-to-sort |
-| **Calendar** | Monthly or weekly calendar view with event creation |
-| **Pomodoro** | A 25-minute focus timer with auto-session (press play to start) |
-| **Habits** | Daily habit checklist that resets every midnight |
-
-To add a new card, click the **"+ Add Card"** button at the bottom of the page. In edit mode (press `E`), you can also change a card's width by clicking the size button on the card.
-
-### Search Features
-
-| What you want to do | How to do it |
-|----------------------|--------------|
-| **Search the web** | Type in the search bar at the top and press Enter |
-| **Change search engine** | Click the icon to the left of the search bar (Google, YouTube, Naver, etc.) |
-| **Search everything at once** | Press the `F` key -- searches bookmarks, to-dos, notes, and events together |
-| **Korean initial consonant search** | Type just the first consonants (e.g., "ㄴㅇㅂ") and matching bookmarks appear |
-| **Keyword shortcuts** | Type `yt cats` to search YouTube for "cats" directly |
-| **Run commands** | In unified search, type `>settings`, `>theme`, `>timer`, etc. |
+| 키 | 동작 | 변경 가능 여부 |
+|---|---|---|
+| `/` | 검색창 포커스 | 설정에서 변경 가능 |
+| `E` | 편집 모드 켜기/끄기 | 설정에서 변경 가능 |
+| `S` | 설정 열기 | 설정에서 변경 가능 |
+| `F` | Spotlight 통합 검색 열기 | 설정에서 변경 가능 |
+| `?` | 단축키 안내창 표시 | 설정에서 변경 가능 |
+| `1`~`9` | 해당 순서 카테고리로 이동 | 고정 |
+| `Ctrl/Cmd + Z` | 방금 한 작업 되돌리기(실행취소) | 고정 |
+| `Esc` | 열려 있는 창/검색창 닫기 | 고정 |
+| `Tab` / `Shift+Tab` | 북마크 카드 간 이동, `Enter`로 열기 | 고정 |
 
 ---
 
-## Settings & Customization
+## <a id="howitworks"></a>9. 작동 방법 (동작 원리)
 
-### Changing the Port Number
+한 문장 요약: **브라우저(화면)가 내 컴퓨터 안의 작은 서버에게 "저장해줘/불러와줘"라고 요청하고, 서버는 그 내용을 `data/` 폴더의 JSON 파일에 그대로 쓰고 읽습니다.**
 
-> **What is a "port"?** Think of it like a door number on a building. Your computer has thousands of these "doors", and each program uses a different one. The dashboard uses door number 1111 by default. If another program is already using that door, you need to pick a different number.
-
-The dashboard runs on port `1111` by default. To change it:
-
-| Method | How |
-|--------|-----|
-| **From the dashboard** (easiest) | Settings > Data > Server Management > enter new port > click "Change" |
-| **Double-click a file** | Run `set-port.bat`, type a number (e.g., `8080`), press Enter |
-| **Edit a text file** | Create or edit `port.conf` in the project folder, write just the number inside |
-| **Command line** | Run `node server.js 8080` |
-
-> After changing the port, update your Chrome start page address too (e.g., `http://localhost:8080`).
-
-### Themes and Appearance
-
-| Setting | How to change it |
-|---------|-----------------|
-| **Dark / Light theme** | Click the moon/sun icon at the top of the dashboard (smooth circle transition) |
-| **Follow your OS theme** | Settings > General > Theme Mode > "Follow OS" |
-| **Accent color** | Settings > General > Accent Color (6 choices: blue, purple, rose, emerald, amber, cyan) |
-| **Glass effect** | Settings > Appearance > adjust card blur (blur slider) and opacity (opacity slider) |
-| **Layout** | Settings > Appearance > Layout (Default / Compact / Wide / Magazine) |
-| **Custom CSS** | Settings > Appearance > Custom CSS (for advanced users) |
-
-### Background Images
-
-| What you set | What happens |
-|-------------|-------------|
-| **1 image** | The image stays fixed as your background |
-| **2 or more images** | Slideshow mode becomes available with ON/OFF toggle, adjustable interval (1 minute to 24 hours), and manual previous/next buttons |
-
-How to set backgrounds:
-
-1. Go to **Settings > Appearance > Background Images**
-2. Click **"Add Images"** to upload pictures from your computer
-3. If you uploaded 2 or more images, a slideshow toggle appears -- turn it ON or OFF as you like
-4. When slideshow is ON, choose a rotation interval (1 minute to 24 hours) and use the manual previous/next buttons anytime
-5. Click **"Reset All"** to go back to the default background
-
-### Weather Widget
-
-1. Go to **Settings > General > Weather**
-2. Get a free API key from [OpenWeatherMap](https://openweathermap.org/api) (sign up for a free account -- it takes 1 minute)
-3. Paste the API key and type your city name (e.g., "Seoul", "New York")
-4. Choose Celsius or Fahrenheit
-
-### World Clock
-
-1. Go to **Settings > General > World Clock**
-2. Click **"+ Add Clock"**
-3. Enter a label (e.g., "New York") and select the timezone
-
-### D-Day Countdown
-
-- Go to **Settings > Widgets > D-Day** to add important dates
-- Shows "D-7", "D-3", "D-Day", "D+1", etc. at the top of the dashboard
-- Past dates show how many days have passed
+1. **처음 열면**: 브라우저가 `http://localhost:포트번호/`에 접속 → 서버가 `index.html`, `style.css`, `script.js`를 내려줌 → 화면 스크립트가 곧바로 `/api/bookmarks`, `/api/notes`, `/api/config` 등 자기 자신의 서버에 데이터를 요청해서 화면을 채웁니다.
+2. **뭔가 바꾸면(북마크 추가, 할 일 체크 등)**: 화면은 0.3~1초 정도 기다렸다가(짧은 시간 내 여러 번 바뀌는 걸 한 번에 모아 저장하기 위함) 서버에 저장 요청을 보냅니다. 서버는 임시 파일에 먼저 쓰고 이름을 바꾸는 방식(원자적 쓰기)으로 파일이 도중에 깨지는 것을 막습니다.
+3. **인터넷/서버 연결이 끊기면**: 화면 좌측 상단에 "오프라인 모드" 배너가 뜨고, 바뀐 내용은 브라우저의 `localStorage`(임시 보관함)에 저장해 두었다가, 연결이 돌아오면 자동으로 서버에 다시 저장합니다. 데이터가 사라지지 않습니다.
+4. **여러 탭을 열어두면**: 한 탭에서 저장하면 `BroadcastChannel`이라는 브라우저 기능으로 다른 탭에도 "새로고침 해!"라는 신호를 보내 화면이 서로 어긋나지 않게 맞춰줍니다.
+5. **오프라인에서도 화면이 뜨는 이유**: 서비스워커(`sw.js`)가 정적 파일(`index.html`, `style.css`, `script.js`) 4개를 미리 저장해 두기 때문입니다. 단, 저장된 데이터를 다루는 `/api/...` 요청은 절대 캐시하지 않고 항상 실시간으로 서버와 통신합니다.
+6. **서버가 스스로 관리하는 것들**: 부팅 시 데이터 파일이 깨졌는지 검사해서 자동으로 백업본에서 복구, 하루(기본값)에 한 번 자동 백업, 30일 넘은 백업 자동 정리(최대 50개까지만 보관), 포트가 이미 사용 중이면 자동으로 다음 포트(1112, 1113…)로 재시도.
 
 ---
 
-## Data Safety
+## <a id="commands"></a>10. 명령어 모음
 
-### Where is my data stored?
+| 명령어 / 파일 | 실행 위치 | 설명 |
+|---|---|---|
+| `npm start` | 프로젝트 폴더 | `node server.js`와 동일. 기본 포트(1111 또는 `port.conf` 값)로 서버 실행 |
+| `node server.js` | 프로젝트 폴더 | 서버를 화면(터미널)이 보이는 상태로 실행 |
+| `node server.js <포트번호>` | 프로젝트 폴더 | 지정한 포트로 실행 (예: `node server.js 8080`) |
+| `setup_windows.bat` | Windows, 더블클릭 | 최초 설치: Node 확인/설치, 자동 시작 등록, 서버 시작 |
+| `bash setup_mac.sh` | macOS 터미널 | 최초 설치: LaunchAgent 등록, 서버 시작 |
+| `run_server_background.bat` | Windows, 더블클릭 | 창 없이 서버만 다시 시작 (자동 시작 등록은 건드리지 않음) |
+| `restart.bat` | Windows, 더블클릭 | 실행 중인 서버를 안전하게 종료 후 재시작 |
+| `set-port.bat` | Windows, 더블클릭 | 실행하면 새 포트 번호를 물어봄 (대화형) |
+| `set-port.bat 8080` | Windows, 명령 프롬프트 | 포트를 8080으로 바로 저장 (재시작해야 적용) |
+| `uninstall.bat` | Windows, 더블클릭 | 서버 종료, 자동 시작 등록 해제, 데이터 삭제 여부 선택(Y/N), 로그 파일 정리 |
+| `uninstall_mac.sh` | macOS 터미널 (`bash uninstall_mac.sh`) | 서버 종료, LaunchAgent 해제, 데이터 삭제 여부 선택, 로그 파일 정리 |
 
-All your data lives in the `data/` folder inside the project. This folder is **never deleted** by setup, restart, or update scripts. Nothing is ever sent to any external server.
-
-Think of it like keeping a diary in your desk drawer -- it stays in your folder on your computer, and only you can see it.
-
-### Automatic Backups
-
-The server automatically creates backups on a smart retention schedule. You do not need to do anything.
-
-| Time range | How many backups are kept |
-|-----------|--------------------------|
-| Last 7 days | Every backup is kept |
-| Days 8 through 30 | One backup per day |
-| Older than 30 days | Automatically removed |
-| Maximum total | 50 backup files |
-
-Backups are stored in `data/backups/`.
-
-### Backup List and Restore
-
-You can browse and restore any backup directly from the dashboard:
-
-1. Go to **Settings > Data**
-2. You will see a **list of all backups** with their dates and file sizes
-3. Click **"Restore"** next to any backup to restore your dashboard to that exact point in time
-
-This is useful if you accidentally deleted something or changed your settings and want to go back.
-
-### Manual Export and Import
-
-| Action | Steps |
-|--------|-------|
-| **Export as JSON** (save everything to one file) | Press `S` > Data tab > click "Export" > a file downloads containing all your bookmarks, notes, settings, icons, backgrounds, and profiles |
-| **Export as Markdown** | Press `S` > Data tab > choose Markdown format |
-| **Export as HTML** | Press `S` > Data tab > choose HTML format |
-| **Import** (restore from a file) | Press `S` > Data tab > click "Import" > select your backup file > see a **preview** showing exactly how many bookmarks, notes, to-dos, and other items will be imported > confirm to apply |
-| **Quick restore (drag and drop)** | Drag and drop any backup JSON file directly onto the dashboard page |
-
-> **Import preview:** Before any import is applied, you will see a summary screen showing the count of each type of item (e.g., "42 bookmarks, 5 notes, 12 to-dos"). This lets you verify the file is correct before overwriting your current data.
-
-> Save your export file to a USB drive or cloud storage (like Google Drive) for extra safety.
-
-### Moving to Another Computer
-
-1. On the old computer: **Export** your data (Settings > Data > Export)
-2. Copy the downloaded file to the new computer (USB, email, cloud drive -- anything works)
-3. On the new computer: set up the dashboard, then **Import** the file (Settings > Data > Import)
-4. Done -- your dashboard looks exactly the same
-
-> **Alternative method:** Copy the entire `data/` folder from the old computer and paste it into the same location inside the project folder on the new computer.
-
-### What Happens on Reinstall?
-
-Running `setup_windows.bat` again will:
-
-1. **Create a safety backup** of your current data first (saved as `safety-before-setup.json` in the backups folder)
-2. **Keep all your existing data untouched** -- nothing is deleted
-3. **Re-register auto-start** so the dashboard launches on boot
-4. **Restart the server** with the latest files
-
-Your bookmarks, notes, to-dos, and settings will still be there. Nothing is lost.
+> `start_hidden.vbs`는 사용자가 직접 실행하는 파일이 아니라, Windows 자동 시작 등록이 내부적으로 사용하는 파일입니다.
 
 ---
 
-## Updating to a New Version
+## <a id="changelog"></a>11. 업데이트 내용 요약
 
-When a new version is released:
-
-1. **Export your data first** (Settings > Data > Export) -- just to be extra safe
-2. **Replace the project files** with the new version (overwrite the old files with the new ones)
-   - Your `data/` folder will not be overwritten because it contains your personal data -- **do not touch or delete it**
-3. **Run `setup_windows.bat`** (or `setup_mac.sh` on Mac) again, or double-click `restart.bat`
-4. Your data is preserved automatically
+버전별 주요 변경 사항입니다. 각 항목을 클릭하면 펼쳐집니다. (출처: `CHANGELOG.md`, 최신 버전이 맨 위)
 
 <details>
-<summary>If the page looks broken after updating (click to fix)</summary>
+<summary><strong>v7.3 (2025-03-19) — 배경 슬라이드쇼, 데이터 안전장치, 보안 강화</strong></summary>
 
-This is caused by your browser remembering old files (called "cache" -- a temporary storage area where the browser keeps copies of pages it has visited before). To fix it:
+- 배경 이미지 여러 장 슬라이드쇼(간격 1분~24시간, 수동 이전/다음, 페이드 전환)
+- 북마크 상단 고정, 카드를 페이지 탭으로 드래그해서 이동
+- 할 일 카드 드래그 정렬
+- 데이터 안전: 부팅 시 JSON 9종 무결성 검사 + 백업 자동 복구, 백업 목록/복원 UI, 가져오기 미리보기, 내보내기 완료 토스트, 10단계 실행취소
+- 서버 안정성: 포트 자동 대체(1111→1112…1120), 새로 시작할 때 기존 서버 자동 종료, 오래된 PID 파일 정리, 이중 시작 버그 수정, `.bat/.vbs` 줄바꿈(CRLF) 인코딩 문제 수정
+- 네트워크: 재연결 시도 간격 15초→5초 단축 + 토스트 알림, 오프라인 배너, 여러 탭 동기화(에코 루프 방지 포함), 서비스워커 30분마다 업데이트 확인
+- 접근성/UX: 키보드 포커스 스타일, 8개 항목 aria-label 추가, 인쇄용 스타일시트, 모바일(768px) 반응형 레이아웃
+- 보안: 가져오기 경로에서 `..`/`~` 상위 경로 탈출 차단, Windows 대소문자 우회 차단, 사용자 지정 CSS에서 `expression()`/`javascript:`/외부 `@import`/`behavior:` 등 위험 패턴 차단
+- 문서/메타: README·CHANGELOG·package.json·manifest 정비 (단, 이후 이 저장소에서 README 파일 자체가 유실되어 현재 문서 세트로 새로 작성됨)
 
-1. Press `Ctrl+Shift+Delete` in Chrome
-2. Check "Cached images and files" and set the time range to "Last hour"
-3. Click "Clear data"
-4. Reload the page (`Ctrl+R` or `F5`)
+</details>
+
+<details>
+<summary><strong>v7.2 — 할 일 카드 다중화</strong></summary>
+
+- 여러 개의 독립된 할 일 카드 생성, 카드별 제목/이름변경/삭제, 카드 간 드래그 이동
+
+</details>
+
+<details>
+<summary><strong>v7.1 — 카드형 메모, 위젯 표시/숨김</strong></summary>
+
+- 메모를 여러 개의 독립 카드로 관리(제목/줄 수/드래그 정렬), 굵게·코드·링크 마크다운 미리보기
+- 할 일/캘린더/습관 카드 표시·숨김 전환, 실행취소로 복구
+
+</details>
+
+<details>
+<summary><strong>v7.0 — 습관 트래커, 레이아웃 프리셋, 뽀모도로 자동 반복</strong></summary>
+
+- 습관 트래커(매일 체크, 자정 초기화)
+- 레이아웃 4종(기본/컴팩트/와이드/매거진)
+- 뽀모도로 자동 반복(25분 집중 → 5분 휴식), 검색 키워드 단축어(`yt 고양이`, `nv 날씨`, `gh react`)
+- 일정 10분 전 알림, 카테고리 강조 색상
+- 유리(glass) 효과 3단계, 블러 0~40px 조절, 시간대별 배경 색조 변화
+
+</details>
+
+<details>
+<summary><strong>v6.0 — 캘린더, 뽀모도로, 프로필 관리, 통합 검색</strong></summary>
+
+- 캘린더 카드(월/주 보기), 뽀모도로 타이머, 여러 설정을 프로필로 저장/전환
+- 다중 선택(Ctrl+클릭) 일괄 이동/삭제, 더블클릭 이름 변경, 포커스 모드
+- 스마트 붙여넣기(`Ctrl+V` → 카테고리 선택), 주소창 URL 드래그 추가, JSON 드래그 가져오기
+- 통합 Spotlight 검색(`F` 키), 한글 초성 검색, `>명령어` 모드
+- 할 일 연속 완료 기록, 죽은 링크 감지(3회 실패), 주간 리포트, 오프라인 대기열
+
+</details>
+
+<details>
+<summary><strong>v5.0 — 다중 페이지, 디데이, 세계시계, 날씨</strong></summary>
+
+- 여러 페이지(탭)로 구분(예: 업무/개인/공부), 디데이 카운트다운, 세계시계, 날씨 위젯(OpenWeatherMap)
+- 시스템 설정 따라가는 자동 테마, 강조 색상 6종, 사용자 CSS 삽입
+- 서버: 원자적 쓰기, 보관기간 정책이 있는 자동 백업, 포트/재시작 API, 헬스체크 API, 에러 로그 10MB 제한 회전
+
+</details>
+
+<details>
+<summary><strong>v4.0 — 카테고리 정렬, 휴지통, 실행취소</strong></summary>
+
+- 카테고리 드래그 정렬/접기·펼치기, 카드 크기 조절, 우클릭 메뉴, "NEW" 배지(7일)
+- 휴지통(30일 복구), `Ctrl+Z` 5초 실행취소 토스트
+- 서버: 파일 업로드 파서 직접 구현, 아이콘/배경 이미지 업로드, 동시 저장 충돌 방지 잠금
+
+</details>
+
+<details>
+<summary><strong>v3.0 — 할 일 우선순위/반복, 메모</strong></summary>
+
+- 할 일 우선순위(상/중/하), 마감일, 태그, 반복(매일/매주/격주/매달), 하위 작업
+- 메모/노트 카드(자동 링크 감지)
+- 서버: 휴지통 API(30일 정리), 사용량 추적 API, 뽀모도로 통계 API
+
+</details>
+
+<details>
+<summary><strong>v2.0 — 다크/라이트 테마, 검색엔진 전환</strong></summary>
+
+- 다크/라이트 테마 전환(원형 애니메이션), 유리 질감 UI, 커스텀 단축키
+- 다중 검색엔진(Google/Naver/YouTube), 사용 빈도 기반 정렬
+- 서버: gzip 압축, ETag 캐싱, 메모리 캐시, 정상 종료 처리(마지막 백업 포함)
+
+</details>
+
+<details>
+<summary><strong>v1.0 — 최초 릴리스</strong></summary>
+
+- Node.js 내장 모듈만 사용하는 HTTP 서버(외부 의존성 0개)
+- 카테고리별 북마크 카드(드래그 정렬)
+- 포트 설정 가능(`port.conf`/명령줄 인자/화면 UI), `127.0.0.1` 전용 바인딩
+- 오프라인 지원(서비스워커), Windows 자동 시작(레지스트리+숨김 실행), Mac 자동 시작(LaunchAgent)
+- Windows용 포터블 Node.js 다운로드 옵션(시스템 설치 불필요)
+- PID 기반 프로세스 관리(다른 프로그램을 건드리지 않고 안전하게 재시작)
+- `data/` 폴더에 JSON 파일 기반 저장
 
 </details>
 
 ---
 
-## Uninstalling (Clean Removal)
+## <a id="files"></a>12. 파일 / 문서 위치
 
-### Windows (Recommended)
+프로젝트 최상위 폴더(예: `D:\Test_Dev\test9\Chrome_Starting-Page\` 또는 여러분이 옮긴 위치) 기준입니다.
 
-1. Double-click **`uninstall.bat`**
-2. It will automatically:
-   - Stop the server
-   - Remove auto-start from Windows Registry and Startup folder
-   - Ask if you want to keep or delete your data (you choose)
-   - Clean up log files and temporary files
-3. After that, you can safely delete the entire project folder
-4. In Chrome, go to `chrome://settings/onStartup` and remove the localhost entry
-
-No traces left on your system. No other programs are affected. This program does not modify system files, so deleting the folder is all it takes for a clean removal.
-
-### Mac
-
-The easiest way: open Terminal, navigate to the project folder, and run the uninstall script:
-
-```bash
-cd ~/Dashboard
-chmod +x uninstall_mac.sh
-./uninstall_mac.sh
+```text
+chrome-starting-page/
+├── README.md            ← 이 문서 (국문 레퍼런스)
+├── README.en.md         ← 영문 레퍼런스
+├── GUIDE.md              ← 국문 왕초보 가이드
+├── GUIDE.en.md           ← 영문 왕초보 가이드
+├── README.html / README.en.html / GUIDE.html / GUIDE.en.html  ← 위 4개 문서의 브라우저용 버전(내용 동일)
+├── CHANGELOG.md          ← 버전별 변경 이력 원본
+├── LICENSE               ← MIT 라이선스 원문
+├── package.json          ← 프로젝트 정보, 실행 스크립트, Node.js 최소 버전
+├── manifest.webmanifest  ← PWA(앱처럼 설치) 설정
+├── index.html            ← 화면 구조
+├── script.js              ← 화면 동작 로직 (프론트엔드)
+├── style.css               ← 디자인/테마
+├── sw.js                    ← 서비스워커(오프라인 캐시)
+├── server.js               ← 로컬 서버 (백엔드, Node.js)
+├── port.conf                ← 현재 사용 포트 번호 (기본 1111)
+├── .server.pid               ← 실행 중인 서버의 PID/포트 기록 (자동 생성/삭제)
+├── setup_windows.bat / setup_mac.sh   ← 설치 스크립트
+├── restart.bat / run_server_background.bat / set-port.bat / start_hidden.vbs  ← Windows 운영 스크립트
+├── uninstall.bat / uninstall_mac.sh   ← 제거 스크립트
+├── data/                      ← ★ 모든 사용자 데이터가 저장되는 곳
+│   ├── bookmarks.json / notes.json / config.json / todos.json
+│   ├── ddays.json / events.json / usage.json / trash.json / pomo-stats.json
+│   ├── backups/                ← 자동/수동 백업 JSON
+│   ├── icons/                    ← 업로드한 북마크 아이콘
+│   └── profiles/                  ← 저장한 설정 프로필
+└── assets/                       ← 아이콘(icon-192.svg 등), 업로드한 배경 이미지
 ```
 
-The script will stop the server, remove auto-start, and ask if you want to keep or delete your data.
+---
 
-<details>
-<summary>Manual uninstall (if you prefer)</summary>
+## <a id="workflow"></a>13. 워크플로우
 
-Open Terminal and run these commands:
+사용자 입장에서 이 프로그램과 함께하는 하루/설치 흐름은 다음과 같습니다.
 
-```bash
-launchctl unload ~/Library/LaunchAgents/com.dashboard.startpage.plist
-rm ~/Library/LaunchAgents/com.dashboard.startpage.plist
+```text
+[최초 1회]
+  다운로드 → 설치 스크립트 실행 → 자동 시작 등록 완료
+       ↓
+[그 이후, 매일]
+  컴퓨터 켜기
+       ↓ (Windows: 레지스트리 Run 키 / Mac: LaunchAgent가 자동으로 서버 실행)
+  서버가 조용히 백그라운드에서 대기 (창 없음)
+       ↓
+  Chrome에서 새 탭 열기 또는 http://localhost:1111 접속
+       ↓
+  대시보드 화면 표시 → 북마크/할 일/메모/캘린더 등 평소처럼 사용
+       ↓ (사용 중 변경사항은 0.3~1초 debounce 후 자동 저장)
+  서버가 data/*.json에 저장 (원자적 쓰기 + 자동 백업)
+       ↓
+[컴퓨터 끄기]
+  서버 프로세스도 함께 종료 (정상 종료 시 마지막 백업 1회 수행)
 ```
 
-Then delete the project folder.
+문제가 생겨 되돌리고 싶을 때의 흐름:
 
-</details>
-
-### Linux
-
-Open a terminal and run these commands:
-
-```bash
-sudo systemctl stop dashboard
-sudo systemctl disable dashboard
-sudo rm /etc/systemd/system/dashboard.service
-sudo systemctl daemon-reload
+```text
+데이터가 이상해짐
+   → 설정 → 데이터 탭 → 백업 목록에서 원하는 시점 선택 → 복원
+   (또는) 서버 자체가 부팅 시 자동으로 무결성 검사를 하므로
+   파일이 깨져 있었다면 재시작만 해도 자동 복구되는 경우가 많음
 ```
-
-Then delete the project folder.
-
-> After uninstalling on any platform, go to `chrome://settings/onStartup` in Chrome and remove the localhost entry.
 
 ---
 
-## Troubleshooting
+## <a id="architecture"></a>14. 아키텍처
 
-<details>
-<summary><strong>The page will not open ("This site can't be reached")</strong></summary>
+```text
+┌───────────────────────────┐        HTTP (127.0.0.1:포트)        ┌──────────────────────────────┐
+│   브라우저 (Chrome 등)      │ ───────────────────────────────▶  │  로컬 서버 (server.js, Node)   │
+│                            │                                    │                                │
+│  index.html                │ ◀─────────────────────────────── │  Node 내장 http 모듈만 사용        │
+│  script.js  (화면 로직)      │       정적 파일 + /api/* 응답        │  외부 npm 패키지 0개               │
+│  style.css                  │                                    │  127.0.0.1 전용 바인딩(외부 차단)   │
+│  sw.js (서비스워커, 정적 캐시)  │                                    │  포트: port.conf → CLI 인자 → 1111 │
+│  localStorage (오프라인 캐시)  │                                    └───────────────┬────────────────┘
+└───────────────────────────┘                                                     │
+                                                                                    ▼
+                                                                     ┌───────────────────────────┐
+                                                                     │   data/*.json  (파일 저장)   │
+                                                                     │   원자적 쓰기 + 쓰기 잠금       │
+                                                                     │   자동 백업 (data/backups/)   │
+                                                                     └───────────────────────────┘
+```
 
-1. Double-click `restart.bat` to restart the server
-2. Make sure the address is `http://localhost:1111` -- not "https" (no "s"), just "http"
-3. If you changed the port, use the correct number (e.g., `http://localhost:8080`)
-4. Check if Node.js is working: open Command Prompt (press the Windows key, type `cmd`, press Enter), type `node -v`, and press Enter. You should see a version number like `v22.19.0`
-   - If you see a version number, Node.js is fine -- try running `setup_windows.bat` again
-   - If you see "not recognized as a command", run `setup_windows.bat` again to re-download Node.js
-
-</details>
-
-<details>
-<summary><strong>"Port already in use" error</strong></summary>
-
-Another program on your computer is already using that port number (door number).
-
-How to fix:
-1. Double-click `set-port.bat` and choose a different number (e.g., `2222`, `8080`, or `9999`)
-2. Double-click `restart.bat` to restart the server
-3. Update your Chrome start page address to match the new port (e.g., `http://localhost:8080`)
-
-</details>
-
-<details>
-<summary><strong>Bookmark icons are not showing</strong></summary>
-
-Icons are automatically downloaded from the internet. If they are missing:
-- You need an internet connection for icons to load the first time
-- Some websites do not provide icons -- you will see the first two letters of the site name instead
-- The system tries 4 different sources automatically before giving up
-- If your internet is connected but icons still do not appear, wait a while and they will be retried automatically
-
-</details>
-
-<details>
-<summary><strong>Data is not saving ("Save failed" message)</strong></summary>
-
-1. The server might have stopped -- double-click `restart.bat`
-2. Check that the `data/` folder exists inside the project folder
-3. If the folder does not exist, create an empty folder named `data`
-4. Make sure the folder is not set to "read-only" (right-click the project folder > Properties > uncheck "Read-only")
-
-</details>
-
-<details>
-<summary><strong>The page looks broken after an update</strong></summary>
-
-Your browser is using old cached files. To fix:
-1. Press `Ctrl+Shift+Delete` in Chrome
-2. Check "Cached images and files" and set the time range to "Last hour"
-3. Click "Clear data"
-4. Reload the page (`Ctrl+R` or `F5`)
-
-</details>
-
-<details>
-<summary><strong>The server does not auto-start after reboot</strong></summary>
-
-- **Windows:** Run `setup_windows.bat` again to re-register auto-start
-- **Mac:** Run `./setup_mac.sh` again
-- **Linux:** Run `sudo systemctl enable dashboard`
-
-</details>
-
-<details>
-<summary><strong>I want to restart the server</strong></summary>
-
-Two ways:
-- **From the dashboard:** Settings > Data > "Restart Server" button
-- **From your files:** Double-click `restart.bat`
-
-Both methods safely stop only the dashboard server. Other programs on your computer are never affected.
-
-</details>
-
-<details>
-<summary><strong>A black window briefly appears on startup</strong></summary>
-
-Normally, the server starts invisibly in the background and no window should appear. If you see a brief black window (Command Prompt) every time you start your computer:
-
-1. Run `setup_windows.bat` again
-2. This re-registers the auto-start correctly so the server runs in the background without any visible window
-
-</details>
-
-<details>
-<summary><strong>I want to move data to another computer</strong></summary>
-
-**Method 1 (recommended):**
-1. On the old computer: Settings > Data > **Export** -- save the JSON file
-2. On the new computer: install the dashboard, then Settings > Data > **Import** -- select the file
-
-**Method 2 (manual copy):**
-- Copy the entire `data/` folder from the old computer and paste it into the same location inside the project folder on the new computer
-
-</details>
+- **프론트엔드**: 순수 HTML/CSS/JavaScript(프레임워크 없음). 모든 상태는 서버의 `/api/*`를 통해 읽고 쓰며, 실패 시에만 `localStorage`를 임시 캐시로 사용합니다.
+- **백엔드**: Node.js 내장 `http` 모듈로 만든 단일 프로세스 서버. 데이터베이스가 없고, 모든 데이터는 JSON 파일입니다.
+- **자동화 계층**: Windows 레지스트리 Run 키 또는 macOS LaunchAgent가 "컴퓨터 켜면 서버도 켜지게" 만들어 줍니다. 이 계층은 순수하게 OS 수준의 "프로그램 자동 실행" 기능이며, Chrome 자체를 건드리지 않습니다.
+- **오프라인 계층**: 서비스워커(`sw.js`)가 정적 파일 4종만 캐시하고, `/api/*` 요청은 항상 네트워크 우선으로 서버와 직접 통신합니다.
 
 ---
 
-## File Structure
+## <a id="security"></a>15. 보안 / 데이터 흐름
 
-> Here is what each file in the project does. You do not need to understand all of this -- it is here for reference.
+### 15.1 이 프로그램이 접속하는 곳 (전수 목록)
 
-```
-Chrome_Starting-Page/
-│
-│  === Setup & Management Tools ===
-├── setup_windows.bat ........... One-click setup for Windows (double-click this!)
-├── setup_mac.sh ................ One-click setup for Mac
-├── restart.bat ................. Restart the server if something is wrong
-├── uninstall.bat ............... Clean removal tool (Windows)
-├── uninstall_mac.sh ............ Clean removal tool (Mac)
-├── set-port.bat ................ Change the port number
-├── start_hidden.vbs ............ Helper that starts the server invisibly
-├── run_server_background.bat ... Helper for running server in background
-│
-│  === The Dashboard Itself ===
-├── server.js ................... The server (the engine that powers everything)
-├── index.html .................. Page structure (the skeleton of the dashboard)
-├── style.css ................... Visual design (colors, fonts, layout, animations)
-├── script.js ................... Dashboard logic (what happens when you click)
-├── sw.js ....................... Offline support (works without internet)
-├── manifest.webmanifest ........ Browser app configuration
-├── package.json ................ Project metadata (name, version)
-│
-│  === Auto-Generated (do not edit) ===
-├── port.conf ................... Your custom port number
-├── .server.pid ................. Server process info
-│
-│  === Your Files ===
-├── assets/ ..................... Background images and app icons
-│   ├── icon-192.svg              App icon (small)
-│   ├── icon-512.svg              App icon (large)
-│   └── background_custom.jpg     Your custom background
-│
-└── data/ ....................... YOUR DATA (the most important folder!)
-    ├── bookmarks.json              Your bookmarks
-    ├── config.json                 Your settings
-    ├── notes.json                  Your notes
-    ├── todos.json                  Your to-do items
-    ├── events.json                 Your calendar events
-    ├── ddays.json                  Your D-Day countdown dates
-    ├── usage.json                  Usage statistics
-    ├── trash.json                  Deleted items (recoverable)
-    ├── icons/                      Cached bookmark icons
-    ├── profiles/                   Saved profiles
-    └── backups/                    Automatic backup files
-        └── safety-before-setup.json    Pre-setup safety backup
-```
+| 목적지 | 언제 호출되나 | 왜 필요한가 |
+|---|---|---|
+| `fonts.googleapis.com`, `fonts.gstatic.com` (Google Fonts) | 화면을 열 때마다 항상 | 한글/영문 글꼴(IBM Plex Sans KR, JetBrains Mono) 표시용 |
+| `google.com/s2/favicons`, `icons.duckduckgo.com`, `icon.horse`, 북마크한 사이트 자체의 `/favicon.ico` | 북마크 카드가 화면에 보일 때(스크롤 도달 시) | 북마크 아이콘을 예쁘게 보여주기 위한 4단계 대체 경로 |
+| `api.openweathermap.org` | **사용자가 설정에서 날씨 API 키를 직접 입력했을 때만** | 날씨 위젯. 키를 넣지 않으면 이 요청 자체가 발생하지 않음 |
+| 사용자가 등록한 북마크의 실제 주소 | 30초 후 및 주기적으로 (죽은 링크 검사, 설정에서 끌 수 있음) | 북마크가 아직 살아있는 사이트인지 확인(사이트에 `HEAD` 요청만 보냄) |
+| 검색창에 입력 후 검색 실행 시 Google/Naver/YouTube 등 | 사용자가 직접 검색할 때만 | 일반적인 브라우저 검색과 동일한 동작 |
 
-> The `data/` folder contains all your personal data. Keep this folder safe and you can always restore your dashboard.
+**이 목록이 전부입니다.** 코드 전체를 조사한 결과, 사용자 동의 없이 자동으로 실행되는 광고/분석/추적(telemetry) 코드나, 개발자에게 사용 데이터를 보내는 "전화 걸기(phone-home)" 기능은 **없습니다.** 유일하게 있는 자동 인터넷 접속은 Windows 설치 스크립트가 Node.js가 없을 때 **딱 1회** `nodejs.org`의 공식 배포 파일을 받는 것뿐입니다.
+
+### 15.2 서버(`server.js`) 자체의 보안 특징
+
+- **`127.0.0.1`(localhost)에만 연결을 받습니다** — 같은 와이파이/네트워크에 있는 다른 컴퓨터나 휴대폰에서는 이 서버에 절대 접속할 수 없습니다.
+- 서버가 스스로 외부 인터넷에 나가는 요청은 **없습니다.** 유일한 "네트워크 통신"은 재시작할 때 자기 자신의 이전 실행 인스턴스에게(역시 `127.0.0.1`로) "종료해줘" 신호를 보내는 것뿐입니다.
+- **인증(로그인)이 없습니다.** 개인용 단일 사용자 로컬 도구이기 때문입니다. 즉, 같은 컴퓨터에서 실행되는 다른 프로그램이 이 서버의 포트에 접속하면 데이터를 읽거나 쓸 수 있다는 뜻이므로, 신뢰할 수 없는 프로그램을 함께 실행하는 컴퓨터에서는 주의가 필요합니다.
+- 파일 경로 조작(`../` 같은 상위 폴더 접근) 시도를 차단하는 안전장치가 파일 업로드/가져오기/내보내기 경로마다 적용되어 있습니다.
+- 사용자 지정 CSS는 `expression()`, `javascript:` 주소, 외부 `@import`, `behavior:` 같은 위험한 패턴을 걸러낸 뒤에만 적용됩니다.
+- 업로드 요청 크기는 10MB로 제한되어 있어 비정상적으로 큰 요청은 자동 차단됩니다.
+
+### 15.3 내 데이터는 어디에 있나요?
+
+전부 이 프로젝트 폴더 안 `data/` 폴더의 일반 텍스트(JSON) 파일입니다. 클라우드에 올라가지 않고, 다른 컴퓨터와 자동 동기화되지 않습니다. 폴더째로 복사하면 그대로 다른 컴퓨터로 옮길 수 있고, 폴더를 지우면 데이터도 함께 사라집니다(그래서 자동 백업 기능이 있습니다).
 
 ---
 
-<details>
-<summary><h2>Technical Details (for curious readers)</h2></summary>
+## <a id="troubleshooting"></a>16. 문제 / 오류 대처 방법
 
-If you are a developer or just curious about how this works under the hood:
-
-### Architecture
-
-```
-Chrome Browser  <--HTTP-->  Local Node.js Server (port 1111)  <--Read/Write-->  JSON files on disk
-                                  (server.js)                                     (data/*.json)
-```
-
-The server is a single-file HTTP server using only Node.js built-in modules. No npm packages are used. The frontend is a single-page application with no build tools or transpilation needed.
-
-| Item | Detail |
-|------|--------|
-| **Server** | Node.js using only built-in modules (`http`, `fs`, `path`, `zlib`, `crypto`) -- no `npm install` required |
-| **Frontend** | Plain HTML + CSS + JavaScript -- no frameworks, no build step, no transpilation |
-| **Default port** | 1111 (configurable via `port.conf`, command-line argument, dashboard UI, or `set-port.bat`) |
-| **Binding** | `127.0.0.1` only -- cannot be accessed from other computers on your network |
-| **Data storage** | Local JSON files in the `data/` directory |
-
-### Performance
-
-| Item | Detail |
-|------|--------|
-| **Compression** | Gzip for HTML, CSS, JS, JSON, SVG, and webmanifest |
-| **Caching** | SHA-256 ETag + in-memory file cache with 5-minute TTL |
-| **Offline support** | Service Worker pre-caches critical files |
-| **Memory usage** | ~15 MB at idle |
-| **Max request body** | 10 MB |
-| **Error log rotation** | Logs capped at 10 MB with automatic rotation |
-| **Boot sequence** | 3-phase: instant render > deferred init > background checks after 30 seconds |
-
-### Security
-
-| Item | Detail |
-|------|--------|
-| **Path traversal prevention** | Server blocks access to files outside the project folder |
-| **Filename sanitization** | Malicious filenames are filtered out |
-| **Write locks** | Timeout-based write locks ensure data integrity |
-| **Localhost-only binding** | `127.0.0.1` only -- even other computers on the same network cannot access it |
-| **Process management** | PID file (`.server.pid`) for safe restart without affecting other programs |
-| **Portable mode** | Windows setup downloads Node.js into local `node/` folder for full independence from system Node.js |
-| **Custom CSS XSS filter** | User-provided custom CSS is sanitized to prevent cross-site scripting attacks |
-
-### Dependencies
-
-```
-External libraries: none (0)
-npm install: not required
-node_modules: never created
-```
-
-This project uses only Node.js **built-in modules** (`http`, `fs`, `path`, `zlib`, `crypto`). Like a self-contained travel bag, it carries everything it needs -- no extra parts to find or install.
-
-</details>
+| 증상 | 원인 | 해결 방법 |
+|---|---|---|
+| 화면 좌측 상단에 "서버 응답 오류" 또는 "서버 연결 끊김" 표시 | 서버 프로세스가 죽었거나 아직 켜지는 중 | 잠깐 기다려보기(15초마다 자동 재확인) → 안 되면 Windows는 `restart.bat`, Mac은 터미널에서 `launchctl load ~/Library/LaunchAgents/com.dashboard.startpage.plist` 실행 |
+| 브라우저에서 페이지가 아예 안 열림 (`이 사이트에 연결할 수 없음`) | 서버가 꺼져 있거나 포트가 다름 | `port.conf` 파일을 열어 실제 포트 확인, 또는 `.server.pid` 파일 안의 `port` 값 확인 후 `http://localhost:해당포트`로 접속 |
+| `setup_windows.bat` 실행 시 Node.js 다운로드에서 멈추거나 실패 | 인터넷 연결 문제, 방화벽/백신이 다운로드 차단 | 인터넷 연결 확인 후 재실행. 계속 실패하면 <https://nodejs.org>에서 Node.js를 직접 설치한 뒤 다시 실행(스크립트가 시스템 Node를 자동으로 감지해 사용) |
+| Mac에서 `setup_mac.sh` 실행 시 "Node.js is not installed" 오류 | Mac은 Node.js 자동 설치를 하지 않음(Windows와 다른 점) | [3장](#requirements) 안내대로 Node.js를 먼저 설치한 후 다시 실행 |
+| 코드/파일을 최신 버전으로 바꿨는데 화면이 그대로임 | 서비스워커(`sw.js`)가 이전 화면 파일을 캐시해 둔 상태 | 브라우저를 완전히 새로고침(Windows: `Ctrl+Shift+R`, Mac: `Cmd+Shift+R`)해도 안 되면, 개발자 도구 → Application(또는 저장공간) 탭 → "캐시 삭제/지우기" 실행 후 새로고침 |
+| 포트가 이미 사용 중이라는 메시지 / 실제 포트가 1111이 아님 | 다른 프로그램이 1111번 포트를 이미 쓰고 있어 서버가 자동으로 1112, 1113…으로 넘어감 | 완료 메시지나 `.server.pid` 파일에서 실제 포트를 확인해 그 주소로 접속. 특정 포트를 고정하고 싶다면 `set-port.bat`으로 변경 |
+| 설정에서 "포트 변경"을 눌렀는데 안 바뀜 | 포트 변경은 재시작해야 적용됨 | `restart.bat` 실행 또는 설정 화면의 "서버 재시작" 버튼 사용 |
+| 저장이 안 되고 "⚠ 저장 실패" 표시 | 서버 연결이 잠깐 끊김 | 걱정하지 않아도 됩니다. 변경 내용은 브라우저에 임시 저장되어 있다가 연결이 복구되면 자동으로 다시 저장됩니다 |
+| 데이터가 이상해졌거나 사라진 것 같음 | 파일 손상 또는 실수로 삭제 | 설정 → 데이터 탭 → 백업 목록에서 원하는 시점으로 복원. 최근 삭제한 항목은 휴지통(30일 보관)에서도 복구 가능 |
+| 완전히 삭제하고 싶음 | - | Windows: `uninstall.bat` 실행 → 데이터 삭제 여부를 직접 선택(Y/N, 두 번 확인). Mac: `bash uninstall_mac.sh` 실행 → 동일하게 선택 |
 
 ---
 
-## License
+## <a id="faq"></a>17. FAQ (자주 묻는 질문)
 
-This project is licensed under the [MIT License](LICENSE).
+**Q. 상업적으로(회사에서, 유료 제품에 포함해서) 써도 되나요?**
+A. 네, 가능합니다. MIT 라이선스이므로 사용·수정·배포·판매 모두 허용됩니다. 단, 원저작권 고지 문구는 유지해야 합니다. 자세한 내용은 [18장](#license)을 확인하세요. (참고용 요약이며, 정확한 법적 해석은 `LICENSE` 원문이 우선합니다.)
 
-Copyright (c) 2026 Sodam AI Studio
+**Q. 인터넷이 없어도 쓸 수 있나요?**
+A. 네. 서버·데이터 저장·북마크/할 일/메모/캘린더/뽀모도로/습관 기능은 전부 오프라인에서 작동합니다. 다만 글꼴(Google Fonts), 북마크 아이콘, (설정한 경우) 날씨 위젯처럼 외부 이미지/정보를 가져오는 일부 요소는 인터넷이 있어야 정상적으로 보입니다.
 
-**In plain language:**
-- You are free to use this software for any purpose
-- You are free to modify it however you like
-- You are free to share it with others
+**Q. 제 북마크/일정이 어딘가로 전송되나요?**
+A. 아니요. 모든 데이터는 이 컴퓨터의 `data/` 폴더 안에만 저장됩니다. [15장 보안/데이터 흐름](#security)에 이 프로그램이 접속하는 모든 외부 주소를 빠짐없이 정리해 두었습니다.
+
+**Q. 실제로 크롬의 "새 탭"이 이 화면으로 바뀌나요?**
+A. 자동으로는 바뀌지 않습니다. 설치 스크립트는 서버를 켜고 자동 실행을 등록할 뿐, Chrome의 설정을 직접 바꾸지 않습니다. `chrome://settings/onStartup`(시작 그룹)에서 이 페이지 주소를 직접 추가해야 합니다. 크롬의 "새 탭 페이지" 자체를 이 화면으로 완전히 대체하려면 별도의 확장 프로그램이 필요합니다.
+
+**Q. 다른 컴퓨터에서도 접속할 수 있나요(휴대폰, 다른 PC)?**
+A. 안 됩니다(의도된 동작입니다). 서버가 `127.0.0.1`(이 컴퓨터 자기 자신)에만 연결을 받도록 만들어져 있어, 같은 와이파이의 다른 기기에서도 접속이 되지 않습니다. 이는 보안을 위한 설계입니다.
+
+**Q. 데이터를 다른 컴퓨터로 옮기고 싶어요.**
+A. 설정 → 데이터 탭 → "내보내기(JSON)"로 백업 파일을 받은 뒤, 새 컴퓨터에 설치를 마치고 같은 화면에서 "가져오기"로 불러오면 됩니다. 또는 `data/` 폴더 전체를 복사해서 옮겨도 됩니다.
+
+**Q. Node.js가 뭔지 몰라도 되나요?**
+A. Windows는 몰라도 됩니다 — 설치 스크립트가 필요하면 알아서 받아줍니다. Mac은 최초 1회 Node.js를 직접 설치해야 합니다([3장](#requirements) 참고). 그 이후로는 다시 신경 쓸 일이 없습니다.
+
+**Q. 실수로 지운 북마크나 할 일을 복구할 수 있나요?**
+A. 네. 삭제 후 바로라면 `Ctrl+Z`(실행취소), 시간이 좀 지났다면 설정 → 데이터 탭의 휴지통(30일 보관)에서 복구할 수 있습니다.
+
+**Q. 업데이트는 어떻게 하나요?**
+A. 이 프로젝트는 자동 업데이트 확인 기능이 없습니다. 최신 버전을 새로 받아 기존 폴더의 `data/` 폴더만 그대로 옮기거나 덮어써서 유지하면 됩니다(설치 스크립트도 실행 전 자동으로 안전 백업을 만듭니다).
 
 ---
 
-## Changelog
+## <a id="license"></a>18. 법률 / 저작권 / 라이선스 / 상업적 용도
 
-See [CHANGELOG.md](CHANGELOG.md) for the full version history.
+> 아래 내용은 이해를 돕기 위한 요약이며, **법적으로 정확한 기준은 프로젝트에 포함된 `LICENSE` 파일 원문**입니다. 상업적 활용 등 중요한 의사결정 전에는 원문을 직접 확인하시기 바랍니다.
 
----
+### 18.1 라이선스 원문 (MIT License, 그대로 인용)
 
-<p align="center">
-  <strong>If you like this project, please give it a star!</strong><br>
-  <em>You do not need to know how to code to have your own beautiful dashboard.</em>
-</p>
+```text
+MIT License
+
+Copyright (c) 2026 소담 AI 스튜디오
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### 18.2 쉬운 말로 풀이
+
+| 항목 | 내용 |
+|---|---|
+| 라이선스 종류 | MIT License (오픈소스 라이선스 중 가장 관대한 축) |
+| 저작권자 | 소담 AI 스튜디오 (Sodam AI Studio), 2026년 |
+| **상업적 이용** | ✅ **허용됩니다.** 이 소프트웨어를 그대로, 혹은 수정해서 회사/개인 사업에 쓰거나, 유료 제품/서비스의 일부로 포함하거나, 재판매하는 것까지 전부 가능합니다 |
+| **수정** | ✅ 허용. 코드를 자유롭게 고쳐서 써도 됩니다 |
+| **재배포** | ✅ 허용. 원본이든 수정본이든 다른 사람에게 다시 배포해도 됩니다 |
+| **의무 사항 (지켜야 할 것)** | ⚠️ 소프트웨어 원본 또는 상당 부분을 배포할 때, 위 저작권 고지("Copyright (c) 2026 소담 AI 스튜디오")와 라이선스 전문을 **함께 포함**해야 합니다 |
+| **보증** | ❌ **없음.** "있는 그대로(AS IS)" 제공되며, 특정 목적에 적합하다거나 오류가 없다는 보증을 하지 않습니다 |
+| **책임 제한** | ❌ 저작권자는 이 소프트웨어의 사용으로 발생하는 어떠한 손해·클레임에 대해서도 법적 책임을 지지 않습니다 |
+| **상표권** | 이 라이선스는 코드에 대한 권리이며, "Chrome"은 Google LLC의 상표입니다. 이 프로젝트는 Google과 관련이 없는 비공식 개인 프로젝트입니다 |
+
+### 18.3 요약 한 줄
+
+**"저작권 고지만 유지하면, 개인이든 회사든 마음대로 쓰고 고치고 팔아도 되지만, 문제가 생겨도 만든 사람은 책임지지 않는다"** — 이것이 MIT 라이선스의 핵심입니다.
