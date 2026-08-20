@@ -11,6 +11,10 @@ desktop.ini
 
 # === Local tool artifacts ===
 .omc/
+.active-agents
+.active-agents.lock
+.active-agents.tmp
+.failure-tracker.jsonl
 
 # === Environment ===
 .env
@@ -25,6 +29,9 @@ node/
 .server.pid
 port.conf
 *.plist
+
+# === Local project memory (사용자 요청: 절대 commit/push 금지) ===
+CHECKPOINT.md
 
 # === Logs ===
 server.log
