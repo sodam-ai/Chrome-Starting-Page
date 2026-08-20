@@ -87,7 +87,8 @@ function releaseWriteLock(file) {
 }
 
 function safePath(url) {
-    const d = decodeURIComponent(url.split('?')[0]);
+    let d;
+    try { d = decodeURIComponent(url.split('?')[0]); } catch { return null; } // malformed % encoding must not hang the request
     const r = path.resolve(DIR, '.' + d);
     // Case-insensitive comparison on Windows to prevent path traversal bypass
     const dirNorm = DIR.toLowerCase();
@@ -135,6 +136,53 @@ function wJson(file, data) {
     }
 }
 function ensureDir(d) { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }); }
+
+// Bookmark URL scheme allowlist. Blocks javascript:/data:/vbscript: etc. — those aren't
+// real bookmarks, they're script-execution payloads that would run when the card is
+// clicked (createBookmarkEl sets link.href = item.url directly). http(s)/ftp(s)/mailto
+// covers every legitimate bookmark use case, so this doesn't restrict real usage.
+const BOOKMARK_URL_ALLOWED_PROTOCOLS = ['http:', 'https:', 'ftp:', 'ftps:', 'mailto:'];
+function isValidBookmarkUrl(url) {
+    if (typeof url !== 'string' || url.length === 0) return false;
+    try { return BOOKMARK_URL_ALLOWED_PROTOCOLS.includes(new URL(url).protocol); }
+    catch { return false; }
+}
+// Strict validator for /api/bookmarks (routine saves from the running UI) — rejects the
+// whole payload if any entry is invalid, matching every other endpoint's v() convention.
+// In normal use this only ever receives data the client already validated in saveBM(),
+// so a rejection here means either direct API misuse or a bug — fail loudly, don't guess.
+function isValidBookmarksData(d) {
+    if (typeof d !== 'object' || d === null || Array.isArray(d)) return false;
+    for (const cat of Object.keys(d)) {
+        const items = d[cat];
+        if (!Array.isArray(items)) return false;
+        for (const item of items) {
+            if (!item || typeof item !== 'object') return false;
+            if (typeof item.name !== 'string' || item.name.length === 0) return false;
+            if (!isValidBookmarkUrl(item.url)) return false;
+        }
+    }
+    return true;
+}
+// Lenient filter for /api/import (bulk restore from a backup file) — a backup made before
+// this validation existed could plausibly contain one stale/malformed URL among hundreds
+// of good ones. Failing the whole import over one old entry would work against the point
+// of import (restore everything that's still good) — so this drops only the bad entries
+// and reports how many, instead of rejecting the entire restore.
+function sanitizeBookmarksForImport(d) {
+    if (typeof d !== 'object' || d === null || Array.isArray(d)) return { data: {}, droppedCount: 0 };
+    const out = {}; let droppedCount = 0;
+    for (const cat of Object.keys(d)) {
+        const items = d[cat];
+        if (!Array.isArray(items)) continue;
+        out[cat] = items.filter(item => {
+            const ok = item && typeof item === 'object' && typeof item.name === 'string' && item.name.length > 0 && isValidBookmarkUrl(item.url);
+            if (!ok) droppedCount++;
+            return ok;
+        });
+    }
+    return { data: out, droppedCount };
+}
 
 // Canonical list of data files — used by backup, export, import, and integrity check
 const DATA_FILES = [
@@ -207,12 +255,35 @@ function checkDataIntegrity() {
 
 // --- Auto Backup ---
 let backupTimer = null;
+let backupBootTimeout = null;
+// 2026-08-20 수정: startAutoBackup()은 서버 시작 시 1번 + /api/config 저장마다 매번
+// 호출된다(371행). 기존 코드는 setInterval 핸들(backupTimer)만 clearInterval하고,
+// 60초 뒤로 미뤄둔 setTimeout 자체는 아무도 취소하지 않았다 — 그래서 사용자가 설정을
+// 60초 안에 여러 번 저장하면(설정 조정 중 흔함), 이전 setTimeout들이 각자 독립적으로
+// 살아남아 doBackup()을 각자 실행하고, 각자 새 setInterval까지 만든다(가장 마지막
+// setTimeout이 만든 것만 backupTimer 변수에 남고 이전 것들은 참조를 잃어 절대 못 지움 —
+// 고아 타이머 누적). 실측: data/backups/에 51개 파일이 쌓여있던 원인이 이것으로 추정됨
+// (7일 이내 전부 보관·8~30일 하루1개·30일+삭제라는 보관정책 자체는 정상인데, 짧은 시간에
+// 여러 겹의 타이머가 각자 자동백업을 만들어내 정책이 감당 못 할 속도로 쌓인 것). 이제
+// setTimeout 핸들도 함께 저장해뒀다가 다음 호출 시 반드시 먼저 취소한다.
 function startAutoBackup() {
+    if (backupBootTimeout) clearTimeout(backupBootTimeout);
     if (backupTimer) clearInterval(backupTimer);
     const cfg = rJson(path.join(DATA, 'config.json'), {});
-    const hours = cfg.backupIntervalHours || 24;
+    // 2026-08-21 수정(경계값 테스트로 발견): /api/config 검증 함수(v:d=>typeof
+    // d==='object'&&d!==null)는 backupIntervalHours 값 자체는 전혀 검증하지 않는다 —
+    // 이 값이 음수·비숫자 문자열이면 `hours*3600*1000`이 음수·NaN이 되고, setInterval은
+    // 그런 값을 그대로 최소 지연(사실상 0ms)으로 취급해 doBackup()이 초당 수십 번씩
+    // 폭주하며 디스크를 계속 두드리는 결함을 격리 시뮬레이션으로 확인했다(음수 -1: 200ms
+    // 동안 14회 발화, "abc": 13회 발화 — 정상값 24는 0회). 클라이언트 입력 UI(min=1/
+    // max=168)는 API를 직접 호출하거나 config.json이 손상되면 우회되므로, 서버가 실제로
+    // 쓰는 시점에 안전한 범위로 강제한다(false-positive 안내 없이 조용히 clamp — 이 필드는
+    // 사용자가 직접 편집할 일이 거의 없는 내부 설정값이라 에러보다 안전한 기본값 폴백이
+    // 낫다고 판단, 다른 API 필드들의 "Invalid" 전체 거부와는 다른 관용적 처리).
+    const rawHours = Number(cfg.backupIntervalHours);
+    const hours = Number.isFinite(rawHours) && rawHours >= 1 ? Math.min(rawHours, 168) : 24;
     // Defer first backup 60s to avoid blocking initial requests
-    setTimeout(() => { doBackup(); backupTimer = setInterval(doBackup, hours * 3600 * 1000); }, 60000);
+    backupBootTimeout = setTimeout(() => { doBackup(); backupTimer = setInterval(doBackup, hours * 3600 * 1000); }, 60000);
 }
 function doBackup() {
     try {
@@ -297,12 +368,12 @@ const server = http.createServer((req, res) => {
 
     // === JSON CRUD APIs ===
     const apis = {
-        '/api/bookmarks': { f:'bookmarks.json', fb:{}, v:d=>typeof d==='object'&&d!==null },
+        '/api/bookmarks': { f:'bookmarks.json', fb:{}, v:isValidBookmarksData },
         '/api/notes': { f:'notes.json', fb:{notes:[]}, v:d=>d&&(Array.isArray(d.notes)||typeof d.notes==='object') },
-        '/api/config': { f:'config.json', fb:{}, v:d=>typeof d==='object' },
+        '/api/config': { f:'config.json', fb:{}, v:d=>typeof d==='object'&&d!==null },
         '/api/todos': { f:'todos.json', fb:{items:[]}, v:d=>d&&Array.isArray(d.items) },
         '/api/ddays': { f:'ddays.json', fb:{items:[]}, v:d=>d&&Array.isArray(d.items) },
-        '/api/usage': { f:'usage.json', fb:{}, v:d=>typeof d==='object' },
+        '/api/usage': { f:'usage.json', fb:{}, v:d=>typeof d==='object'&&d!==null },
         '/api/events': { f:'events.json', fb:{items:[]}, v:d=>d&&Array.isArray(d.items) },
         // Note: /api/trash is handled separately below (with 30-day auto-cleanup on POST)
         '/api/pomo-stats': { f:'pomo-stats.json', fb:{sessions:[]}, v:d=>d&&Array.isArray(d.sessions) },
@@ -421,9 +492,19 @@ const server = http.createServer((req, res) => {
                 if (!d._export_version && !d._backup_version) throw new Error('Not valid');
                 // Create safety backup before import
                 try { doBackup(); } catch {}
-                // Restore JSON data
+                // Restore JSON data. bookmarks gets filtered (not rejected outright) —
+                // a backup made before URL validation existed could plausibly carry one
+                // stale/bad entry among hundreds of good ones (see sanitizeBookmarksForImport).
+                let bookmarksDroppedCount = 0;
                 DATA_FILES.forEach(({ key, f }) => {
-                    if (d[key]) wJson(path.join(DATA, f), d[key]);
+                    if (!d[key]) return;
+                    if (key === 'bookmarks') {
+                        const sanitized = sanitizeBookmarksForImport(d[key]);
+                        bookmarksDroppedCount = sanitized.droppedCount;
+                        wJson(path.join(DATA, f), sanitized.data);
+                    } else {
+                        wJson(path.join(DATA, f), d[key]);
+                    }
                 });
                 // Restore profiles
                 if (d._profiles) {
@@ -465,7 +546,7 @@ const server = http.createServer((req, res) => {
                 }
                 // Clear file cache so restored images are served immediately
                 clearFileCache();
-                json(res, 200, { success:true });
+                json(res, 200, { success:true, bookmarksDroppedCount });
             } catch (e) { json(res, 400, { error:e.message }); }
         });
         return;
@@ -613,12 +694,21 @@ const server = http.createServer((req, res) => {
                 const d = JSON.parse(fs.readFileSync(bp, 'utf8'));
                 // Create safety backup before restore
                 try { doBackup(); } catch {}
-                // Restore each data file
+                // Restore each data file (bookmarks filtered, not rejected — see
+                // sanitizeBookmarksForImport; same reasoning as /api/import)
+                let bookmarksDroppedCount = 0;
                 DATA_FILES.forEach(({ key, f }) => {
-                    if (d[key]) wJson(path.join(DATA, f), d[key]);
+                    if (!d[key]) return;
+                    if (key === 'bookmarks') {
+                        const sanitized = sanitizeBookmarksForImport(d[key]);
+                        bookmarksDroppedCount = sanitized.droppedCount;
+                        wJson(path.join(DATA, f), sanitized.data);
+                    } else {
+                        wJson(path.join(DATA, f), d[key]);
+                    }
                 });
                 clearFileCache();
-                json(res, 200, { success: true, message: 'Restored from ' + safeName });
+                json(res, 200, { success: true, message: 'Restored from ' + safeName, bookmarksDroppedCount });
             } catch (e) { json(res, 400, { error: e.message }); }
         });
         return;

@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
         initServerHealth();initProfiles();
         initContextMenu();initSettingsSearch();initCalendarEvents();
         initDragURLDrop(); // A3: drag URL from browser
+        initDragAutoScroll(); // 2026-08-20: auto-scroll while dragging bookmarks/categories
         initMultiSelect(); // A6: multi-select
         initKeyboardNav(); // D4: full keyboard nav
         initOnboarding(); // B4: onboarding
@@ -625,6 +626,36 @@ function showMoveToPageCategoryPicker(bItem,srcCat,srcIdx,targetPageIdx){
     popup.style.position='fixed';popup.style.left='50%';popup.style.top='50%';popup.style.transform='translate(-50%,-50%)';
     setTimeout(()=>document.addEventListener('click',e=>{if(!popup.contains(e.target))popup.remove()},{once:true}),10);
 }
+// 2026-08-20 신설 — showMoveToPageCategoryPicker(다른 페이지로 옮길 때)와 동일한 UI
+// 패턴을, 더 흔한 "같은 페이지 안에서 다른 카테고리로 옮기기"에도 그대로 적용한다
+// (사용성 감사: 앱이 이미 만들어둔 더 편한 방식을 정작 흔한 케이스엔 안 쓰던 비일관성).
+function showMoveWithinPageCategoryPicker(bItem,srcCat,srcIdx){
+    const existing=document.querySelector('.move-page-popup');if(existing)existing.remove();
+    const page=CFG.pages[CFG.activePage];
+    const cats=[...(page.topCategories||[]),...(page.bottomCategories||[])].filter(c=>c!==srcCat&&BM[c]!==undefined);
+    if(!cats.length){showUndo('이 페이지에 옮길 수 있는 다른 카테고리가 없습니다',null);return}
+    const popup=document.createElement('div');popup.className='move-page-popup move-bm-popup';
+    popup.innerHTML=`<div class="mpp-title">"${esc(bItem.name)}" 이동</div>`;
+    cats.forEach(c=>{
+        const btn=document.createElement('button');btn.className='mpp-btn';btn.textContent=c;
+        btn.addEventListener('click',()=>{
+            const backup={item:JSON.parse(JSON.stringify(bItem)),cat:srcCat,idx:srcIdx};
+            BM[srcCat].splice(srcIdx,1);
+            if(!BM[c])BM[c]=[];
+            BM[c].push(bItem);
+            persistBM();renderDashboard();popup.remove();
+            showUndo(`"${bItem.name}" → "${c}" 이동됨`,()=>{
+                BM[c]=BM[c].filter(b=>b!==bItem);
+                BM[backup.cat].splice(backup.idx,0,backup.item);
+                persistBM();renderDashboard();
+            });
+        });
+        popup.appendChild(btn);
+    });
+    document.body.appendChild(popup);
+    popup.style.position='fixed';popup.style.left='50%';popup.style.top='50%';popup.style.transform='translate(-50%,-50%)';
+    setTimeout(()=>document.addEventListener('click',e=>{if(!popup.contains(e.target))popup.remove()},{once:true}),10);
+}
 
 // ====================================================================
 //  DASHBOARD RENDER
@@ -842,6 +873,12 @@ function createBookmarkEl(cat,item,idx){
     const hoverBtns=document.createElement('div');hoverBtns.className='bm-hover-btns';
     const editBtn=document.createElement('button');editBtn.className='bm-hover-btn';editBtn.textContent='✎';editBtn.title='편집';
     editBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();openBMModal('edit',cat,idx)});
+    // 2026-08-20 UX 개선: 다른 카테고리로 옮기는 방법이 정밀한 드래그·우클릭 메뉴·편집창
+    // 카테고리 선택뿐이라 발견하기 어렵다는 지적(사용성 감사) — 다른 페이지로 드롭할 때
+    // 이미 쓰던 "카테고리 목록 클릭" 팝업을, 더 흔한 케이스인 "같은 페이지 안에서 옮기기"
+    // 에도 그대로 재사용해 눈에 보이는 버튼 하나로 접근할 수 있게 한다.
+    const moveBtn=document.createElement('button');moveBtn.className='bm-hover-btn';moveBtn.textContent='⇄';moveBtn.title='다른 카테고리로 이동';
+    moveBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();showMoveWithinPageCategoryPicker(item,cat,idx)});
     const delBtn=document.createElement('button');delBtn.className='bm-hover-btn bm-hover-del';delBtn.textContent='×';delBtn.title='삭제';
     delBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();
         TRASH.push({...item,category:cat,deletedAt:new Date().toISOString()});persistTrash();
@@ -849,7 +886,7 @@ function createBookmarkEl(cat,item,idx){
         BM[cat].splice(idx,1);persistBM();renderDashboard();
         showUndo(`"${item.name}" 삭제됨`,()=>{BM[backup.cat].splice(backup.idx,0,backup.item);TRASH.pop();persistBM();persistTrash();renderDashboard()});
     });
-    hoverBtns.appendChild(editBtn);hoverBtns.appendChild(delBtn);
+    hoverBtns.appendChild(editBtn);hoverBtns.appendChild(moveBtn);hoverBtns.appendChild(delBtn);
     link.appendChild(hoverBtns);
 
     link.draggable=true;
@@ -1483,7 +1520,7 @@ function fuzzyMatch(text,query){
 // ====================================================================
 function openSpotlight(){const ov=document.getElementById('spotlight-overlay'),inp=document.getElementById('spotlight-input');ov.classList.add('open');inp.value='';inp.focus();spotlightActive=-1;renderSpotlightResults('');inp.oninput=()=>{spotlightActive=-1;renderSpotlightResults(inp.value)};inp.onkeydown=spotlightKeyHandler}
 function closeSpotlight(){document.getElementById('spotlight-overlay').classList.remove('open')}
-function getAllBookmarks(){const all=[];for(const[cat,items]of Object.entries(BM))(items||[]).forEach(item=>all.push({...item,category:cat}));return all}
+function getAllBookmarks(){const all=[];for(const[cat,items]of Object.entries(BM))(items||[]).forEach((item,idx)=>all.push({...item,category:cat,idx}));return all}
 function renderSpotlightResults(query){
     const cont=document.getElementById('spotlight-results');cont.innerHTML='';const q=query.toLowerCase().trim();if(!q)return;
     const results=[];
@@ -1732,15 +1769,27 @@ function openBMModal(mode,cat,idx){
         if(group.children.length)ct.appendChild(group);
     });
     if(mode==='edit'){const item=BM[cat][idx];t.textContent='북마크 편집';nm.value=item.name;ur.value=item.url;ct.value=cat;ic.value=item.icon||'';del.style.display='block';editTarget={cat,idx}}
-    else{t.textContent='북마크 추가';nm.value='';ur.value='https://';ct.value=cat;ic.value='';del.style.display='none';editTarget=null}
+    else{t.textContent='북마크 추가';nm.value='';ur.value='';ur.placeholder='https://example.com';ct.value=cat;ic.value='';del.style.display='none';editTarget=null}
     openModal('modal-bookmark');setTimeout(()=>nm.focus(),100);
+}
+// http(s)/ftp(s)/mailto covers every legitimate bookmark — this only blocks
+// javascript:/data:/vbscript: etc., which aren't real bookmarks but script-execution
+// payloads that would run when the card is clicked (createBookmarkEl sets link.href
+// directly to item.url). Doesn't reduce real freedom to add/move/edit/remove URLs.
+const BOOKMARK_URL_ALLOWED_PROTOCOLS=['http:','https:','ftp:','ftps:','mailto:'];
+function isValidBookmarkUrl(url){
+    try{return BOOKMARK_URL_ALLOWED_PROTOCOLS.includes(new URL(url).protocol)}catch{return false}
 }
 function saveBM(){
     const name=document.getElementById('bm-name').value.trim(),url=document.getElementById('bm-url').value.trim(),cat=document.getElementById('bm-category').value,icon=document.getElementById('bm-icon').value.trim();
     if(!name||!url)return alert('이름과 URL을 입력해주세요.');
-    // URL dupe check
+    if(!isValidBookmarkUrl(url))return alert('올바른 URL 형식이 아닙니다. http:// 또는 https://로 시작하는 주소를 입력해주세요.');
+    // URL dupe check — exclude the item currently being edited by its actual position
+    // (category+index), not by name(2026-08-20 fix: comparing by name incorrectly matched
+    // *any* same-named bookmark in a different category, letting real duplicates slip
+    // through unwarned when two unrelated bookmarks happened to share a name).
     const isEdit=!!editTarget;const allItems=getAllBookmarks();
-    const dupe=allItems.find(b=>b.url===url&&!(isEdit&&b.name===BM[editTarget?.cat]?.[editTarget?.idx]?.name));
+    const dupe=allItems.find(b=>b.url===url&&!(isEdit&&b.category===editTarget.cat&&b.idx===editTarget.idx));
     if(dupe&&!confirm(`"${dupe.name}" (${dupe.category})에 같은 URL이 있습니다. 계속 추가할까요?`))return;
     const item={name,url};if(icon)item.icon=icon;
     if(isEdit){const{cat:old,idx}=editTarget;if(old===cat)BM[cat][idx]=item;else{BM[old].splice(idx,1);if(!BM[cat])BM[cat]=[];item.addedAt=new Date().toISOString();BM[cat].push(item)}}
@@ -1878,6 +1927,7 @@ function initSettingsUI(){
     document.getElementById('btn-bm-delete').addEventListener('click',deleteBM);
     document.getElementById('btn-cat-save').addEventListener('click',createCat);
     document.getElementById('btn-export').addEventListener('click',doExport);
+    document.getElementById('backup-interval').addEventListener('input',updateBackupIntervalHint);
     const impI=document.getElementById('import-file');
     document.getElementById('btn-import').addEventListener('click',()=>impI.click());
     impI.addEventListener('change',doImport);
@@ -1915,7 +1965,11 @@ function initSettingsUI(){
                 rb.textContent='복원 중...';rb.disabled=true;
                 try{
                     const rr=await fetch('/api/backups/restore',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})});
-                    if(rr.ok){alert('✅ 백업에서 복원되었습니다. 페이지를 새로고침합니다.');location.reload()}
+                    if(rr.ok){
+                        const rd=await rr.json();
+                        const dropMsg=rd.bookmarksDroppedCount>0?`\n\n(URL 형식이 잘못된 북마크 ${rd.bookmarksDroppedCount}개는 건너뜀)`:'';
+                        alert('✅ 백업에서 복원되었습니다.'+dropMsg+' 페이지를 새로고침합니다.');location.reload()
+                    }
                     else{const err=await rr.json();alert('복원 실패: '+(err.error||'알 수 없는 오류'))}
                 }catch(e){alert('복원 실패: '+e.message)}
                 rb.textContent='복원';rb.disabled=false;
@@ -1980,7 +2034,19 @@ function populateSettings(){
         const date=latest.date?new Date(latest.date).toLocaleString('ko-KR',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'알 수 없음';
         const ago=latest.date?Math.round((Date.now()-new Date(latest.date).getTime())/3600000):0;
         const agoText=ago<1?'방금 전':ago<24?ago+'시간 전':Math.round(ago/24)+'일 전';
-        el.textContent=`마지막 백업: ${agoText} (${date}) / 총 ${backups.length}개`;
+        // 2026-08-20 UX 개선: "다음 백업이 언제인지 안 보임" 지적 — 서버가 실제로 예약해둔
+        // 정확한 시각을 클라이언트가 알 방법은 없지만(메모리상 타이머라 조회 API가 없음),
+        // 마지막 백업 시각 + 현재 설정된 간격으로 추정치를 보여준다(정확한 예약이 아니라
+        // "대략"임을 명시해 과대 고지하지 않는다).
+        let nextText='';
+        if(latest.date){
+            const intervalMs=(CFG.backupIntervalHours||24)*3600000;
+            const nextAt=new Date(latest.date).getTime()+intervalMs;
+            const remainMs=nextAt-Date.now();
+            if(remainMs<=0)nextText=' · 다음 백업 대기 중';
+            else{const remainH=Math.round(remainMs/3600000);nextText=` · 다음 백업(대략): ${remainH<1?'1시간 이내':remainH+'시간 후'}`}
+        }
+        el.textContent=`마지막 백업: ${agoText} (${date}) / 총 ${backups.length}개${nextText}`;
     }).catch(()=>{const el=document.getElementById('backup-status');if(el)el.textContent='백업 상태를 확인할 수 없습니다'});
     document.getElementById('bg-opacity').value=CFG.backgroundOverlayOpacity||15;
     document.getElementById('chk-time-overlay').checked=!!CFG.timeBasedOverlay;
@@ -2002,6 +2068,7 @@ function populateSettings(){
     populateBgThumbs();
     document.getElementById('custom-css').value=CFG.customCSS||'';
     document.getElementById('backup-interval').value=CFG.backupIntervalHours||24;
+    updateBackupIntervalHint();
     document.getElementById('weather-key-input').value=CFG.weatherApiKey||'';
     document.getElementById('weather-city-input').value=CFG.weatherCity||'Seoul';
     document.getElementById('weather-units-input').value=CFG.weatherUnits||'metric';
@@ -2122,7 +2189,13 @@ function saveAllSettings(){
     const bgIntEl=document.getElementById('bg-interval-select');
     if(bgIntEl)CFG.bgIntervalMinutes=parseInt(bgIntEl.value)||10;
     CFG.customCSS=document.getElementById('custom-css').value;
-    CFG.backupIntervalHours=parseInt(document.getElementById('backup-interval').value)||24;
+    // 2026-08-21 수정(QA 경계값 테스트로 발견): 입력창은 min=1/max=168이지만 그건
+    // HTML 표시상의 제약일 뿐 값 자체를 강제로 막지는 않는다 — 168보다 큰 값을 입력하면
+    // 화면 안내(≈ N일)는 그 큰 값 그대로 보여주는데, 서버는 실제로 168시간까지만 인정하고
+    // 그 이상은 조용히 잘라서 써서(server.js startAutoBackup) 사용자가 본 안내와 실제
+    // 동작이 어긋나는 결함이 있었다. 저장 시점에 여기서도 서버와 동일한 범위로 미리
+    // 맞춰서, 화면에 보이는 값과 실제로 적용되는 값이 항상 같게 한다.
+    CFG.backupIntervalHours=Math.min(168,Math.max(1,parseInt(document.getElementById('backup-interval').value)||24));
     CFG.weatherApiKey=document.getElementById('weather-key-input').value.trim();
     CFG.weatherCity=document.getElementById('weather-city-input').value.trim()||'Seoul';
     CFG.weatherUnits=document.getElementById('weather-units-input').value;
@@ -2163,11 +2236,31 @@ async function populateProfileList(){try{const r=await fetch('/api/profiles');co
 async function saveProfile(){const name=document.getElementById('profile-name-input').value.trim();if(!name)return alert('프로필 이름을 입력하세요.');
     try{const r=await fetch('/api/profiles/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})});const d=await r.json();if(d.success){alert(`"${name}" 프로필 저장 완료!`);document.getElementById('profile-name-input').value='';populateProfileList();loadProfileList()}else alert(d.error)}catch{alert('저장 실패')}}
 
+// 2026-08-20 UX 개선: "168시간"처럼 시간 단위만 있으면 비개발자에게 며칠인지 바로
+// 와닿지 않는다는 지적(설정 화면 사용성 감사) — 입력칸 옆에 "≈ N일" 환산을 실시간으로
+// 보여준다.
+function updateBackupIntervalHint(){
+    const raw=parseInt(document.getElementById('backup-interval')?.value)||24;
+    // 2026-08-21 수정(QA로 발견): 168시간을 넘는 값을 입력하면 서버가 저장 시점에 조용히
+    // 168시간으로 잘라 쓰는데, 안내 문구는 입력한 그대로("≈ 4166일" 등)를 보여줘 실제
+    // 적용값과 어긋나는 결함이 있었다 — 표시도 저장 로직과 동일하게 clamp한다.
+    const h=Math.min(168,Math.max(1,raw));
+    const el=document.getElementById('backup-interval-days');if(!el)return;
+    if(h<24){el.textContent='';return}
+    const days=h/24;
+    const dayText=`≈ ${Number.isInteger(days)?days:days.toFixed(1)}일`;
+    el.textContent=raw>168?`${dayText} (168시간까지만 적용됨)`:dayText;
+}
 // ====================================================================
 //  EXPORT / IMPORT
 // ====================================================================
 function doExport(){
     const fmt=document.getElementById('export-format')?.value||'json';
+    // Markdown/HTML은 가져오기(doImport)가 절대 다시 읽을 수 없는 보기·공유 전용
+    // 형식이다(JSON만 _export_version/_backup_version 필드를 담아 복원 가능) — 사용자가
+    // "백업"이라고 착각하고 이 형식만 내보냈다가 나중에 되돌릴 방법이 없어 당황하는 것을
+    // 막기 위해, 실행 직전에 한 번 더 명확히 확인한다(2026-08-20 UX 개선).
+    if(fmt!=='json'&&!confirm('Markdown/HTML은 보기·공유 전용입니다 — 나중에 다시 불러올(복원할) 수 없습니다.\n\n계속 내보낼까요? (복원 가능한 백업이 필요하면 JSON을 선택하세요)'))return;
     if(fmt==='json'){
         // JSON: fetch as blob to measure size and show toast
         fetch('/api/export').then(r=>{
@@ -2229,7 +2322,11 @@ async function doImport(){
             +`현재 데이터가 위 내용으로 교체됩니다.\n(현재 데이터의 안전 백업이 먼저 생성됩니다)\n\n계속하시겠습니까?`;
         if(!confirm(preview))return;
         const r=await fetch('/api/import',{method:'POST',headers:{'Content-Type':'application/json'},body:text});
-        if((await r.json()).success){showUndo('가져오기 완료! 새로고침합니다...',null);setTimeout(()=>location.reload(),1000)}
+        const rd=await r.json();
+        if(rd.success){
+            const dropMsg=rd.bookmarksDroppedCount>0?` (URL 형식이 잘못된 북마크 ${rd.bookmarksDroppedCount}개는 건너뜀)`:'';
+            showUndo(`가져오기 완료!${dropMsg} 새로고침합니다...`,null);setTimeout(()=>location.reload(),1000)
+        }
         else{alert('가져오기 실패')}
     }catch(e){alert('유효하지 않은 파일: '+e.message)}
     input.value='';
@@ -2663,7 +2760,15 @@ function persistEvents(){_persist('events','/api/events',()=>({items:EVENTS}))}
 function persistDDays(){_persist('dd','/api/ddays',()=>({items:DDAYS}))}
 function persistTrash(){_persist('trash','/api/trash',()=>({items:TRASH}),500)}
 function persistPomoStats(){_persist('pomo','/api/pomo-stats',()=>({sessions:POMO_STATS}),1000)}
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+const ESC_MAP={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+// 2026-08-20 수정: 기존 DOM textContent 방식은 &<> 만 이스케이프하고 큰따옴표(")는
+// 안 건드림 — esc()가 텍스트 위치뿐 아니라 속성값 위치(value="${esc(x)}" 등, 카테고리명/
+// D-Day 라벨/단축키/프로필 이름 등 최소 15곳)에도 쓰이고 있어서, 그런 자리에서는
+// "가 그대로 통과해 속성을 탈출시키는 XSS가 가능했다(백업 가져오기로 조작된 값이 들어올
+// 수 있는 경로). 5개 특수문자(&<>"')를 전부 이스케이프하도록 바꿔 텍스트/속성 양쪽 다
+// 안전하게 만든다 — 텍스트 위치에서는 "가 그대로 렌더링되던 것과 동일하게 보이므로
+// 기존 화면 표시는 그대로다(HTML 파싱 시 엔티티가 다시 문자로 풀림).
+function esc(s){if(s===null||s===undefined)return '';return String(s).replace(/[&<>"']/g,c=>ESC_MAP[c])}
 
 // D1: Save indicator
 function showSaveIndicator(state){
@@ -2673,6 +2778,30 @@ function showSaveIndicator(state){
     else{el.textContent='저장 중…';el.className='save-indicator saving'}
 }
 
+// 2026-08-20 UX 개선: 북마크/카테고리를 드래그하는 동안 화면 가장자리에 커서를 대면
+// 자동으로 스크롤되게 한다 — 카테고리가 많으면(실사용 59개 확인) 옮기려는 대상 카드가
+// 화면 밖에 있을 때 지금까지는 물리적으로 드래그가 불가능했다(사용성 감사로 확인한
+// 실제 차단 사례 — 자동 스크롤 관련 코드가 이 파일에 아예 없었음). 북마크 드래그
+// (dragSrc)·카테고리 드래그(catDragSrc) 중일 때만 작동해 다른 드래그 기능(칸반, 파일
+// 가져오기 등)에는 영향 없다.
+function initDragAutoScroll(){
+    const EDGE=80,MAX_SPEED=18;
+    let scrollDir=0,rafId=null;
+    function tick(){
+        if(scrollDir!==0){window.scrollBy(0,scrollDir);rafId=requestAnimationFrame(tick)}
+        else rafId=null;
+    }
+    document.addEventListener('dragover',e=>{
+        if(!dragSrc&&!catDragSrc){scrollDir=0;return}
+        const y=e.clientY,h=window.innerHeight;
+        if(y<EDGE)scrollDir=-Math.max(2,Math.ceil((EDGE-y)/EDGE*MAX_SPEED));
+        else if(y>h-EDGE)scrollDir=Math.max(2,Math.ceil((EDGE-(h-y))/EDGE*MAX_SPEED));
+        else scrollDir=0;
+        if(scrollDir!==0&&rafId===null)rafId=requestAnimationFrame(tick);
+    });
+    document.addEventListener('dragend',()=>{scrollDir=0});
+    document.addEventListener('drop',()=>{scrollDir=0});
+}
 // ====================================================================
 //  A3: DRAG URL DROP (drag URL from browser address bar)
 // ====================================================================
