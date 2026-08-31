@@ -11,6 +11,7 @@ desktop.ini
 
 # === Local tool artifacts ===
 .omc/
+.sodam-re/
 .active-agents
 .active-agents.lock
 .active-agents.tmp
@@ -29,6 +30,7 @@ node/
 .server.pid
 port.conf
 *.plist
+.autostart-installed
 
 # === Local project memory (사용자 요청: 절대 commit/push 금지) ===
 CHECKPOINT.md

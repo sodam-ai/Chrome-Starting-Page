@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const VERSION = '7.3';
+const VERSION = '7.4';
 
 // Port priority: command line arg > port.conf file > default 1111
 const PREFERRED_PORT = (() => {
@@ -100,9 +100,19 @@ function sanitizeFilename(name) {
     return name.replace(/[\/\\:*?"<>|]/g, '_').replace(/\.\./g, '_').slice(0, 100);
 }
 function readBody(req, cb) {
-    const chunks = []; let s = 0;
-    req.on('data', c => { s += c.length; if (s > MAX_BODY) { req.destroy(); return cb(new Error('Too large')); } chunks.push(c); });
-    req.on('end', () => cb(null, Buffer.concat(chunks).toString('utf8')));
+    // 2026-08-31 수정: req.destroy()를 즉시 호출하면 req/res가 공유하는 소켓 자체가
+    // 끊겨, 바로 다음에 보내려던 413 JSON 응답이 클라이언트에 전혀 도달하지 못하고
+    // 그냥 연결 리셋으로 보였다(실측: curl exit 56, 응답 바디 없음). 소켓을 끊지 않고
+    // 초과분만 버퍼링을 멈춘 채 스트림이 자연스럽게 'end'까지 흐르게 두면, 아래
+    // 콜백이 정상적으로 한 번 호출되어 호출부가 413 응답을 실제로 보낼 수 있다.
+    const chunks = []; let s = 0; let tooLarge = false;
+    req.on('data', c => {
+        if (tooLarge) return;
+        s += c.length;
+        if (s > MAX_BODY) { tooLarge = true; cb(new Error('Too large')); return; }
+        chunks.push(c);
+    });
+    req.on('end', () => { if (!tooLarge) cb(null, Buffer.concat(chunks).toString('utf8')); });
     req.on('error', cb);
 }
 function json(res, code, data) {
@@ -137,52 +147,9 @@ function wJson(file, data) {
 }
 function ensureDir(d) { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }); }
 
-// Bookmark URL scheme allowlist. Blocks javascript:/data:/vbscript: etc. — those aren't
-// real bookmarks, they're script-execution payloads that would run when the card is
-// clicked (createBookmarkEl sets link.href = item.url directly). http(s)/ftp(s)/mailto
-// covers every legitimate bookmark use case, so this doesn't restrict real usage.
-const BOOKMARK_URL_ALLOWED_PROTOCOLS = ['http:', 'https:', 'ftp:', 'ftps:', 'mailto:'];
-function isValidBookmarkUrl(url) {
-    if (typeof url !== 'string' || url.length === 0) return false;
-    try { return BOOKMARK_URL_ALLOWED_PROTOCOLS.includes(new URL(url).protocol); }
-    catch { return false; }
-}
-// Strict validator for /api/bookmarks (routine saves from the running UI) — rejects the
-// whole payload if any entry is invalid, matching every other endpoint's v() convention.
-// In normal use this only ever receives data the client already validated in saveBM(),
-// so a rejection here means either direct API misuse or a bug — fail loudly, don't guess.
-function isValidBookmarksData(d) {
-    if (typeof d !== 'object' || d === null || Array.isArray(d)) return false;
-    for (const cat of Object.keys(d)) {
-        const items = d[cat];
-        if (!Array.isArray(items)) return false;
-        for (const item of items) {
-            if (!item || typeof item !== 'object') return false;
-            if (typeof item.name !== 'string' || item.name.length === 0) return false;
-            if (!isValidBookmarkUrl(item.url)) return false;
-        }
-    }
-    return true;
-}
-// Lenient filter for /api/import (bulk restore from a backup file) — a backup made before
-// this validation existed could plausibly contain one stale/malformed URL among hundreds
-// of good ones. Failing the whole import over one old entry would work against the point
-// of import (restore everything that's still good) — so this drops only the bad entries
-// and reports how many, instead of rejecting the entire restore.
-function sanitizeBookmarksForImport(d) {
-    if (typeof d !== 'object' || d === null || Array.isArray(d)) return { data: {}, droppedCount: 0 };
-    const out = {}; let droppedCount = 0;
-    for (const cat of Object.keys(d)) {
-        const items = d[cat];
-        if (!Array.isArray(items)) continue;
-        out[cat] = items.filter(item => {
-            const ok = item && typeof item === 'object' && typeof item.name === 'string' && item.name.length > 0 && isValidBookmarkUrl(item.url);
-            if (!ok) droppedCount++;
-            return ok;
-        });
-    }
-    return { data: out, droppedCount };
-}
+// Bookmark URL validation + backup-interval clamp: extracted to lib/validators.js
+// (2026-08-31) so the exact same logic is covered by test/validators.test.js.
+const { isValidBookmarkUrl, isValidBookmarksData, sanitizeBookmarksForImport, clampBackupHours } = require('./lib/validators.js');
 
 // Canonical list of data files — used by backup, export, import, and integrity check
 const DATA_FILES = [
@@ -270,18 +237,9 @@ function startAutoBackup() {
     if (backupBootTimeout) clearTimeout(backupBootTimeout);
     if (backupTimer) clearInterval(backupTimer);
     const cfg = rJson(path.join(DATA, 'config.json'), {});
-    // 2026-08-21 수정(경계값 테스트로 발견): /api/config 검증 함수(v:d=>typeof
-    // d==='object'&&d!==null)는 backupIntervalHours 값 자체는 전혀 검증하지 않는다 —
-    // 이 값이 음수·비숫자 문자열이면 `hours*3600*1000`이 음수·NaN이 되고, setInterval은
-    // 그런 값을 그대로 최소 지연(사실상 0ms)으로 취급해 doBackup()이 초당 수십 번씩
-    // 폭주하며 디스크를 계속 두드리는 결함을 격리 시뮬레이션으로 확인했다(음수 -1: 200ms
-    // 동안 14회 발화, "abc": 13회 발화 — 정상값 24는 0회). 클라이언트 입력 UI(min=1/
-    // max=168)는 API를 직접 호출하거나 config.json이 손상되면 우회되므로, 서버가 실제로
-    // 쓰는 시점에 안전한 범위로 강제한다(false-positive 안내 없이 조용히 clamp — 이 필드는
-    // 사용자가 직접 편집할 일이 거의 없는 내부 설정값이라 에러보다 안전한 기본값 폴백이
-    // 낫다고 판단, 다른 API 필드들의 "Invalid" 전체 거부와는 다른 관용적 처리).
-    const rawHours = Number(cfg.backupIntervalHours);
-    const hours = Number.isFinite(rawHours) && rawHours >= 1 ? Math.min(rawHours, 168) : 24;
+    // /api/config's validator doesn't check backupIntervalHours itself (M5 bug —
+    // see clampBackupHours() in lib/validators.js for the full rationale + regression test).
+    const hours = clampBackupHours(cfg.backupIntervalHours);
     // Defer first backup 60s to avoid blocking initial requests
     backupBootTimeout = setTimeout(() => { doBackup(); backupTimer = setInterval(doBackup, hours * 3600 * 1000); }, 60000);
 }
@@ -361,9 +319,27 @@ function parseMultipart(raw, boundary) {
 }
 
 // --- Server ---
+// 2026-09-01 보안 수정: 이 서버는 항상 백그라운드에서 실행 중이므로(자동시작 설계 자체가
+// 그런 목적), CORS/Origin 검증이 없으면 사용자가 방문한 아무 악성 웹페이지가 브라우저를
+// 통해 이 서버에 조용히 쓰기 요청(POST)을 보낼 수 있다 — 실제로 fetch(url, {mode:'no-cors',
+// headers:{'Content-Type':'text/plain'}, body: JSON.stringify(...)})는 CORS 사전확인
+// (preflight) 없이 전송되고, 서버는 Content-Type과 무관하게 본문을 그냥 JSON.parse해서
+// 저장하므로 그대로 통과했다(실제 재현: data/todos.json이 가짜 Origin으로 통째로
+// 덮어써짐). 브라우저는 POST 등 상태변경 요청에는 동일-출처여도 Origin 헤더를 보내므로,
+// Origin이 있는데 이 서버 자신의 주소와 다르면 차단한다. Origin이 아예 없는 요청(curl,
+// 이 프로젝트의 setup/restart 스크립트 등 브라우저가 아닌 도구)은 그대로 허용한다.
+function isSameOrigin(req) {
+    const origin = req.headers['origin'];
+    if (!origin) return true;
+    return origin === `http://${HOST}:${PORT}`;
+}
+
 const server = http.createServer((req, res) => {
     const url = req.url.split('?')[0];
     const m = req.method;
+    if (m === 'POST' && !isSameOrigin(req)) {
+        return json(res, 403, { error: 'Cross-origin requests are not allowed' });
+    }
     const query = new URL(req.url, `http://localhost:${PORT}`).searchParams;
 
     // === JSON CRUD APIs ===
@@ -386,14 +362,15 @@ const server = http.createServer((req, res) => {
         if (m === 'POST') {
             readBody(req, async (err, body) => {
                 if (err) return json(res, 413, { error:'Too large' });
+                let p;
+                try { p = JSON.parse(body); } catch(e) { return json(res, 400, { error:'Invalid JSON' }); }
+                if (!api.v(p)) return json(res, 400, { error:'Invalid data' });
                 try {
-                    const p = JSON.parse(body);
-                    if (!api.v(p)) throw new Error('Invalid');
                     await acquireWriteLock(fp);
                     try { wJson(fp, p); } finally { releaseWriteLock(fp); }
                     if (url === '/api/config') startAutoBackup();
                     json(res, 200, { success:true });
-                } catch(e) { json(res, 400, { error:'Invalid JSON' }); }
+                } catch(e) { json(res, 500, { error:'Write failed' }); }
             });
             return;
         }
@@ -555,7 +532,9 @@ const server = http.createServer((req, res) => {
     // === Upload Background ===
     if (url === '/api/upload-background' && m === 'POST') {
         const chunks = []; let sz = 0; let destroyed = false;
-        req.on('data', c => { sz += c.length; if (sz > MAX_BODY) { destroyed = true; req.destroy(); return; } chunks.push(c); });
+        // req.destroy() 제거 이유는 readBody()의 동일 수정(2026-08-31) 주석 참고 —
+        // 소켓을 끊지 않아야 아래 'end' 핸들러가 실제로 413 응답을 보낼 수 있다.
+        req.on('data', c => { if (destroyed) return; sz += c.length; if (sz > MAX_BODY) { destroyed = true; return; } chunks.push(c); });
         req.on('error', () => { destroyed = true; });
         req.on('end', () => {
             if (destroyed) return json(res, 413, { error: 'File too large' });
@@ -588,7 +567,9 @@ const server = http.createServer((req, res) => {
     // === Upload Bookmark Icon ===
     if (url === '/api/upload-icon' && m === 'POST') {
         const chunks = []; let sz = 0; let destroyed = false;
-        req.on('data', c => { sz += c.length; if (sz > MAX_BODY) { destroyed = true; req.destroy(); return; } chunks.push(c); });
+        // req.destroy() 제거 이유는 readBody()의 동일 수정(2026-08-31) 주석 참고 —
+        // 소켓을 끊지 않아야 아래 'end' 핸들러가 실제로 413 응답을 보낼 수 있다.
+        req.on('data', c => { if (destroyed) return; sz += c.length; if (sz > MAX_BODY) { destroyed = true; return; } chunks.push(c); });
         req.on('error', () => { destroyed = true; });
         req.on('end', () => {
             if (destroyed) return json(res, 413, { error: 'File too large' });
@@ -873,6 +854,49 @@ function stopExistingDashboard() {
     });
 }
 
+// === Windows auto-start self-heal (2026-09-01) ===
+// setup_windows.bat registers auto-start once, at install time, via a Registry Run key
+// AND a Startup-folder shortcut (both). Some antivirus products flag/remove "a script
+// silently launched at every login via wscript.exe" because it matches common malware
+// persistence patterns -- if that strips one (or both) of the two between reboots, the
+// dashboard silently stops auto-starting and the only fix used to be re-running the
+// installer by hand. This repairs whichever piece is missing, once per server start --
+// since the dashboard is opened many times a day (it's the browser start page), one
+// normal use is usually enough to self-heal.
+//
+// Only acts when `.autostart-installed` exists in THIS folder (written by setup_windows.bat
+// after a real install). That marker -- not the current Registry/shortcut state, which is
+// exactly what may have been wiped -- is the source of truth for "this folder is the
+// installed copy". Without it, a second copy of this project on the same PC (e.g. a dev
+// copy) never touches Windows auto-start and can never steal it away from the real install.
+function ensureAutoStart() {
+    if (process.platform !== 'win32') return;
+    try {
+        if (!fs.existsSync(path.join(DIR, '.autostart-installed'))) return;
+        const appData = process.env.APPDATA;
+        if (!appData) return;
+        const vbsPath = path.join(DIR, 'start_hidden.vbs');
+        if (!fs.existsSync(vbsPath)) return;
+        const shortcutPath = path.join(appData, 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup', 'Dashboard_StartPage.lnk');
+        const { execFile } = require('child_process');
+
+        execFile('reg', ['query', 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run', '/v', 'DashboardStartPage'], (err, stdout) => {
+            const missing = !!err || !stdout || !stdout.toLowerCase().includes(vbsPath.toLowerCase());
+            if (!missing) return;
+            execFile('reg', ['add', 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run', '/v', 'DashboardStartPage', '/t', 'REG_SZ', '/d', `wscript.exe "${vbsPath}"`, '/f'], (err2) => {
+                if (!err2) console.log('[Server] Auto-start (Registry) was missing — repaired.');
+            });
+        });
+
+        if (!fs.existsSync(shortcutPath)) {
+            const psScript = `$s=(New-Object -COM WScript.Shell).CreateShortcut('${shortcutPath}');$s.TargetPath='wscript.exe';$s.Arguments='"${vbsPath}"';$s.WorkingDirectory='${DIR}';$s.WindowStyle=7;$s.Save()`;
+            execFile('powershell', ['-NoProfile', '-Command', psScript], (err3) => {
+                if (!err3) console.log('[Server] Auto-start (Startup shortcut) was missing — repaired.');
+            });
+        }
+    } catch { /* never let this block server startup */ }
+}
+
 stopExistingDashboard().then(() => {
     // Also clean stale PID file
     try {
@@ -899,6 +923,7 @@ stopExistingDashboard().then(() => {
         checkDataIntegrity();
         preloadCache();
         startAutoBackup();
+        ensureAutoStart();
     });
 }).catch(err => {
     console.error(`[Server] ${err.message}`);

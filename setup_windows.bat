@@ -111,18 +111,47 @@ timeout /t 2 /nobreak >nul
 :: ==========================================
 :: Step 4: Register auto-start
 :: ==========================================
-:: Clean up old methods
-if exist "%SHORTCUT%" del "%SHORTCUT%" >nul 2>&1
+:: 2026-09-01: register BOTH the Registry Run key AND the Startup folder shortcut
+:: (previously only one, whichever succeeded first). Some antivirus products flag/remove
+:: "a script silently launched at every login via wscript.exe" because it matches common
+:: malware persistence patterns -- if that happens to ONE of the two methods, the other
+:: still survives and the dashboard keeps auto-starting. See server.js's ensureAutoStart()
+:: for the matching self-heal check that repairs either one if it goes missing later.
 schtasks /delete /tn "DashboardStartPage" /f >nul 2>&1
 
-echo [SETUP] Registering auto-start...
+echo [SETUP] Registering auto-start (2 methods, for redundancy)...
+set "AUTOSTART_REG_OK=0"
+set "AUTOSTART_SHORTCUT_OK=0"
+
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "DashboardStartPage" /t REG_SZ /d "wscript.exe \"%VBS_PATH%\"" /f >nul 2>&1
-if not errorlevel 1 (
-    echo [OK] Auto-start registered via Registry
+if not errorlevel 1 set "AUTOSTART_REG_OK=1"
+
+powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='wscript.exe';$s.Arguments='\"'+\"%VBS_PATH%\"+'\"';$s.WorkingDirectory='%SCRIPT_DIR%';$s.WindowStyle=7;$s.Save()" >nul 2>&1
+if exist "%SHORTCUT%" set "AUTOSTART_SHORTCUT_OK=1"
+
+if "!AUTOSTART_REG_OK!"=="1" (
+    if "!AUTOSTART_SHORTCUT_OK!"=="1" (
+        echo [OK] Auto-start registered via Registry + Startup shortcut ^(both^)
+    ) else (
+        echo [OK] Auto-start registered via Registry ^(shortcut method failed^)
+    )
 ) else (
-    echo [WARN] Registry failed, using Startup shortcut...
-    powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='wscript.exe';$s.Arguments='\"'+\"%VBS_PATH%\"+'\"';$s.WorkingDirectory='%SCRIPT_DIR%';$s.WindowStyle=7;$s.Save()"
-    echo [OK] Auto-start registered via Startup shortcut
+    if "!AUTOSTART_SHORTCUT_OK!"=="1" (
+        echo [OK] Auto-start registered via Startup shortcut ^(registry method failed^)
+    ) else (
+        echo [WARN] Auto-start registration failed for both methods -- you can still start
+        echo        the dashboard manually any time by double-clicking restart.bat
+    )
+)
+
+:: Marker: tells THIS folder's server.js it is a real install, so its self-heal check
+:: (ensureAutoStart in server.js) is allowed to repair auto-start for this folder if
+:: it goes missing later. A folder without this marker (e.g. a second copy used only
+:: for development) never touches Windows auto-start settings.
+if "!AUTOSTART_REG_OK!"=="1" (
+    echo installed> "%SCRIPT_DIR%.autostart-installed"
+) else if "!AUTOSTART_SHORTCUT_OK!"=="1" (
+    echo installed> "%SCRIPT_DIR%.autostart-installed"
 )
 
 :: ==========================================

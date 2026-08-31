@@ -95,6 +95,7 @@ del "server.log" >nul 2>&1
 del "server.error.log" >nul 2>&1
 del "server.error.log.old" >nul 2>&1
 del ".server.pid" >nul 2>&1
+del ".autostart-installed" >nul 2>&1
 echo [OK] Runtime files cleaned
 echo.
 
