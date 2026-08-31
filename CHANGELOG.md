@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v7.4] - 2026-09-01
+
+### Security
+- **CSRF / Origin validation** — reproduced a real vulnerability where a third-party website could use the victim's browser to send unauthorized state-changing (POST) requests to the local server while it runs in the background; the server now rejects any POST whose `Origin` header, when present, does not match the server's own address
+- **Error response accuracy** — a syntactically invalid JSON body and a validly-formed-but-schema-invalid body now return distinct error messages (`Invalid JSON` vs `Invalid data`) instead of being conflated
+- **Oversized request handling fixed** — `req.destroy()` was closing the socket before the intended 413 response could be sent, so oversized requests previously hung instead of erroring; the socket is now kept open until the 413 response is flushed (applies to the generic JSON body reader and both file upload endpoints)
+- **4 missing output-escaping sites fixed** in `script.js` (todo due dates rendered in the Kanban card and weekly report popup, D-Day date rendered in the top bar) — all confirmed exploitable with a reproduced payload and confirmed fixed
+- Extracted `esc()` and the bookmark/URL/backup-interval validators out of `script.js`/`server.js` into `lib/esc.js` and `lib/validators.js`, with `node --test` regression coverage (`test/esc.test.js`, `test/validators.test.js`) so these fixes can never silently regress
+- Added `tools/check-unescaped-html.js`, a zero-dependency advisory scanner that flags `innerHTML` assignments missing `esc()` calls
+
+### Reliability
+- **Dual auto-start registration on Windows** — `setup_windows.bat` now registers login auto-start via both the Registry Run key and a Startup-folder shortcut simultaneously (previously only one, whichever succeeded first); some antivirus products flag/remove the single-method registration as a false positive
+- **Auto-start self-healing** — `server.js` now checks on every startup whether its own auto-start registration (for the specific folder it was installed from) is still intact, and silently repairs whichever piece is missing
+- Fixed a batch-script conditional-chaining bug (`if A if B (...) else if...`) that caused `setup_windows.bat`'s auto-start result message to never print under any outcome
+
+---
+
 ## [v7.3] - 2025-03-19
 
 ### Background System

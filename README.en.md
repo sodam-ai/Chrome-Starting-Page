@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-7.3-blue?style=flat-square" alt="Version 7.3">
+  <img src="https://img.shields.io/badge/version-7.4-blue?style=flat-square" alt="Version 7.4">
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Linux-lightgrey?style=flat-square" alt="Platform">
   <img src="https://img.shields.io/badge/dependencies-zero-brightgreen?style=flat-square" alt="Zero Dependencies">
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT License">
@@ -43,6 +43,7 @@
 - [File Structure](#file-structure)
 - [Technical Details](#technical-details-for-the-curious)
 - [License & Legal Notice](#license--legal-notice)
+- [Original Project & Acknowledgments](#original-project--acknowledgments)
 - [Changelog Summary](#changelog-summary)
 
 ---
@@ -184,6 +185,16 @@ computer -- you never need to reinstall. Just open that address in Chrome.
 
 > **What is Node.js?** Think of it as a tiny engine that powers the dashboard behind the scenes. If the dashboard is a "car", Node.js is the "engine" that makes it go. It runs quietly in the background and uses very little memory (about 15 MB -- less than a single browser tab). On Windows, the setup file (`setup_windows.bat`) downloads a portable copy of Node.js automatically, so you do not need to install anything yourself. If Node.js is already installed on your system, it will use that; if not, it downloads a private copy just for this project.
 
+> **Do I need any environment variables?** No, this project uses none at all. Every
+> personal setting -- including API keys like the weather widget's -- is stored through
+> the dashboard's own Settings screen or in `data/config.json`, never in a `.env` file, so
+> there is no environment-variable step before running the server.
+
+> **How do I "deploy" this?** This isn't a cloud web service -- it's a program you **install
+> and run on your own computer only**. There is no separate deployment step; running the
+> setup script in the [Installation](#installation) section below *is* the deployment.
+> There is no `npm publish`, no server upload, no domain to configure.
+
 ---
 
 ## Installation
@@ -233,7 +244,13 @@ Then press **Enter**.
 1. Checks if you already have data and creates a safety backup first (`safety-before-setup.json`)
 2. Downloads a portable copy of Node.js into the `node/` folder (if not already there and no system Node.js is found)
 3. Stops any previously running dashboard server
-4. Registers auto-start so the dashboard launches when you log in (no admin rights needed)
+4. Registers auto-start so the dashboard launches when you log in (no admin rights needed) --
+   using **two methods at once**: a Windows Registry entry and a Startup-folder shortcut. Some
+   antivirus tools mistakenly flag "something that quietly launches every login" and remove
+   one of the two, so registering both means one always survives (since v7.4). On top of that,
+   the server checks every time it starts whether this registration is still intact and
+   silently re-registers it if not (self-healing) -- since you likely open the dashboard many
+   times a day, most breaks fix themselves the next time it starts.
 5. Starts the server silently in the background (no visible window)
 
 It does NOT install anything system-wide. It does NOT modify your Windows settings beyond a single auto-start entry. Everything stays inside the project folder.
@@ -730,7 +747,12 @@ Your browser is using old cached files. To fix:
 <details>
 <summary><strong>The server does not auto-start after reboot</strong></summary>
 
-- **Windows:** Run `setup_windows.bat` again to re-register auto-start
+Since v7.4, Windows registers auto-start in two places at once (Registry + Startup folder)
+and the server self-checks and repairs this every time it starts, so this happens much less
+often now. If it still happens:
+
+- **Windows:** Run `setup_windows.bat` again to re-register auto-start (if antivirus removed
+  both registration methods, re-running this restores them)
 - **Mac:** Run `./setup_mac.sh` again
 - **Linux:** Run `sudo systemctl enable dashboard`
 
@@ -989,8 +1011,10 @@ The server is a single-file HTTP server using only Node.js built-in modules. No 
 | **Portable mode** | Windows setup downloads Node.js into local `node/` folder for full independence from system Node.js |
 | **Custom CSS XSS filter** | User-provided custom CSS is sanitized to prevent cross-site scripting attacks |
 | **Bookmark URL scheme validation** | Blocks code-executing addresses like `javascript:` at save time, both in the browser and on the server (only `http/https/ftp/mailto` are accepted) |
-| **Output escaping on render** | Every user-entered value shown on screen (category names, labels, etc.) is HTML-escaped (`&<>"'`) before rendering, so a tampered value coming in through backup import cannot execute as code |
+| **Output escaping on render** | Every user-entered value shown on screen (category names, labels, dates, etc.) is HTML-escaped (`&<>"'`) before rendering, so a tampered value coming in through backup import cannot execute as code |
 | **Safe bounds on the backup interval** | Even if the backup interval setting is somehow invalid (negative, non-numeric), the server always clamps it to a safe 1-168 hour range, preventing runaway repeated backups |
+| **Origin validation — CSRF (cross-site request forgery) protection** (new in v7.4) | This server runs in the background at all times once your computer is on, so a malicious website you visit could try to secretly send data-changing requests through your browser. The server now checks the Origin of every data-changing request and blocks any that didn't come from this dashboard itself. |
+| **Request size limit** | The amount of data a single request can send is capped at 10MB, preventing an abnormally large request from freezing the server (returns a proper "too large" error instead) |
 
 ### Dependencies
 
@@ -1001,6 +1025,19 @@ node_modules: never created
 ```
 
 This project uses only Node.js **built-in modules** (`http`, `fs`, `path`, `zlib`, `crypto`). Like a self-contained travel bag, it carries everything it needs -- no extra parts to find or install.
+
+### Testing / Build
+
+```
+Build step: none (no transpiling or bundling -- files run as-is)
+Tests: node --test  (= npm test)
+Self-check scanner (advisory, not a pass/fail gate): npm run check:xss
+```
+
+`npm test` runs the regression tests in the `test/` folder (input validation, HTML
+escaping, and other security-related logic). After changing code, running `npm test` is
+recommended to confirm nothing existing broke. The frontend (`script.js`, `style.css`,
+`index.html`) is read by the browser as-is with no build step needed.
 
 </details>
 
@@ -1018,7 +1055,7 @@ This project uses only Node.js **built-in modules** (`http`, `fs`, `path`, `zlib
 ### This Project's License
 
 This project is distributed under the **[MIT License](LICENSE)**.
-Copyright (c) 2026 Sodam AI Studio.
+Copyright (c) 2026 SoDam AI Studio.
 
 The MIT License is one of the simplest and most permissive open-source licenses that
 exists. Below is exactly what its full text actually permits and requires, spelled out
@@ -1064,10 +1101,10 @@ and it belongs 100% to you.
 
 ### About the Trademark (Brand Name)
 
-"Sodam AI Studio" is the creator credit for this project and does not assert any registered
+"SoDam AI Studio" is the creator credit for this project and does not assert any registered
 trademark claim. You are free to fork this project or redistribute it under a different name,
 as long as you do not use the project name or this credit in a way that would make people
-mistakenly believe Sodam AI Studio directly operates or endorses your version (and, per the
+mistakenly believe SoDam AI Studio directly operates or endorses your version (and, per the
 "one condition" above, you must still keep the original copyright notice intact).
 
 ### Third-Party (External) Services -- Separate From This Project's License
@@ -1089,13 +1126,55 @@ use the dashboard without bookmark icons.
 
 ---
 
+## 🙏 Original Project & Acknowledgments
+
+This project began from the idea in **[kinkos1234](https://github.com/kinkos1234)**'s
+original project, **[kinkos1234/chrome-starting-page](https://github.com/kinkos1234/chrome-starting-page)**.
+Our sincere thanks go to the original author, kinkos1234, for creating and publishing this
+project in the first place.
+
+> **A note on licensing (not legal advice):** As of this writing (September 2026), the
+> original repository has no open-source license registered on GitHub (`license: null`).
+> As a general rule, a repository with no declared license cannot be freely copied,
+> modified, or redistributed without separate permission. This project proceeds with
+> **direct, personal permission obtained from the original author, kinkos1234,** to use,
+> modify, and distribute the work. However, this is an informal personal agreement, not a
+> license reflected in GitHub's public license field -- so if you intend to reuse this
+> project further (especially for commercial purposes), we recommend you also check
+> directly with the original author (kinkos1234), separately from the MIT License applied
+> to this repository. If you need legal certainty, please consult a legal professional.
+
+---
+
 ## Changelog Summary
 
 > The complete, item-by-item version history lives in [CHANGELOG.md](CHANGELOG.md). Below is
 > a condensed summary per version -- click any entry to expand it.
 
 <details>
-<summary><strong>v7.3</strong> (current version) -- Background slideshow overhaul, pin bookmarks, automatic data integrity checks, stronger security</summary>
+<summary><strong>v7.4</strong> (current version) -- Real CSRF vulnerability found & fixed, dual auto-start registration + self-healing</summary>
+
+- **[Security] Blocked forged-origin requests**: Found and fixed, via an actual reproduced
+  attack, a vulnerability where another website could use your browser to secretly send
+  data-changing requests to this dashboard. Requests that don't originate from the
+  dashboard itself are now blocked.
+- **[Security] More accurate error responses**: The server now distinguishes a
+  syntactically-broken request from a validly-formed-but-invalid one (previously both
+  returned the same generic message).
+- **[Security] More stable handling of oversized requests**: Fixed a defect where sending
+  very large data made the server hang with no response -- it now correctly replies with a
+  "too large" error.
+- **[Security] Fixed 4 missing output-escaping spots**: Found and fixed places (task due
+  dates, D-Day dates) where a tampered value could have executed as code on screen.
+- **[Stability] Dual auto-start registration + self-healing**: On Windows, sign-in
+  auto-start is now registered in two places at once (Registry + Startup folder), and the
+  server checks and repairs this itself every time it starts (addresses antivirus false
+  positives that were removing the auto-start entry).
+
+</details>
+
+<details>
+<summary><strong>v7.3</strong> -- Background slideshow overhaul, pin bookmarks, automatic data integrity checks, stronger security</summary>
 
 - Complete overhaul of the background image slideshow system (on/off toggle, adjustable interval, manual switching)
 - "Pin to top" for bookmarks, drag bookmarks onto page tabs to move them

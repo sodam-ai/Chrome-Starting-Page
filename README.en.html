@@ -60,33 +60,30 @@ p[align="center"], p[align=center]{text-align:center}
 </head>
 <body>
 <div class="wrap">
-<p align="center">
-  <img src="assets/icon-512.svg" width="80" alt="Dashboard icon">
-</p>
-
-<h1 align="center">Chrome Starting Page Dashboard</h1>
 
 <p align="center">
-  <strong>Your personal homepage that lives on your computer -- beautiful, private, and truly yours.</strong>
+<img src="assets/icon-512.svg" width="80" alt="Dashboard icon">
 </p>
-
+<h1 align="center">
+Chrome Starting Page Dashboard
+</h1>
 <p align="center">
-  <img src="https://img.shields.io/badge/version-7.3-blue?style=flat-square" alt="Version 7.3">
-  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Linux-lightgrey?style=flat-square" alt="Platform">
-  <img src="https://img.shields.io/badge/dependencies-zero-brightgreen?style=flat-square" alt="Zero Dependencies">
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT License">
-  <img src="https://img.shields.io/badge/data-100%25%20local-orange?style=flat-square" alt="100% Local Data">
-  <img src="https://img.shields.io/badge/coding-not%20required-purple?style=flat-square" alt="No Coding Required">
+<strong>Your personal homepage that lives on your computer – beautiful,
+private, and truly yours.</strong>
 </p>
-
 <p align="center">
-  <a href="README.html">한국어 버전 (Korean)</a>
+<img src="https://img.shields.io/badge/version-7.4-blue?style=flat-square" alt="Version 7.4">
+<img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Linux-lightgrey?style=flat-square" alt="Platform">
+<img src="https://img.shields.io/badge/dependencies-zero-brightgreen?style=flat-square" alt="Zero Dependencies">
+<img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT License">
+<img src="https://img.shields.io/badge/data-100%25%20local-orange?style=flat-square" alt="100% Local Data">
+<img src="https://img.shields.io/badge/coding-not%20required-purple?style=flat-square" alt="No Coding Required">
 </p>
-
-<hr>
-
+<p align="center">
+<a href="README.md">한국어 버전 (Korean)</a>
+</p>
+<hr />
 <h2 id="table-of-contents">Table of Contents</h2>
-
 <ul>
 <li><a href="#what-is-this">What Is This?</a></li>
 <li><a href="#quick-start-3-steps">Quick Start (3 Steps)</a></li>
@@ -95,310 +92,508 @@ p[align="center"], p[align=center]{text-align:center}
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#how-to-use">How to Use</a></li>
-<li><a href="#workflow-how-youll-actually-use-it-day-to-day">Workflow (How You'll Actually Use It Day to Day)</a></li>
-<li><a href="#settings--customization">Settings & Customization</a></li>
+<li><a href="#workflow-how-youll-actually-use-it-day-to-day">Workflow
+(How You’ll Actually Use It Day to Day)</a></li>
+<li><a href="#settings--customization">Settings &amp;
+Customization</a></li>
 <li><a href="#data-safety">Data Safety</a></li>
-<li><a href="#updating-to-a-new-version">Updating to a New Version</a></li>
+<li><a href="#updating-to-a-new-version">Updating to a New
+Version</a></li>
 <li><a href="#command-reference">Command Reference</a></li>
-<li><a href="#uninstalling-clean-removal">Uninstalling (Clean Removal)</a></li>
+<li><a href="#uninstalling-clean-removal">Uninstalling (Clean
+Removal)</a></li>
 <li><a href="#troubleshooting">Troubleshooting</a></li>
-<li><a href="#frequently-asked-questions-faq">Frequently Asked Questions (FAQ)</a></li>
+<li><a href="#frequently-asked-questions-faq">Frequently Asked Questions
+(FAQ)</a></li>
 <li><a href="#file-structure">File Structure</a></li>
-<li><a href="#technical-details-for-the-curious">Technical Details</a></li>
-<li><a href="#license--legal-notice">License & Legal Notice</a></li>
+<li><a href="#technical-details-for-the-curious">Technical
+Details</a></li>
+<li><a href="#license--legal-notice">License &amp; Legal Notice</a></li>
+<li><a href="#original-project--acknowledgments">Original Project &amp;
+Acknowledgments</a></li>
 <li><a href="#changelog-summary">Changelog Summary</a></li>
 </ul>
-
-<hr>
-
+<hr />
 <h2 id="what-is-this">What Is This?</h2>
-
-<p>Every time you open your web browser (a program like Google Chrome that lets you visit websites), it shows a <strong>start page</strong> (the first page you see when the browser opens). Usually, that is just Google's search page or something the browser chose for you.</p>
-
-<p><strong>This project replaces that page with your own custom dashboard</strong> -- a beautiful, personal homepage where you can organize your bookmarks (favorite websites), write notes, manage to-do lists, track habits, and more.</p>
-
-<p>The dashboard runs as a tiny <strong>server</strong> (a small program running quietly in the background on your computer, like a helpful assistant waiting for requests). It uses something called <strong>Node.js</strong> (explained later in the Requirements section) as its engine. Your data stays private -- nothing is ever sent to any company or server on the internet. You do not need to know how to code. You do not need to install complicated software. Just run one setup file, and you are done.</p>
-
-<blockquote><p><strong>Three key points:</strong></p>
-<ul><li><strong>No coding knowledge required</strong> -- double-click one file and the installation is done (this includes people who only use natural language or "vibe coding" to build software)</li><li><strong>Your data stays on your computer only</strong> -- nothing is ever sent to any external server</li><li><strong>No extra software to install</strong> -- it downloads what it needs and runs independently</li></ul></blockquote>
-
-<hr>
-
+<p>Every time you open your web browser (a program like Google Chrome
+that lets you visit websites), it shows a <strong>start page</strong>
+(the first page you see when the browser opens). Usually, that is just
+Google’s search page or something the browser chose for you.</p>
+<p><strong>This project replaces that page with your own custom
+dashboard</strong> – a beautiful, personal homepage where you can
+organize your bookmarks (favorite websites), write notes, manage to-do
+lists, track habits, and more.</p>
+<p>The dashboard runs as a tiny <strong>server</strong> (a small program
+running quietly in the background on your computer, like a helpful
+assistant waiting for requests). It uses something called
+<strong>Node.js</strong> (explained later in the Requirements section)
+as its engine. Your data stays private – nothing is ever sent to any
+company or server on the internet. You do not need to know how to code.
+You do not need to install complicated software. Just run one setup
+file, and you are done.</p>
+<blockquote>
+<p><strong>Three key points:</strong> - <strong>No coding knowledge
+required</strong> – double-click one file and the installation is done
+(this includes people who only use natural language or “vibe coding” to
+build software) - <strong>Your data stays on your computer only</strong>
+– nothing is ever sent to any external server - <strong>No extra
+software to install</strong> – it downloads what it needs and runs
+independently</p>
+</blockquote>
+<hr />
 <h2 id="quick-start-3-steps">Quick Start (3 Steps)</h2>
-
-<blockquote><p>For people who just want to get it running fast, without reading every detail. Curious</p>
-<p>what each step actually does? The <a href="#installation">Installation</a> section below walks</p>
-<p>through it step by step.</p></blockquote>
-
-<ol>
-<li><strong>Download</strong> -- save this whole project folder anywhere on your computer.</li>
-<li><strong>Run the setup script</strong> -- double-click <code>setup_windows.bat</code> (Windows) or run</li>
+<blockquote>
+<p>For people who just want to get it running fast, without reading
+every detail. Curious what each step actually does? The <a
+href="#installation">Installation</a> section below walks through it
+step by step.</p>
+</blockquote>
+<ol type="1">
+<li><strong>Download</strong> – save this whole project folder anywhere
+on your computer.</li>
+<li><strong>Run the setup script</strong> – double-click
+<code>setup_windows.bat</code> (Windows) or run
+<code>setup_mac.sh</code> (Mac) inside the folder. Wait until you see
+“Setup Complete!”</li>
+<li><strong>Open it in Chrome</strong> – type
+<code>http://localhost:1111</code> into Chrome’s address bar and press
+Enter.</li>
 </ol>
-<p>   <code>setup_mac.sh</code> (Mac) inside the folder. Wait until you see "Setup Complete!"</p>
-<ol>
-<li><strong>Open it in Chrome</strong> -- type <code>http://localhost:1111</code> into Chrome's address bar and</li>
-</ol>
-<p>   press Enter.</p>
-
-<p>That's it. From now on, the server starts automatically every time you turn on your</p>
-<p>computer -- you never need to reinstall. Just open that address in Chrome.</p>
-
-<hr>
-
+<p>That’s it. From now on, the server starts automatically every time
+you turn on your computer – you never need to reinstall. Just open that
+address in Chrome.</p>
+<hr />
 <h2 id="preview">Preview</h2>
-
-<blockquote><p>Replace these placeholders with actual screenshots of your dashboard.</p></blockquote>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Dark Theme</th><th>Light Theme</th></tr></thead>
+<blockquote>
+<p>Replace these placeholders with actual screenshots of your
+dashboard.</p>
+</blockquote>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">Dark Theme</th>
+<th style="text-align: center;">Light Theme</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><img alt="Dark theme screenshot" src="https://via.placeholder.com/600x380?text=Dark+Theme+Screenshot"></td><td><img alt="Light theme screenshot" src="https://via.placeholder.com/600x380?text=Light+Theme+Screenshot"></td></tr>
-</tbody></table></div>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Bookmarks & Cards</th><th>Settings Panel</th></tr></thead>
+<tr>
+<td style="text-align: center;"><img
+src="https://via.placeholder.com/600x380?text=Dark+Theme+Screenshot"
+alt="Dark theme screenshot" /></td>
+<td style="text-align: center;"><img
+src="https://via.placeholder.com/600x380?text=Light+Theme+Screenshot"
+alt="Light theme screenshot" /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 55%" />
+<col style="width: 44%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">Bookmarks &amp; Cards</th>
+<th style="text-align: center;">Settings Panel</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><img alt="Bookmarks screenshot" src="https://via.placeholder.com/600x380?text=Bookmarks+and+Cards"></td><td><img alt="Settings screenshot" src="https://via.placeholder.com/600x380?text=Settings+Panel"></td></tr>
-</tbody></table></div>
-
-<hr>
-
+<tr>
+<td style="text-align: center;"><img
+src="https://via.placeholder.com/600x380?text=Bookmarks+and+Cards"
+alt="Bookmarks screenshot" /></td>
+<td style="text-align: center;"><img
+src="https://via.placeholder.com/600x380?text=Settings+Panel"
+alt="Settings screenshot" /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
 <h2 id="features">Features</h2>
-
-<h3 id="bookmarktabs-bookmarks-organization">📑 Bookmarks & Organization</h3>
-
+<h3 id="bookmark_tabs-bookmarks-organization">:bookmark_tabs: Bookmarks
+&amp; Organization</h3>
 <ul>
-<li><strong>Bookmark cards</strong> -- group your favorite websites into neat categories (Work, Social, Shopping, etc.)</li>
-<li><strong>Multiple pages</strong> -- split bookmarks across separate tabs when one page is not enough (e.g., "Work", "Personal", "Study")</li>
-<li><strong>Unified search</strong> -- search your bookmarks, notes, to-dos, and events all at once with one keystroke</li>
-<li><strong>Smart paste</strong> -- copy a website address (URL) and press Ctrl+V anywhere on the page; a category picker appears automatically</li>
-<li><strong>Drag and drop</strong> -- drag links from Chrome's address bar directly onto a card</li>
-<li><strong>Dead link detection</strong> -- automatically finds bookmarks that no longer work</li>
-<li><strong>Multi-select</strong> -- hold Ctrl and click to select several bookmarks at once, then move or delete them together</li>
-<li><strong>Pin to top</strong> -- pin your most important bookmarks so they always appear at the top of their card</li>
+<li><strong>Bookmark cards</strong> – group your favorite websites into
+neat categories (Work, Social, Shopping, etc.)</li>
+<li><strong>Multiple pages</strong> – split bookmarks across separate
+tabs when one page is not enough (e.g., “Work”, “Personal”,
+“Study”)</li>
+<li><strong>Unified search</strong> – search your bookmarks, notes,
+to-dos, and events all at once with one keystroke</li>
+<li><strong>Smart paste</strong> – copy a website address (URL) and
+press Ctrl+V anywhere on the page; a category picker appears
+automatically</li>
+<li><strong>Drag and drop</strong> – drag links from Chrome’s address
+bar directly onto a card</li>
+<li><strong>Dead link detection</strong> – automatically finds bookmarks
+that no longer work</li>
+<li><strong>Multi-select</strong> – hold Ctrl and click to select
+several bookmarks at once, then move or delete them together</li>
+<li><strong>Pin to top</strong> – pin your most important bookmarks so
+they always appear at the top of their card</li>
 </ul>
-
-<h3 id="mag-search">🔍 Search</h3>
-
+<h3 id="mag-search">:mag: Search</h3>
 <ul>
-<li><strong>Web search</strong> -- type in the search bar at the top and press Enter to search the web</li>
-<li><strong>Multi-search engine</strong> -- switch between Google, YouTube, Naver, and others with one click</li>
-<li><strong>Unified search (Spotlight)</strong> -- press <code>F</code> to search bookmarks, to-dos, notes, and calendar events all at once</li>
-<li><strong>Korean initial consonant search</strong> -- type just the first consonants (e.g., "ㄴㅇㅂ") and matching bookmarks like "네이버" appear</li>
-<li><strong>Keyword shortcuts</strong> -- type <code>yt cats</code> to search YouTube for "cats" directly</li>
-<li><strong>Command mode</strong> -- in unified search, type <code>&gt;settings</code>, <code>&gt;theme</code>, <code>&gt;timer</code>, etc. to run commands instantly</li>
+<li><strong>Web search</strong> – type in the search bar at the top and
+press Enter to search the web</li>
+<li><strong>Multi-search engine</strong> – switch between Google,
+YouTube, Naver, and others with one click</li>
+<li><strong>Unified search (Spotlight)</strong> – press <code>F</code>
+to search bookmarks, to-dos, notes, and calendar events all at once</li>
+<li><strong>Korean initial consonant search</strong> – type just the
+first consonants (e.g., “ㄴㅇㅂ”) and matching bookmarks like “네이버”
+appear</li>
+<li><strong>Keyword shortcuts</strong> – type <code>yt cats</code> to
+search YouTube for “cats” directly</li>
+<li><strong>Command mode</strong> – in unified search, type
+<code>&gt;settings</code>, <code>&gt;theme</code>,
+<code>&gt;timer</code>, etc. to run commands instantly</li>
 </ul>
-
-<h3 id="whitecheckmark-productivity-tools">✅ Productivity Tools</h3>
-
+<h3 id="white_check_mark-productivity-tools">:white_check_mark:
+Productivity Tools</h3>
 <ul>
-<li><strong>To-do list</strong> -- tasks with priority levels (high / medium / low), tags, due dates, and recurring schedules; drag to reorder; completed items automatically move to the bottom</li>
-<li><strong>Notes</strong> -- create as many note cards as you need for simple text notes (multiple cards supported)</li>
-<li><strong>Calendar</strong> -- monthly or weekly view with event creation and browser notifications</li>
-<li><strong>Pomodoro timer</strong> -- a 25-minute focus timer with optional automatic 5-minute breaks (auto-session continues cycles)</li>
-<li><strong>Habit tracker</strong> -- daily checklist that resets every midnight</li>
+<li><strong>To-do list</strong> – tasks with priority levels (high /
+medium / low), tags, due dates, and recurring schedules; drag to
+reorder; completed items automatically move to the bottom</li>
+<li><strong>Notes</strong> – create as many note cards as you need for
+simple text notes (multiple cards supported)</li>
+<li><strong>Calendar</strong> – monthly or weekly view with event
+creation and browser notifications</li>
+<li><strong>Pomodoro timer</strong> – a 25-minute focus timer with
+optional automatic 5-minute breaks (auto-session continues cycles)</li>
+<li><strong>Habit tracker</strong> – daily checklist that resets every
+midnight</li>
 </ul>
-
-<h3 id="art-appearance-customization">🎨 Appearance & Customization</h3>
-
+<h3 id="art-appearance-customization">:art: Appearance &amp;
+Customization</h3>
 <ul>
-<li><strong>Dark / Light theme</strong> -- switch with one click (with a smooth circle transition animation), or automatically follow your computer's setting</li>
-<li><strong>6 accent colors</strong> -- blue, purple, rose, emerald, amber, cyan</li>
-<li><strong>Custom backgrounds</strong> -- upload your own images; with 1 image it stays fixed, with 2 or more they become a slideshow (ON/OFF toggle, adjustable interval, manual previous/next buttons)</li>
-<li><strong>Glass-morphism UI</strong> -- adjustable card transparency (blur slider) and opacity (opacity slider) for a modern frosted-glass look</li>
-<li><strong>Layout presets</strong> -- 4 types: Default, Compact, Wide, or Magazine</li>
-<li><strong>Custom CSS</strong> -- for advanced users who want to write their own styling rules</li>
+<li><strong>Dark / Light theme</strong> – switch with one click (with a
+smooth circle transition animation), or automatically follow your
+computer’s setting</li>
+<li><strong>6 accent colors</strong> – blue, purple, rose, emerald,
+amber, cyan</li>
+<li><strong>Custom backgrounds</strong> – upload your own images; with 1
+image it stays fixed, with 2 or more they become a slideshow (ON/OFF
+toggle, adjustable interval, manual previous/next buttons)</li>
+<li><strong>Glass-morphism UI</strong> – adjustable card transparency
+(blur slider) and opacity (opacity slider) for a modern frosted-glass
+look</li>
+<li><strong>Layout presets</strong> – 4 types: Default, Compact, Wide,
+or Magazine</li>
+<li><strong>Custom CSS</strong> – for advanced users who want to write
+their own styling rules</li>
 </ul>
-
-<h3 id="cloud-weather-clock">☁️ Weather & Clock</h3>
-
+<h3 id="cloud-weather-clock">:cloud: Weather &amp; Clock</h3>
 <ul>
-<li><strong>Weather widget</strong> -- shows current weather for your city using <a href="https://openweathermap.org/api">OpenWeatherMap</a> (requires a free API key -- explained below)</li>
-<li><strong>World clock</strong> -- display multiple time zones at the top of the dashboard (e.g., New York, London, Tokyo)</li>
+<li><strong>Weather widget</strong> – shows current weather for your
+city using <a href="https://openweathermap.org/api">OpenWeatherMap</a>
+(requires a free API key – explained below)</li>
+<li><strong>World clock</strong> – display multiple time zones at the
+top of the dashboard (e.g., New York, London, Tokyo)</li>
 </ul>
-
-<h3 id="calendar-d-day-countdown">📆 D-Day Countdown</h3>
-
+<h3 id="calendar-d-day-countdown">:calendar: D-Day Countdown</h3>
 <ul>
-<li>Track important dates with "D-7", "D-3", "D-Day", "D+1" style countdowns</li>
+<li>Track important dates with “D-7”, “D-3”, “D-Day”, “D+1” style
+countdowns</li>
 <li>Displayed at the top of the dashboard for quick reference</li>
 <li>Past dates show how many days have passed</li>
 </ul>
-
-<h3 id="keyboard-keyboard-shortcuts">⌨️ Keyboard Shortcuts</h3>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Key</th><th>What it does</th></tr></thead>
+<h3 id="keyboard-keyboard-shortcuts">:keyboard: Keyboard Shortcuts</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>What it does</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><code>/</code></td><td>Move cursor to the search bar</td></tr>
-<tr><td><code>F</code></td><td>Open unified search (bookmarks + to-dos + notes + events)</td></tr>
-<tr><td><code>S</code></td><td>Open settings</td></tr>
-<tr><td><code>E</code></td><td>Toggle edit mode (shows card management buttons)</td></tr>
-<tr><td><code>1</code> through <code>9</code></td><td>Jump to the 1st, 2nd, ... 9th card</td></tr>
-<tr><td><code>Esc</code></td><td>Close any open popup or modal</td></tr>
-<tr><td><code>Ctrl+Z</code></td><td>Undo the last action (delete, move, etc.)</td></tr>
-</tbody></table></div>
-
-<h3 id="shield-safety-privacy">🛡️ Safety & Privacy</h3>
-
+<tr>
+<td><code>/</code></td>
+<td>Move cursor to the search bar</td>
+</tr>
+<tr>
+<td><code>F</code></td>
+<td>Open unified search (bookmarks + to-dos + notes + events)</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td>Open settings</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td>Toggle edit mode (shows card management buttons)</td>
+</tr>
+<tr>
+<td><code>1</code> through <code>9</code></td>
+<td>Jump to the 1st, 2nd, … 9th card</td>
+</tr>
+<tr>
+<td><code>Esc</code></td>
+<td>Close any open popup or modal</td>
+</tr>
+<tr>
+<td><code>Ctrl+Z</code></td>
+<td>Undo the last action (delete, move, etc.)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="shield-safety-privacy">:shield: Safety &amp; Privacy</h3>
 <ul>
-<li><strong>100% local</strong> -- your data never leaves your computer; no accounts, no cloud, no tracking</li>
-<li><strong>Automatic backups</strong> -- the server creates backups on a smart retention schedule, keeping up to 50 files</li>
-<li><strong>Full export / import</strong> -- download everything (bookmarks, notes, settings, icons, backgrounds) as one JSON, Markdown, or HTML file</li>
-<li><strong>Trash with undo</strong> -- accidentally deleted something? Press Ctrl+Z to bring it back (10-level undo stack -- you can undo up to 10 actions in a row)</li>
-<li><strong>Localhost only</strong> -- the server only listens on <code>127.0.0.1</code> (your computer); nobody else on your network can access it</li>
-<li><strong>Zero dependencies</strong> -- the server uses only built-in features of Node.js; nothing extra to download or update</li>
-<li><strong>Offline support</strong> -- the dashboard works even without an internet connection (except weather)</li>
-<li><strong>Profiles</strong> -- save and switch between different dashboard setups</li>
-<li><strong>Backup list and restore UI</strong> -- browse all your backups with dates and sizes, and restore any one with a single click</li>
-<li><strong>Import preview</strong> -- before applying an import, see a summary of exactly how many bookmarks, notes, and other items will be imported</li>
-<li><strong>Tab sync</strong> -- if you have the dashboard open in multiple browser tabs, changes sync instantly between them (uses BroadcastChannel API)</li>
+<li><strong>100% local</strong> – your data never leaves your computer;
+no accounts, no cloud, no tracking</li>
+<li><strong>Automatic backups</strong> – the server creates backups on a
+smart retention schedule, keeping up to 50 files</li>
+<li><strong>Full export / import</strong> – download everything
+(bookmarks, notes, settings, icons, backgrounds) as one JSON, Markdown,
+or HTML file</li>
+<li><strong>Trash with undo</strong> – accidentally deleted something?
+Press Ctrl+Z to bring it back (10-level undo stack – you can undo up to
+10 actions in a row)</li>
+<li><strong>Localhost only</strong> – the server only listens on
+<code>127.0.0.1</code> (your computer); nobody else on your network can
+access it</li>
+<li><strong>Zero dependencies</strong> – the server uses only built-in
+features of Node.js; nothing extra to download or update</li>
+<li><strong>Offline support</strong> – the dashboard works even without
+an internet connection (except weather)</li>
+<li><strong>Profiles</strong> – save and switch between different
+dashboard setups</li>
+<li><strong>Backup list and restore UI</strong> – browse all your
+backups with dates and sizes, and restore any one with a single
+click</li>
+<li><strong>Import preview</strong> – before applying an import, see a
+summary of exactly how many bookmarks, notes, and other items will be
+imported</li>
+<li><strong>Tab sync</strong> – if you have the dashboard open in
+multiple browser tabs, changes sync instantly between them (uses
+BroadcastChannel API)</li>
 </ul>
-
-<hr>
-
+<hr />
 <h2 id="requirements">Requirements</h2>
-
-<blockquote><p>"Requirements" means the things you need before you can start.</p></blockquote>
-
-<div class="table-wrap"><table>
-<thead><tr><th>What</th><th>Why</th><th>How to get it</th></tr></thead>
+<blockquote>
+<p>“Requirements” means the things you need before you can start.</p>
+</blockquote>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 19%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr>
+<th>What</th>
+<th>Why</th>
+<th>How to get it</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>A computer</strong></td><td>Windows 10/11, macOS, or Linux</td><td>You probably already have this</td></tr>
-<tr><td><strong>Google Chrome</strong> (or any browser)</td><td>To view the dashboard</td><td><a href="https://www.google.com/chrome/">Download Chrome</a></td></tr>
-<tr><td><strong>Internet connection</strong></td><td>Only needed for the first-time setup</td><td>After setup, the dashboard works offline</td></tr>
-<tr><td><strong>Node.js</strong></td><td>A small program that runs the dashboard in the background</td><td><strong>Windows:</strong> the setup file downloads it for you automatically. <strong>Mac/Linux:</strong> install from <a href="https://nodejs.org">nodejs.org</a></td></tr>
-</tbody></table></div>
-
-<blockquote><p><strong>What is Node.js?</strong> Think of it as a tiny engine that powers the dashboard behind the scenes. If the dashboard is a "car", Node.js is the "engine" that makes it go. It runs quietly in the background and uses very little memory (about 15 MB -- less than a single browser tab). On Windows, the setup file (<code>setup_windows.bat</code>) downloads a portable copy of Node.js automatically, so you do not need to install anything yourself. If Node.js is already installed on your system, it will use that; if not, it downloads a private copy just for this project.</p></blockquote>
-
-<hr>
-
+<tr>
+<td><strong>A computer</strong></td>
+<td>Windows 10/11, macOS, or Linux</td>
+<td>You probably already have this</td>
+</tr>
+<tr>
+<td><strong>Google Chrome</strong> (or any browser)</td>
+<td>To view the dashboard</td>
+<td><a href="https://www.google.com/chrome/">Download Chrome</a></td>
+</tr>
+<tr>
+<td><strong>Internet connection</strong></td>
+<td>Only needed for the first-time setup</td>
+<td>After setup, the dashboard works offline</td>
+</tr>
+<tr>
+<td><strong>Node.js</strong></td>
+<td>A small program that runs the dashboard in the background</td>
+<td><strong>Windows:</strong> the setup file downloads it for you
+automatically. <strong>Mac/Linux:</strong> install from <a
+href="https://nodejs.org">nodejs.org</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>What is Node.js?</strong> Think of it as a tiny engine that
+powers the dashboard behind the scenes. If the dashboard is a “car”,
+Node.js is the “engine” that makes it go. It runs quietly in the
+background and uses very little memory (about 15 MB – less than a single
+browser tab). On Windows, the setup file
+(<code>setup_windows.bat</code>) downloads a portable copy of Node.js
+automatically, so you do not need to install anything yourself. If
+Node.js is already installed on your system, it will use that; if not,
+it downloads a private copy just for this project.</p>
+</blockquote>
+<blockquote>
+<p><strong>Do I need any environment variables?</strong> No, this
+project uses none at all. Every personal setting – including API keys
+like the weather widget’s – is stored through the dashboard’s own
+Settings screen or in <code>data/config.json</code>, never in a
+<code>.env</code> file, so there is no environment-variable step before
+running the server.</p>
+</blockquote>
+<blockquote>
+<p><strong>How do I “deploy” this?</strong> This isn’t a cloud web
+service – it’s a program you <strong>install and run on your own
+computer only</strong>. There is no separate deployment step; running
+the setup script in the <a href="#installation">Installation</a> section
+below <em>is</em> the deployment. There is no <code>npm publish</code>,
+no server upload, no domain to configure.</p>
+</blockquote>
+<hr />
 <h2 id="installation">Installation</h2>
-
-<h3 id="computer-windows-easiest----no-coding-needed">🖥️ Windows (Easiest -- No Coding Needed)</h3>
-
-<blockquote><p><strong>Time needed:</strong> About 2-5 minutes.</p></blockquote>
-
+<h3 id="computer-windows-easiest-no-coding-needed">:computer: Windows
+(Easiest – No Coding Needed)</h3>
+<blockquote>
+<p><strong>Time needed:</strong> About 2-5 minutes.</p>
+</blockquote>
 <p><strong>Step 1: Download the project</strong></p>
-
 <p>Download this project folder and place it anywhere you like.</p>
-
 <p>Example: <code>C:\Users\YourName\Dashboard</code></p>
-
-<blockquote><p>Your Desktop, Documents folder, or any location is fine. Just avoid system folders like <code>C:\Windows</code> or <code>C:\Program Files</code>. Remember: if you delete this folder later, the dashboard goes with it, so put it somewhere safe.</p></blockquote>
-
+<blockquote>
+<p>Your Desktop, Documents folder, or any location is fine. Just avoid
+system folders like <code>C:\Windows</code> or
+<code>C:\Program Files</code>. Remember: if you delete this folder
+later, the dashboard goes with it, so put it somewhere safe.</p>
+</blockquote>
 <p><strong>Step 2: Run the setup</strong></p>
-
-<p>Open the folder and find the file called <strong><code>setup_windows.bat</code></strong>. It has a gear-like icon and looks like a small script file. <strong>Double-click</strong> it.</p>
-
-<p>A black window (called "Command Prompt" -- a text-based way to give instructions to your computer) will appear with progress messages:</p>
-<ol>
-<li>It checks if Node.js (the engine) is already on your computer</li>
-<li>If not, it automatically downloads a portable copy (~30 MB -- this only happens once)</li>
-<li>If Node.js is already installed system-wide, it uses that instead</li>
-<li>The dashboard server starts in the background (no visible window)</li>
-<li>Auto-start is registered so it launches every time you turn on your computer</li>
-</ol>
-
-<p>Wait until you see <strong>"Setup Complete!"</strong> -- then the black window is safe to close.</p>
-
+<p>Open the folder and find the file called
+<strong><code>setup_windows.bat</code></strong>. It has a gear-like icon
+and looks like a small script file. <strong>Double-click</strong>
+it.</p>
+<p>A black window (called “Command Prompt” – a text-based way to give
+instructions to your computer) will appear with progress messages: 1. It
+checks if Node.js (the engine) is already on your computer 2. If not, it
+automatically downloads a portable copy (~30 MB – this only happens
+once) 3. If Node.js is already installed system-wide, it uses that
+instead 4. The dashboard server starts in the background (no visible
+window) 5. Auto-start is registered so it launches every time you turn
+on your computer</p>
+<p>Wait until you see <strong>“Setup Complete!”</strong> – then the
+black window is safe to close.</p>
 <p><strong>Step 3: Open it in Chrome</strong></p>
-
-<p>Open Chrome and type this address in the <strong>address bar</strong> (the long text box at the very top of the browser window where you normally see website addresses):</p>
-
+<p>Open Chrome and type this address in the <strong>address bar</strong>
+(the long text box at the very top of the browser window where you
+normally see website addresses):</p>
 <pre><code>http://localhost:1111</code></pre>
-
 <p>Then press <strong>Enter</strong>.</p>
-
-<blockquote><p><strong>What does <code>localhost:1111</code> mean?</strong> "localhost" means "this computer" -- you are telling Chrome to look at your own computer instead of the internet. "1111" is the <strong>port</strong> number (think of it as a door number -- explained more in the Settings section).</p></blockquote>
-
-<p><strong>You are done!</strong> From now on, the dashboard starts automatically every time you turn on your computer -- no popups, no extra windows.</p>
-
+<blockquote>
+<p><strong>What does <code>localhost:1111</code> mean?</strong>
+“localhost” means “this computer” – you are telling Chrome to look at
+your own computer instead of the internet. “1111” is the
+<strong>port</strong> number (think of it as a door number – explained
+more in the Settings section).</p>
+</blockquote>
+<p><strong>You are done!</strong> From now on, the dashboard starts
+automatically every time you turn on your computer – no popups, no extra
+windows.</p>
 <details>
-<summary>What does setup_windows.bat actually do? (click to read)</summary>
-
-<ol>
-<li>Checks if you already have data and creates a safety backup first (<code>safety-before-setup.json</code>)</li>
-<li>Downloads a portable copy of Node.js into the <code>node/</code> folder (if not already there and no system Node.js is found)</li>
+<summary>
+What does setup_windows.bat actually do? (click to read)
+</summary>
+<ol type="1">
+<li>Checks if you already have data and creates a safety backup first
+(<code>safety-before-setup.json</code>)</li>
+<li>Downloads a portable copy of Node.js into the <code>node/</code>
+folder (if not already there and no system Node.js is found)</li>
 <li>Stops any previously running dashboard server</li>
-<li>Registers auto-start so the dashboard launches when you log in (no admin rights needed)</li>
-<li>Starts the server silently in the background (no visible window)</li>
+<li>Registers auto-start so the dashboard launches when you log in (no
+admin rights needed) – using <strong>two methods at once</strong>: a
+Windows Registry entry and a Startup-folder shortcut. Some antivirus
+tools mistakenly flag “something that quietly launches every login” and
+remove one of the two, so registering both means one always survives
+(since v7.4). On top of that, the server checks every time it starts
+whether this registration is still intact and silently re-registers it
+if not (self-healing) – since you likely open the dashboard many times a
+day, most breaks fix themselves the next time it starts.</li>
+<li>Starts the server silently in the background (no visible
+window)</li>
 </ol>
-
-<p>It does NOT install anything system-wide. It does NOT modify your Windows settings beyond a single auto-start entry. Everything stays inside the project folder.</p>
-
+<p>It does NOT install anything system-wide. It does NOT modify your
+Windows settings beyond a single auto-start entry. Everything stays
+inside the project folder.</p>
 </details>
-
-<hr>
-
-<h3 id="apple-mac">🍎 Mac</h3>
-
-<blockquote><p><strong>Time needed:</strong> About 3 minutes. You will need to type a few commands.</p></blockquote>
-
+<hr />
+<h3 id="apple-mac">:apple: Mac</h3>
+<blockquote>
+<p><strong>Time needed:</strong> About 3 minutes. You will need to type
+a few commands.</p>
+</blockquote>
 <p><strong>Step 1: Install Node.js</strong></p>
-
-<p>Go to <a href="https://nodejs.org">nodejs.org</a> and click the big green button on the website. Follow the instructions to install it.</p>
-
+<p>Go to <a href="https://nodejs.org">nodejs.org</a> and click the big
+green button on the website. Follow the instructions to install it.</p>
 <p><strong>Step 2: Open Terminal</strong></p>
-
-<p>You need to open an app called <strong>Terminal</strong> (a text-based window where you type commands to control your computer -- think of it as talking to your computer by typing instead of clicking):</p>
-
+<p>You need to open an app called <strong>Terminal</strong> (a
+text-based window where you type commands to control your computer –
+think of it as talking to your computer by typing instead of
+clicking):</p>
 <ul>
-<li>Press <code>Cmd + Space</code> on your keyboard (this opens Spotlight search)</li>
+<li>Press <code>Cmd + Space</code> on your keyboard (this opens
+Spotlight search)</li>
 <li>Type <code>Terminal</code> and press Enter</li>
-<li>A window with a text prompt will appear -- this is where you type commands</li>
+<li>A window with a text prompt will appear – this is where you type
+commands</li>
 </ul>
-
 <p><strong>Step 3: Navigate to the project folder</strong></p>
-
-<p>Type the following command and press Enter. This tells Terminal to "go to" the folder where you put the project:</p>
-
-<pre><code>cd ~/Dashboard</code></pre>
-
-<blockquote><p>Replace <code>~/Dashboard</code> with the actual path to where you put the project folder. The <code>cd</code> command means "change directory" (go to a folder). The <code>~</code> symbol means your home folder.</p></blockquote>
-
+<p>Type the following command and press Enter. This tells Terminal to
+“go to” the folder where you put the project:</p>
+<pre class="bash"><code>cd ~/Dashboard</code></pre>
+<blockquote>
+<p>Replace <code>~/Dashboard</code> with the actual path to where you
+put the project folder. The <code>cd</code> command means “change
+directory” (go to a folder). The <code>~</code> symbol means your home
+folder.</p>
+</blockquote>
 <p><strong>Step 4: Give the setup file permission to run</strong></p>
-
-<pre><code>chmod +x setup_mac.sh</code></pre>
-
-<blockquote><p>The <code>chmod</code> command gives the setup file permission to run. Mac requires this step for security.</p></blockquote>
-
+<pre class="bash"><code>chmod +x setup_mac.sh</code></pre>
+<blockquote>
+<p>The <code>chmod</code> command gives the setup file permission to
+run. Mac requires this step for security.</p>
+</blockquote>
 <p><strong>Step 5: Run the setup</strong></p>
-
-<pre><code>./setup_mac.sh</code></pre>
-
-<blockquote><p>The <code>./</code> prefix means "run this file in the current folder".</p></blockquote>
-
+<pre class="bash"><code>./setup_mac.sh</code></pre>
+<blockquote>
+<p>The <code>./</code> prefix means “run this file in the current
+folder”.</p>
+</blockquote>
 <p><strong>Step 6: Open it in Chrome</strong></p>
-
 <p>Open Chrome and go to:</p>
-
 <pre><code>http://localhost:1111</code></pre>
-
 <p><strong>Step 7: Done!</strong></p>
-
-<p>The dashboard will auto-start every time you log in. You can close Terminal now.</p>
-
-<hr>
-
-<h3 id="penguin-linux">🐧 Linux</h3>
-
-<ol>
-<li>Install Node.js from <a href="https://nodejs.org">nodejs.org</a> or your package manager (e.g., <code>sudo apt install nodejs</code>)</li>
-<li>Open a <strong>terminal</strong> (a text window for typing commands -- most Linux systems open it with <code>Ctrl+Alt+T</code>)</li>
-<li>Navigate to the project folder and run the server:</li>
-<pre><code>   cd ~/Dashboard
-   node server.js</code></pre>
-<li>Open Chrome and go to <code>http://localhost:1111</code></li>
+<p>The dashboard will auto-start every time you log in. You can close
+Terminal now.</p>
+<hr />
+<h3 id="penguin-linux">:penguin: Linux</h3>
+<ol type="1">
+<li><p>Install Node.js from <a href="https://nodejs.org">nodejs.org</a>
+or your package manager (e.g.,
+<code>sudo apt install nodejs</code>)</p></li>
+<li><p>Open a <strong>terminal</strong> (a text window for typing
+commands – most Linux systems open it with
+<code>Ctrl+Alt+T</code>)</p></li>
+<li><p>Navigate to the project folder and run the server:</p>
+<pre class="bash"><code>cd ~/Dashboard
+node server.js</code></pre></li>
+<li><p>Open Chrome and go to <code>http://localhost:1111</code></p></li>
 </ol>
-
 <details>
-<summary>Set up auto-start with systemd (click to read)</summary>
-
-<p><strong>systemd</strong> is a tool built into most Linux systems that can automatically start programs when your computer boots. Create a systemd "service" so the dashboard starts automatically:</p>
-
-<pre><code>sudo tee /etc/systemd/system/dashboard.service &lt;&lt; EOF
+<summary>
+Set up auto-start with systemd (click to read)
+</summary>
+<p><strong>systemd</strong> is a tool built into most Linux systems that
+can automatically start programs when your computer boots. Create a
+systemd “service” so the dashboard starts automatically:</p>
+<pre class="bash"><code>sudo tee /etc/systemd/system/dashboard.service &lt;&lt; EOF
 [Unit]
 Description=Chrome Starting Page Dashboard
 After=network.target
@@ -416,108 +611,227 @@ EOF
 
 sudo systemctl enable dashboard
 sudo systemctl start dashboard</code></pre>
-
-<blockquote><p>Replace <code>$HOME/Dashboard</code> with the actual path to your project folder if different.</p></blockquote>
-
+<blockquote>
+<p>Replace <code>$HOME/Dashboard</code> with the actual path to your
+project folder if different.</p>
+</blockquote>
 </details>
-
-<hr>
-
+<hr />
 <h2 id="how-to-use">How to Use</h2>
-
-<h3 id="setting-it-as-your-chrome-start-page">Setting It as Your Chrome Start Page</h3>
-
+<h3 id="setting-it-as-your-chrome-start-page">Setting It as Your Chrome
+Start Page</h3>
 <p>This makes the dashboard appear every time you open Chrome:</p>
-
-<ol>
+<ol type="1">
 <li>Open Chrome</li>
-<li>Type <code>chrome://settings/onStartup</code> in the address bar and press <strong>Enter</strong></li>
-<li>Select <strong>"Open a specific page or set of pages"</strong></li>
-<li>Click <strong>"Add a new page"</strong></li>
-<li>Type <code>http://localhost:1111</code> and click <strong>Add</strong></li>
+<li>Type <code>chrome://settings/onStartup</code> in the address bar and
+press <strong>Enter</strong></li>
+<li>Select <strong>“Open a specific page or set of pages”</strong></li>
+<li>Click <strong>“Add a new page”</strong></li>
+<li>Type <code>http://localhost:1111</code> and click
+<strong>Add</strong></li>
 </ol>
-
-<blockquote><p>Now every time you open Chrome, your dashboard will greet you.</p></blockquote>
-
-<h3 id="setting-it-as-your-new-tab-page-optional">Setting It as Your New Tab Page (Optional)</h3>
-
-<p>If you also want to see the dashboard when you open a <strong>new tab</strong> (not just when Chrome starts):</p>
-
-<ol>
-<li>Install the free Chrome extension <a href="https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna">New Tab Redirect</a></li>
+<blockquote>
+<p>Now every time you open Chrome, your dashboard will greet you.</p>
+</blockquote>
+<h3 id="setting-it-as-your-new-tab-page-optional">Setting It as Your New
+Tab Page (Optional)</h3>
+<p>If you also want to see the dashboard when you open a <strong>new
+tab</strong> (not just when Chrome starts):</p>
+<ol type="1">
+<li>Install the free Chrome extension <a
+href="https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna">New
+Tab Redirect</a></li>
 <li>Set the redirect URL to <code>http://localhost:1111</code></li>
 </ol>
-
-<hr>
-
+<hr />
 <h3 id="basic-usage-guide">Basic Usage Guide</h3>
-
-<div class="table-wrap"><table>
-<thead><tr><th>What you want to do</th><th>How to do it</th></tr></thead>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 61%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th>What you want to do</th>
+<th>How to do it</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Add a bookmark</strong></td><td>Type or paste a URL in the input box at the bottom of any card, press Enter</td></tr>
-<tr><td><strong>Add by dragging</strong></td><td>Drag a URL from Chrome's address bar and drop it on a card</td></tr>
-<tr><td><strong>Add by pasting</strong></td><td>Copy a URL, then press Ctrl+V anywhere on the page -- a category picker appears</td></tr>
-<tr><td><strong>Rename a bookmark</strong></td><td>Double-click on a bookmark's name</td></tr>
-<tr><td><strong>Edit a bookmark</strong></td><td>Right-click on a bookmark > "Edit"</td></tr>
-<tr><td><strong>Delete a bookmark</strong></td><td>Hover over a bookmark and click the X button (you can undo with Ctrl+Z)</td></tr>
-<tr><td><strong>Reorder bookmarks</strong></td><td>Drag a bookmark up or down within a card</td></tr>
-<tr><td><strong>Move to another card</strong></td><td>Drag a bookmark from one card to another</td></tr>
-<tr><td><strong>Move to another page</strong></td><td>Right-click on a bookmark > "Move to another page"</td></tr>
-<tr><td><strong>Pin a bookmark to top</strong></td><td>Right-click on a bookmark > "Pin to top"</td></tr>
-<tr><td><strong>Select multiple</strong></td><td>Hold Ctrl and click several bookmarks, then use the action bar</td></tr>
-<tr><td><strong>Add a new card</strong></td><td>Click the <strong>"+ Add Card"</strong> button at the bottom of the page</td></tr>
-<tr><td><strong>Open settings</strong></td><td>Press the <code>S</code> key or click the settings icon</td></tr>
-</tbody></table></div>
-
+<tr>
+<td><strong>Add a bookmark</strong></td>
+<td>Type or paste a URL in the input box at the bottom of any card,
+press Enter</td>
+</tr>
+<tr>
+<td><strong>Add by dragging</strong></td>
+<td>Drag a URL from Chrome’s address bar and drop it on a card</td>
+</tr>
+<tr>
+<td><strong>Add by pasting</strong></td>
+<td>Copy a URL, then press Ctrl+V anywhere on the page – a category
+picker appears</td>
+</tr>
+<tr>
+<td><strong>Rename a bookmark</strong></td>
+<td>Double-click on a bookmark’s name</td>
+</tr>
+<tr>
+<td><strong>Edit a bookmark</strong></td>
+<td>Right-click on a bookmark &gt; “Edit”</td>
+</tr>
+<tr>
+<td><strong>Delete a bookmark</strong></td>
+<td>Hover over a bookmark and click the X button (you can undo with
+Ctrl+Z)</td>
+</tr>
+<tr>
+<td><strong>Reorder bookmarks</strong></td>
+<td>Drag a bookmark up or down within a card</td>
+</tr>
+<tr>
+<td><strong>Move to another card</strong></td>
+<td>Drag a bookmark from one card to another</td>
+</tr>
+<tr>
+<td><strong>Move to another page</strong></td>
+<td>Right-click on a bookmark &gt; “Move to another page”</td>
+</tr>
+<tr>
+<td><strong>Pin a bookmark to top</strong></td>
+<td>Right-click on a bookmark &gt; “Pin to top”</td>
+</tr>
+<tr>
+<td><strong>Select multiple</strong></td>
+<td>Hold Ctrl and click several bookmarks, then use the action bar</td>
+</tr>
+<tr>
+<td><strong>Add a new card</strong></td>
+<td>Click the <strong>“+ Add Card”</strong> button at the bottom of the
+page</td>
+</tr>
+<tr>
+<td><strong>Open settings</strong></td>
+<td>Press the <code>S</code> key or click the settings icon</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="pages">Pages</h3>
-
-<p>If you have many bookmarks, split them across multiple <strong>pages</strong> (like having separate tabs for "Work", "Personal", "Study"):</p>
-
+<p>If you have many bookmarks, split them across multiple
+<strong>pages</strong> (like having separate tabs for “Work”,
+“Personal”, “Study”):</p>
 <ul>
-<li><strong>Add a page:</strong> Settings > Widgets > Page Management > "+ Add Page"</li>
-<li><strong>Switch pages:</strong> Click the tabs at the top of the dashboard</li>
-<li><strong>Move a category to another page:</strong> In edit mode (press <code>E</code>), click the page button on a card's title bar</li>
-<li><strong>Move a bookmark to another page:</strong> Right-click on a bookmark > "Move to another page"</li>
+<li><strong>Add a page:</strong> Settings &gt; Widgets &gt; Page
+Management &gt; “+ Add Page”</li>
+<li><strong>Switch pages:</strong> Click the tabs at the top of the
+dashboard</li>
+<li><strong>Move a category to another page:</strong> In edit mode
+(press <code>E</code>), click the page button on a card’s title bar</li>
+<li><strong>Move a bookmark to another page:</strong> Right-click on a
+bookmark &gt; “Move to another page”</li>
 </ul>
-
 <h3 id="cards">Cards</h3>
-
-<p>Your dashboard is made of <strong>cards</strong>. Each card serves a different purpose. Think of them like different sections on your desk -- one for links, one for notes, one for tasks, and so on.</p>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Card</th><th>What it does</th></tr></thead>
+<p>Your dashboard is made of <strong>cards</strong>. Each card serves a
+different purpose. Think of them like different sections on your desk –
+one for links, one for notes, one for tasks, and so on.</p>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr>
+<th>Card</th>
+<th>What it does</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Bookmarks</strong></td><td>A collection of links organized by category</td></tr>
-<tr><td><strong>Notes</strong></td><td>Simple text notes -- create as many note cards as you need</td></tr>
-<tr><td><strong>To-do</strong></td><td>Task list with priority levels, tags, due dates, recurring tasks, and drag-to-sort</td></tr>
-<tr><td><strong>Calendar</strong></td><td>Monthly or weekly calendar view with event creation</td></tr>
-<tr><td><strong>Pomodoro</strong></td><td>A 25-minute focus timer with auto-session (press play to start)</td></tr>
-<tr><td><strong>Habits</strong></td><td>Daily habit checklist that resets every midnight</td></tr>
-</tbody></table></div>
-
-<p>To add a new card, click the <strong>"+ Add Card"</strong> button at the bottom of the page. In edit mode (press <code>E</code>), you can also change a card's width by clicking the size button on the card.</p>
-
+<tr>
+<td><strong>Bookmarks</strong></td>
+<td>A collection of links organized by category</td>
+</tr>
+<tr>
+<td><strong>Notes</strong></td>
+<td>Simple text notes – create as many note cards as you need</td>
+</tr>
+<tr>
+<td><strong>To-do</strong></td>
+<td>Task list with priority levels, tags, due dates, recurring tasks,
+and drag-to-sort</td>
+</tr>
+<tr>
+<td><strong>Calendar</strong></td>
+<td>Monthly or weekly calendar view with event creation</td>
+</tr>
+<tr>
+<td><strong>Pomodoro</strong></td>
+<td>A 25-minute focus timer with auto-session (press play to start)</td>
+</tr>
+<tr>
+<td><strong>Habits</strong></td>
+<td>Daily habit checklist that resets every midnight</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To add a new card, click the <strong>“+ Add Card”</strong> button at
+the bottom of the page. In edit mode (press <code>E</code>), you can
+also change a card’s width by clicking the size button on the card.</p>
 <h3 id="search-features">Search Features</h3>
-
-<div class="table-wrap"><table>
-<thead><tr><th>What you want to do</th><th>How to do it</th></tr></thead>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 61%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th>What you want to do</th>
+<th>How to do it</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Search the web</strong></td><td>Type in the search bar at the top and press Enter</td></tr>
-<tr><td><strong>Change search engine</strong></td><td>Click the icon to the left of the search bar (Google, YouTube, Naver, etc.)</td></tr>
-<tr><td><strong>Search everything at once</strong></td><td>Press the <code>F</code> key -- searches bookmarks, to-dos, notes, and events together</td></tr>
-<tr><td><strong>Korean initial consonant search</strong></td><td>Type just the first consonants (e.g., "ㄴㅇㅂ") and matching bookmarks appear</td></tr>
-<tr><td><strong>Keyword shortcuts</strong></td><td>Type <code>yt cats</code> to search YouTube for "cats" directly</td></tr>
-<tr><td><strong>Run commands</strong></td><td>In unified search, type <code>&gt;settings</code>, <code>&gt;theme</code>, <code>&gt;timer</code>, etc.</td></tr>
-</tbody></table></div>
-
-<hr>
-
-<h2 id="workflow-how-youll-actually-use-it-day-to-day">Workflow (How You'll Actually Use It Day to Day)</h2>
-
-<blockquote><p>"Workflow" just means the loop you'll repeat every day you use this dashboard. You don't</p>
-<p>need to memorize it -- it's here to give you a sense of what's happening behind the scenes.</p></blockquote>
-
+<tr>
+<td><strong>Search the web</strong></td>
+<td>Type in the search bar at the top and press Enter</td>
+</tr>
+<tr>
+<td><strong>Change search engine</strong></td>
+<td>Click the icon to the left of the search bar (Google, YouTube,
+Naver, etc.)</td>
+</tr>
+<tr>
+<td><strong>Search everything at once</strong></td>
+<td>Press the <code>F</code> key – searches bookmarks, to-dos, notes,
+and events together</td>
+</tr>
+<tr>
+<td><strong>Korean initial consonant search</strong></td>
+<td>Type just the first consonants (e.g., “ㄴㅇㅂ”) and matching
+bookmarks appear</td>
+</tr>
+<tr>
+<td><strong>Keyword shortcuts</strong></td>
+<td>Type <code>yt cats</code> to search YouTube for “cats” directly</td>
+</tr>
+<tr>
+<td><strong>Run commands</strong></td>
+<td>In unified search, type <code>&gt;settings</code>,
+<code>&gt;theme</code>, <code>&gt;timer</code>, etc.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="workflow-how-youll-actually-use-it-day-to-day">Workflow (How
+You’ll Actually Use It Day to Day)</h2>
+<blockquote>
+<p>“Workflow” just means the loop you’ll repeat every day you use this
+dashboard. You don’t need to memorize it – it’s here to give you a sense
+of what’s happening behind the scenes.</p>
+</blockquote>
 <pre><code>1. You open Chrome
         |
         v
@@ -528,8 +842,8 @@ sudo systemctl start dashboard</code></pre>
         |
         v
 4. Anything you change is sent to the local server instantly and saved into a file in data/
-   (most items save automatically -- no "Save" button to click; the save indicator in the
-   bottom-right corner shows "Saved" so you know it worked)
+   (most items save automatically -- no &quot;Save&quot; button to click; the save indicator in the
+   bottom-right corner shows &quot;Saved&quot; so you know it worked)
         |
         v
 5. On a schedule (every 24 hours by default), the server automatically creates a full backup
@@ -537,478 +851,615 @@ sudo systemctl start dashboard</code></pre>
         v
 6. If something goes wrong (accidental deletion, corrupted file), open Settings &gt; Data,
    browse the backup list, and restore whichever point in time you need</code></pre>
-
-<p><strong>When you restart your computer</strong>: the server is already registered to start automatically</p>
-<p>(this was set up during installation), so you don't need to run anything manually -- just</p>
-<p>open Chrome and it's there.</p>
-
-<p><strong>When your internet goes down</strong>: everything except the weather widget keeps working. This</p>
-<p>dashboard only talks to your own computer, so it was never dependent on the internet to</p>
-<p>begin with.</p>
-
-<hr>
-
-<h2 id="settings-customization">Settings & Customization</h2>
-
+<p><strong>When you restart your computer</strong>: the server is
+already registered to start automatically (this was set up during
+installation), so you don’t need to run anything manually – just open
+Chrome and it’s there.</p>
+<p><strong>When your internet goes down</strong>: everything except the
+weather widget keeps working. This dashboard only talks to your own
+computer, so it was never dependent on the internet to begin with.</p>
+<hr />
+<h2 id="settings-customization">Settings &amp; Customization</h2>
 <h3 id="changing-the-port-number">Changing the Port Number</h3>
-
-<blockquote><p><strong>What is a "port"?</strong> Think of it like a door number on a building. Your computer has thousands of these "doors", and each program uses a different one. The dashboard uses door number 1111 by default. If another program is already using that door, you need to pick a different number.</p></blockquote>
-
-<p>The dashboard runs on port <code>1111</code> by default. To change it:</p>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Method</th><th>How</th></tr></thead>
+<blockquote>
+<p><strong>What is a “port”?</strong> Think of it like a door number on
+a building. Your computer has thousands of these “doors”, and each
+program uses a different one. The dashboard uses door number 1111 by
+default. If another program is already using that door, you need to pick
+a different number.</p>
+</blockquote>
+<p>The dashboard runs on port <code>1111</code> by default. To change
+it:</p>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 61%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th>Method</th>
+<th>How</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>From the dashboard</strong> (easiest)</td><td>Settings > Data > Server Management > enter new port > click "Change"</td></tr>
-<tr><td><strong>Double-click a file</strong></td><td>Run <code>set-port.bat</code>, type a number (e.g., <code>8080</code>), press Enter</td></tr>
-<tr><td><strong>Edit a text file</strong></td><td>Create or edit <code>port.conf</code> in the project folder, write just the number inside</td></tr>
-<tr><td><strong>Command line</strong></td><td>Run <code>node server.js 8080</code></td></tr>
-</tbody></table></div>
-
-<blockquote><p>After changing the port, update your Chrome start page address too (e.g., <code>http://localhost:8080</code>).</p></blockquote>
-
+<tr>
+<td><strong>From the dashboard</strong> (easiest)</td>
+<td>Settings &gt; Data &gt; Server Management &gt; enter new port &gt;
+click “Change”</td>
+</tr>
+<tr>
+<td><strong>Double-click a file</strong></td>
+<td>Run <code>set-port.bat</code>, type a number (e.g.,
+<code>8080</code>), press Enter</td>
+</tr>
+<tr>
+<td><strong>Edit a text file</strong></td>
+<td>Create or edit <code>port.conf</code> in the project folder, write
+just the number inside</td>
+</tr>
+<tr>
+<td><strong>Command line</strong></td>
+<td>Run <code>node server.js 8080</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>After changing the port, update your Chrome start page address too
+(e.g., <code>http://localhost:8080</code>).</p>
+</blockquote>
 <h3 id="themes-and-appearance">Themes and Appearance</h3>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Setting</th><th>How to change it</th></tr></thead>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>How to change it</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Dark / Light theme</strong></td><td>Click the moon/sun icon at the top of the dashboard (smooth circle transition)</td></tr>
-<tr><td><strong>Follow your OS theme</strong></td><td>Settings > General > Theme Mode > "Follow OS"</td></tr>
-<tr><td><strong>Accent color</strong></td><td>Settings > General > Accent Color (6 choices: blue, purple, rose, emerald, amber, cyan)</td></tr>
-<tr><td><strong>Glass effect</strong></td><td>Settings > Appearance > adjust card blur (blur slider) and opacity (opacity slider)</td></tr>
-<tr><td><strong>Layout</strong></td><td>Settings > Appearance > Layout (Default / Compact / Wide / Magazine)</td></tr>
-<tr><td><strong>Custom CSS</strong></td><td>Settings > Appearance > Custom CSS (for advanced users)</td></tr>
-</tbody></table></div>
-
+<tr>
+<td><strong>Dark / Light theme</strong></td>
+<td>Click the moon/sun icon at the top of the dashboard (smooth circle
+transition)</td>
+</tr>
+<tr>
+<td><strong>Follow your OS theme</strong></td>
+<td>Settings &gt; General &gt; Theme Mode &gt; “Follow OS”</td>
+</tr>
+<tr>
+<td><strong>Accent color</strong></td>
+<td>Settings &gt; General &gt; Accent Color (6 choices: blue, purple,
+rose, emerald, amber, cyan)</td>
+</tr>
+<tr>
+<td><strong>Glass effect</strong></td>
+<td>Settings &gt; Appearance &gt; adjust card blur (blur slider) and
+opacity (opacity slider)</td>
+</tr>
+<tr>
+<td><strong>Layout</strong></td>
+<td>Settings &gt; Appearance &gt; Layout (Default / Compact / Wide /
+Magazine)</td>
+</tr>
+<tr>
+<td><strong>Custom CSS</strong></td>
+<td>Settings &gt; Appearance &gt; Custom CSS (for advanced users)</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="background-images">Background Images</h3>
-
-<div class="table-wrap"><table>
-<thead><tr><th>What you set</th><th>What happens</th></tr></thead>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>What you set</th>
+<th>What happens</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>1 image</strong></td><td>The image stays fixed as your background</td></tr>
-<tr><td><strong>2 or more images</strong></td><td>Slideshow mode becomes available with ON/OFF toggle, adjustable interval (1 minute to 24 hours), and manual previous/next buttons</td></tr>
-</tbody></table></div>
-
+<tr>
+<td><strong>1 image</strong></td>
+<td>The image stays fixed as your background</td>
+</tr>
+<tr>
+<td><strong>2 or more images</strong></td>
+<td>Slideshow mode becomes available with ON/OFF toggle, adjustable
+interval (1 minute to 24 hours), and manual previous/next buttons</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>How to set backgrounds:</p>
-
-<ol>
-<li>Go to <strong>Settings > Appearance > Background Images</strong></li>
-<li>Click <strong>"Add Images"</strong> to upload pictures from your computer</li>
-<li>If you uploaded 2 or more images, a slideshow toggle appears -- turn it ON or OFF as you like</li>
-<li>When slideshow is ON, choose a rotation interval (1 minute to 24 hours) and use the manual previous/next buttons anytime</li>
-<li>Click <strong>"Reset All"</strong> to go back to the default background</li>
+<ol type="1">
+<li>Go to <strong>Settings &gt; Appearance &gt; Background
+Images</strong></li>
+<li>Click <strong>“Add Images”</strong> to upload pictures from your
+computer</li>
+<li>If you uploaded 2 or more images, a slideshow toggle appears – turn
+it ON or OFF as you like</li>
+<li>When slideshow is ON, choose a rotation interval (1 minute to 24
+hours) and use the manual previous/next buttons anytime</li>
+<li>Click <strong>“Reset All”</strong> to go back to the default
+background</li>
 </ol>
-
 <h3 id="weather-widget">Weather Widget</h3>
-
-<ol>
-<li>Go to <strong>Settings > General > Weather</strong></li>
-<li>Get a free API key from <a href="https://openweathermap.org/api">OpenWeatherMap</a> (sign up for a free account -- it takes 1 minute)</li>
-<li>Paste the API key and type your city name (e.g., "Seoul", "New York")</li>
+<ol type="1">
+<li>Go to <strong>Settings &gt; General &gt; Weather</strong></li>
+<li>Get a free API key from <a
+href="https://openweathermap.org/api">OpenWeatherMap</a> (sign up for a
+free account – it takes 1 minute)</li>
+<li>Paste the API key and type your city name (e.g., “Seoul”, “New
+York”)</li>
 <li>Choose Celsius or Fahrenheit</li>
 </ol>
-
 <h3 id="world-clock">World Clock</h3>
-
-<ol>
-<li>Go to <strong>Settings > General > World Clock</strong></li>
-<li>Click <strong>"+ Add Clock"</strong></li>
-<li>Enter a label (e.g., "New York") and select the timezone</li>
+<ol type="1">
+<li>Go to <strong>Settings &gt; General &gt; World Clock</strong></li>
+<li>Click <strong>“+ Add Clock”</strong></li>
+<li>Enter a label (e.g., “New York”) and select the timezone</li>
 </ol>
-
 <h3 id="d-day-countdown">D-Day Countdown</h3>
-
 <ul>
-<li>Go to <strong>Settings > Widgets > D-Day</strong> to add important dates</li>
-<li>Shows "D-7", "D-3", "D-Day", "D+1", etc. at the top of the dashboard</li>
+<li>Go to <strong>Settings &gt; Widgets &gt; D-Day</strong> to add
+important dates</li>
+<li>Shows “D-7”, “D-3”, “D-Day”, “D+1”, etc. at the top of the
+dashboard</li>
 <li>Past dates show how many days have passed</li>
 </ul>
-
-<hr>
-
+<hr />
 <h2 id="data-safety">Data Safety</h2>
-
 <h3 id="where-is-my-data-stored">Where is my data stored?</h3>
-
-<p>All your data lives in the <code>data/</code> folder inside the project. This folder is <strong>never deleted</strong> by setup, restart, or update scripts. Nothing is ever sent to any external server.</p>
-
-<p>Think of it like keeping a diary in your desk drawer -- it stays in your folder on your computer, and only you can see it.</p>
-
+<p>All your data lives in the <code>data/</code> folder inside the
+project. This folder is <strong>never deleted</strong> by setup,
+restart, or update scripts. Nothing is ever sent to any external
+server.</p>
+<p>Think of it like keeping a diary in your desk drawer – it stays in
+your folder on your computer, and only you can see it.</p>
 <h3 id="automatic-backups">Automatic Backups</h3>
-
-<p>The server automatically creates backups on a smart retention schedule. You do not need to do anything.</p>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Time range</th><th>How many backups are kept</th></tr></thead>
+<p>The server automatically creates backups on a smart retention
+schedule. You do not need to do anything.</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Time range</th>
+<th>How many backups are kept</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>Last 7 days</td><td>Every backup is kept</td></tr>
-<tr><td>Days 8 through 30</td><td>One backup per day</td></tr>
-<tr><td>Older than 30 days</td><td>Automatically removed</td></tr>
-<tr><td>Maximum total</td><td>50 backup files</td></tr>
-</tbody></table></div>
-
+<tr>
+<td>Last 7 days</td>
+<td>Every backup is kept</td>
+</tr>
+<tr>
+<td>Days 8 through 30</td>
+<td>One backup per day</td>
+</tr>
+<tr>
+<td>Older than 30 days</td>
+<td>Automatically removed</td>
+</tr>
+<tr>
+<td>Maximum total</td>
+<td>50 backup files</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>Backups are stored in <code>data/backups/</code>.</p>
-
 <h3 id="backup-list-and-restore">Backup List and Restore</h3>
-
-<p>You can browse and restore any backup directly from the dashboard:</p>
-
-<ol>
-<li>Go to <strong>Settings > Data</strong></li>
-<li>You will see a <strong>list of all backups</strong> with their dates and file sizes</li>
-<li>Click <strong>"Restore"</strong> next to any backup to restore your dashboard to that exact point in time</li>
+<p>You can browse and restore any backup directly from the
+dashboard:</p>
+<ol type="1">
+<li>Go to <strong>Settings &gt; Data</strong></li>
+<li>You will see a <strong>list of all backups</strong> with their dates
+and file sizes</li>
+<li>Click <strong>“Restore”</strong> next to any backup to restore your
+dashboard to that exact point in time</li>
 </ol>
-
-<p>This is useful if you accidentally deleted something or changed your settings and want to go back.</p>
-
+<p>This is useful if you accidentally deleted something or changed your
+settings and want to go back.</p>
 <h3 id="manual-export-and-import">Manual Export and Import</h3>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Action</th><th>Steps</th></tr></thead>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr>
+<th>Action</th>
+<th>Steps</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Export as JSON</strong> (save everything to one file)</td><td>Press <code>S</code> > Data tab > click "Export" > a file downloads containing all your bookmarks, notes, settings, icons, backgrounds, and profiles</td></tr>
-<tr><td><strong>Export as Markdown</strong></td><td>Press <code>S</code> > Data tab > choose Markdown format</td></tr>
-<tr><td><strong>Export as HTML</strong></td><td>Press <code>S</code> > Data tab > choose HTML format</td></tr>
-<tr><td><strong>Import</strong> (restore from a file)</td><td>Press <code>S</code> > Data tab > click "Import" > select your backup file > see a <strong>preview</strong> showing exactly how many bookmarks, notes, to-dos, and other items will be imported > confirm to apply</td></tr>
-<tr><td><strong>Quick restore (drag and drop)</strong></td><td>Drag and drop any backup JSON file directly onto the dashboard page</td></tr>
-</tbody></table></div>
-
-<blockquote><p><strong>Import preview:</strong> Before any import is applied, you will see a summary screen showing the count of each type of item (e.g., "42 bookmarks, 5 notes, 12 to-dos"). This lets you verify the file is correct before overwriting your current data.</p></blockquote>
-
-<blockquote><p>Save your export file to a USB drive or cloud storage (like Google Drive) for extra safety.</p></blockquote>
-
+<tr>
+<td><strong>Export as JSON</strong> (save everything to one file)</td>
+<td>Press <code>S</code> &gt; Data tab &gt; click “Export” &gt; a file
+downloads containing all your bookmarks, notes, settings, icons,
+backgrounds, and profiles</td>
+</tr>
+<tr>
+<td><strong>Export as Markdown</strong></td>
+<td>Press <code>S</code> &gt; Data tab &gt; choose Markdown format</td>
+</tr>
+<tr>
+<td><strong>Export as HTML</strong></td>
+<td>Press <code>S</code> &gt; Data tab &gt; choose HTML format</td>
+</tr>
+<tr>
+<td><strong>Import</strong> (restore from a file)</td>
+<td>Press <code>S</code> &gt; Data tab &gt; click “Import” &gt; select
+your backup file &gt; see a <strong>preview</strong> showing exactly how
+many bookmarks, notes, to-dos, and other items will be imported &gt;
+confirm to apply</td>
+</tr>
+<tr>
+<td><strong>Quick restore (drag and drop)</strong></td>
+<td>Drag and drop any backup JSON file directly onto the dashboard
+page</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>Import preview:</strong> Before any import is applied, you
+will see a summary screen showing the count of each type of item (e.g.,
+“42 bookmarks, 5 notes, 12 to-dos”). This lets you verify the file is
+correct before overwriting your current data.</p>
+</blockquote>
+<blockquote>
+<p>Save your export file to a USB drive or cloud storage (like Google
+Drive) for extra safety.</p>
+</blockquote>
 <h3 id="moving-to-another-computer">Moving to Another Computer</h3>
-
-<ol>
-<li>On the old computer: <strong>Export</strong> your data (Settings > Data > Export)</li>
-<li>Copy the downloaded file to the new computer (USB, email, cloud drive -- anything works)</li>
-<li>On the new computer: set up the dashboard, then <strong>Import</strong> the file (Settings > Data > Import)</li>
-<li>Done -- your dashboard looks exactly the same</li>
+<ol type="1">
+<li>On the old computer: <strong>Export</strong> your data (Settings
+&gt; Data &gt; Export)</li>
+<li>Copy the downloaded file to the new computer (USB, email, cloud
+drive – anything works)</li>
+<li>On the new computer: set up the dashboard, then
+<strong>Import</strong> the file (Settings &gt; Data &gt; Import)</li>
+<li>Done – your dashboard looks exactly the same</li>
 </ol>
-
-<blockquote><p><strong>Alternative method:</strong> Copy the entire <code>data/</code> folder from the old computer and paste it into the same location inside the project folder on the new computer.</p></blockquote>
-
+<blockquote>
+<p><strong>Alternative method:</strong> Copy the entire
+<code>data/</code> folder from the old computer and paste it into the
+same location inside the project folder on the new computer.</p>
+</blockquote>
 <h3 id="what-happens-on-reinstall">What Happens on Reinstall?</h3>
-
 <p>Running <code>setup_windows.bat</code> again will:</p>
-
-<ol>
-<li><strong>Create a safety backup</strong> of your current data first (saved as <code>safety-before-setup.json</code> in the backups folder)</li>
-<li><strong>Keep all your existing data untouched</strong> -- nothing is deleted</li>
-<li><strong>Re-register auto-start</strong> so the dashboard launches on boot</li>
+<ol type="1">
+<li><strong>Create a safety backup</strong> of your current data first
+(saved as <code>safety-before-setup.json</code> in the backups
+folder)</li>
+<li><strong>Keep all your existing data untouched</strong> – nothing is
+deleted</li>
+<li><strong>Re-register auto-start</strong> so the dashboard launches on
+boot</li>
 <li><strong>Restart the server</strong> with the latest files</li>
 </ol>
-
-<p>Your bookmarks, notes, to-dos, and settings will still be there. Nothing is lost.</p>
-
-<hr>
-
+<p>Your bookmarks, notes, to-dos, and settings will still be there.
+Nothing is lost.</p>
+<hr />
 <h2 id="updating-to-a-new-version">Updating to a New Version</h2>
-
 <p>When a new version is released:</p>
-
-<ol>
-<li><strong>Export your data first</strong> (Settings > Data > Export) -- just to be extra safe</li>
-<li><strong>Replace the project files</strong> with the new version (overwrite the old files with the new ones)</li>
-</ol>
+<ol type="1">
+<li><strong>Export your data first</strong> (Settings &gt; Data &gt;
+Export) – just to be extra safe</li>
+<li><strong>Replace the project files</strong> with the new version
+(overwrite the old files with the new ones)
 <ul>
-<li>Your <code>data/</code> folder will not be overwritten because it contains your personal data -- <strong>do not touch or delete it</strong></li>
-</ul>
-<ol>
-<li><strong>Run <code>setup_windows.bat</code></strong> (or <code>setup_mac.sh</code> on Mac) again, or double-click <code>restart.bat</code></li>
+<li>Your <code>data/</code> folder will not be overwritten because it
+contains your personal data – <strong>do not touch or delete
+it</strong></li>
+</ul></li>
+<li><strong>Run <code>setup_windows.bat</code></strong> (or
+<code>setup_mac.sh</code> on Mac) again, or double-click
+<code>restart.bat</code></li>
 <li>Your data is preserved automatically</li>
 </ol>
-
 <details>
-<summary>If the page looks broken after updating (click to fix)</summary>
-
-<p>This is caused by your browser remembering old files (called "cache" -- a temporary storage area where the browser keeps copies of pages it has visited before). To fix it:</p>
-
-<ol>
+<summary>
+If the page looks broken after updating (click to fix)
+</summary>
+<p>This is caused by your browser remembering old files (called “cache”
+– a temporary storage area where the browser keeps copies of pages it
+has visited before). To fix it:</p>
+<ol type="1">
 <li>Press <code>Ctrl+Shift+Delete</code> in Chrome</li>
-<li>Check "Cached images and files" and set the time range to "Last hour"</li>
-<li>Click "Clear data"</li>
+<li>Check “Cached images and files” and set the time range to “Last
+hour”</li>
+<li>Click “Clear data”</li>
 <li>Reload the page (<code>Ctrl+R</code> or <code>F5</code>)</li>
 </ol>
-
 </details>
-
-<hr>
-
+<hr />
 <h2 id="uninstalling-clean-removal">Uninstalling (Clean Removal)</h2>
-
 <h3 id="windows-recommended">Windows (Recommended)</h3>
-
-<ol>
+<ol type="1">
 <li>Double-click <strong><code>uninstall.bat</code></strong></li>
-<li>It will automatically:</li>
-</ol>
+<li>It will automatically:
 <ul>
 <li>Stop the server</li>
 <li>Remove auto-start from Windows Registry and Startup folder</li>
 <li>Ask if you want to keep or delete your data (you choose)</li>
 <li>Clean up log files and temporary files</li>
-</ul>
-<ol>
+</ul></li>
 <li>After that, you can safely delete the entire project folder</li>
-<li>In Chrome, go to <code>chrome://settings/onStartup</code> and remove the localhost entry</li>
+<li>In Chrome, go to <code>chrome://settings/onStartup</code> and remove
+the localhost entry</li>
 </ol>
-
-<p>No traces left on your system. No other programs are affected. This program does not modify system files, so deleting the folder is all it takes for a clean removal.</p>
-
+<p>No traces left on your system. No other programs are affected. This
+program does not modify system files, so deleting the folder is all it
+takes for a clean removal.</p>
 <h3 id="mac">Mac</h3>
-
-<p>The easiest way: open Terminal, navigate to the project folder, and run the uninstall script:</p>
-
-<pre><code>cd ~/Dashboard
+<p>The easiest way: open Terminal, navigate to the project folder, and
+run the uninstall script:</p>
+<pre class="bash"><code>cd ~/Dashboard
 chmod +x uninstall_mac.sh
 ./uninstall_mac.sh</code></pre>
-
-<p>The script will stop the server, remove auto-start, and ask if you want to keep or delete your data.</p>
-
+<p>The script will stop the server, remove auto-start, and ask if you
+want to keep or delete your data.</p>
 <details>
-<summary>Manual uninstall (if you prefer)</summary>
-
+<summary>
+Manual uninstall (if you prefer)
+</summary>
 <p>Open Terminal and run these commands:</p>
-
-<pre><code>launchctl unload ~/Library/LaunchAgents/com.dashboard.startpage.plist
+<pre class="bash"><code>launchctl unload ~/Library/LaunchAgents/com.dashboard.startpage.plist
 rm ~/Library/LaunchAgents/com.dashboard.startpage.plist</code></pre>
-
 <p>Then delete the project folder.</p>
-
 </details>
-
 <h3 id="linux">Linux</h3>
-
 <p>Open a terminal and run these commands:</p>
-
-<pre><code>sudo systemctl stop dashboard
+<pre class="bash"><code>sudo systemctl stop dashboard
 sudo systemctl disable dashboard
 sudo rm /etc/systemd/system/dashboard.service
 sudo systemctl daemon-reload</code></pre>
-
 <p>Then delete the project folder.</p>
-
-<blockquote><p>After uninstalling on any platform, go to <code>chrome://settings/onStartup</code> in Chrome and remove the localhost entry.</p></blockquote>
-
-<hr>
-
+<blockquote>
+<p>After uninstalling on any platform, go to
+<code>chrome://settings/onStartup</code> in Chrome and remove the
+localhost entry.</p>
+</blockquote>
+<hr />
 <h2 id="troubleshooting">Troubleshooting</h2>
-
 <details>
-<summary><strong>The page will not open ("This site can't be reached")</strong></summary>
-
-<ol>
+<summary>
+<strong>The page will not open (“This site can’t be reached”)</strong>
+</summary>
+<ol type="1">
 <li>Double-click <code>restart.bat</code> to restart the server</li>
-<li>Make sure the address is <code>http://localhost:1111</code> -- not "https" (no "s"), just "http"</li>
-<li>If you changed the port, use the correct number (e.g., <code>http://localhost:8080</code>)</li>
-<li>Check if Node.js is working: open Command Prompt (press the Windows key, type <code>cmd</code>, press Enter), type <code>node -v</code>, and press Enter. You should see a version number like <code>v22.19.0</code></li>
-</ol>
+<li>Make sure the address is <code>http://localhost:1111</code> – not
+“https” (no “s”), just “http”</li>
+<li>If you changed the port, use the correct number (e.g.,
+<code>http://localhost:8080</code>)</li>
+<li>Check if Node.js is working: open Command Prompt (press the Windows
+key, type <code>cmd</code>, press Enter), type <code>node -v</code>, and
+press Enter. You should see a version number like <code>v22.19.0</code>
 <ul>
-<li>If you see a version number, Node.js is fine -- try running <code>setup_windows.bat</code> again</li>
-<li>If you see "not recognized as a command", run <code>setup_windows.bat</code> again to re-download Node.js</li>
-</ul>
-
-</details>
-
-<details>
-<summary><strong>"Port already in use" error</strong></summary>
-
-<p>Another program on your computer is already using that port number (door number).</p>
-
-<p>How to fix:</p>
-<ol>
-<li>Double-click <code>set-port.bat</code> and choose a different number (e.g., <code>2222</code>, <code>8080</code>, or <code>9999</code>)</li>
-<li>Double-click <code>restart.bat</code> to restart the server</li>
-<li>Update your Chrome start page address to match the new port (e.g., <code>http://localhost:8080</code>)</li>
+<li>If you see a version number, Node.js is fine – try running
+<code>setup_windows.bat</code> again</li>
+<li>If you see “not recognized as a command”, run
+<code>setup_windows.bat</code> again to re-download Node.js</li>
+</ul></li>
 </ol>
-
 </details>
-
 <details>
-<summary><strong>Bookmark icons are not showing</strong></summary>
-
-<p>Icons are automatically downloaded from the internet. If they are missing:</p>
+<summary>
+<strong>“Port already in use” error</strong>
+</summary>
+<p>Another program on your computer is already using that port number
+(door number).</p>
+<p>How to fix: 1. Double-click <code>set-port.bat</code> and choose a
+different number (e.g., <code>2222</code>, <code>8080</code>, or
+<code>9999</code>) 2. Double-click <code>restart.bat</code> to restart
+the server 3. Update your Chrome start page address to match the new
+port (e.g., <code>http://localhost:8080</code>)</p>
+</details>
+<details>
+<summary>
+<strong>Bookmark icons are not showing</strong>
+</summary>
+<p>Icons are automatically downloaded from the internet. If they are
+missing: - You need an internet connection for icons to load the first
+time - Some websites do not provide icons – you will see the first two
+letters of the site name instead - The system tries 4 different sources
+automatically before giving up - If your internet is connected but icons
+still do not appear, wait a while and they will be retried
+automatically</p>
+</details>
+<details>
+<summary>
+<strong>Data is not saving (“Save failed” message)</strong>
+</summary>
+<ol type="1">
+<li>The server might have stopped – double-click
+<code>restart.bat</code></li>
+<li>Check that the <code>data/</code> folder exists inside the project
+folder</li>
+<li>If the folder does not exist, create an empty folder named
+<code>data</code></li>
+<li>Make sure the folder is not set to “read-only” (right-click the
+project folder &gt; Properties &gt; uncheck “Read-only”)</li>
+</ol>
+</details>
+<details>
+<summary>
+<strong>The page looks broken after an update</strong>
+</summary>
+<p>Your browser is using old cached files. To fix: 1. Press
+<code>Ctrl+Shift+Delete</code> in Chrome 2. Check “Cached images and
+files” and set the time range to “Last hour” 3. Click “Clear data” 4.
+Reload the page (<code>Ctrl+R</code> or <code>F5</code>)</p>
+</details>
+<details>
+<summary>
+<strong>The server does not auto-start after reboot</strong>
+</summary>
+<p>Since v7.4, Windows registers auto-start in two places at once
+(Registry + Startup folder) and the server self-checks and repairs this
+every time it starts, so this happens much less often now. If it still
+happens:</p>
 <ul>
-<li>You need an internet connection for icons to load the first time</li>
-<li>Some websites do not provide icons -- you will see the first two letters of the site name instead</li>
-<li>The system tries 4 different sources automatically before giving up</li>
-<li>If your internet is connected but icons still do not appear, wait a while and they will be retried automatically</li>
-</ul>
-
-</details>
-
-<details>
-<summary><strong>Data is not saving ("Save failed" message)</strong></summary>
-
-<ol>
-<li>The server might have stopped -- double-click <code>restart.bat</code></li>
-<li>Check that the <code>data/</code> folder exists inside the project folder</li>
-<li>If the folder does not exist, create an empty folder named <code>data</code></li>
-<li>Make sure the folder is not set to "read-only" (right-click the project folder > Properties > uncheck "Read-only")</li>
-</ol>
-
-</details>
-
-<details>
-<summary><strong>The page looks broken after an update</strong></summary>
-
-<p>Your browser is using old cached files. To fix:</p>
-<ol>
-<li>Press <code>Ctrl+Shift+Delete</code> in Chrome</li>
-<li>Check "Cached images and files" and set the time range to "Last hour"</li>
-<li>Click "Clear data"</li>
-<li>Reload the page (<code>Ctrl+R</code> or <code>F5</code>)</li>
-</ol>
-
-</details>
-
-<details>
-<summary><strong>The server does not auto-start after reboot</strong></summary>
-
-<ul>
-<li><strong>Windows:</strong> Run <code>setup_windows.bat</code> again to re-register auto-start</li>
+<li><strong>Windows:</strong> Run <code>setup_windows.bat</code> again
+to re-register auto-start (if antivirus removed both registration
+methods, re-running this restores them)</li>
 <li><strong>Mac:</strong> Run <code>./setup_mac.sh</code> again</li>
-<li><strong>Linux:</strong> Run <code>sudo systemctl enable dashboard</code></li>
+<li><strong>Linux:</strong> Run
+<code>sudo systemctl enable dashboard</code></li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>I want to restart the server</strong></summary>
-
-<p>Two ways:</p>
-<ul>
-<li><strong>From the dashboard:</strong> Settings > Data > "Restart Server" button</li>
-<li><strong>From your files:</strong> Double-click <code>restart.bat</code></li>
-</ul>
-
-<p>Both methods safely stop only the dashboard server. Other programs on your computer are never affected.</p>
-
+<summary>
+<strong>I want to restart the server</strong>
+</summary>
+<p>Two ways: - <strong>From the dashboard:</strong> Settings &gt; Data
+&gt; “Restart Server” button - <strong>From your files:</strong>
+Double-click <code>restart.bat</code></p>
+<p>Both methods safely stop only the dashboard server. Other programs on
+your computer are never affected.</p>
 </details>
-
 <details>
-<summary><strong>A black window briefly appears on startup</strong></summary>
-
-<p>Normally, the server starts invisibly in the background and no window should appear. If you see a brief black window (Command Prompt) every time you start your computer:</p>
-
-<ol>
+<summary>
+<strong>A black window briefly appears on startup</strong>
+</summary>
+<p>Normally, the server starts invisibly in the background and no window
+should appear. If you see a brief black window (Command Prompt) every
+time you start your computer:</p>
+<ol type="1">
 <li>Run <code>setup_windows.bat</code> again</li>
-<li>This re-registers the auto-start correctly so the server runs in the background without any visible window</li>
+<li>This re-registers the auto-start correctly so the server runs in the
+background without any visible window</li>
 </ol>
-
 </details>
-
 <details>
-<summary><strong>I want to move data to another computer</strong></summary>
-
-<p><strong>Method 1 (recommended):</strong></p>
-<ol>
-<li>On the old computer: Settings > Data > <strong>Export</strong> -- save the JSON file</li>
-<li>On the new computer: install the dashboard, then Settings > Data > <strong>Import</strong> -- select the file</li>
-</ol>
-
-<p><strong>Method 2 (manual copy):</strong></p>
-<ul>
-<li>Copy the entire <code>data/</code> folder from the old computer and paste it into the same location inside the project folder on the new computer</li>
-</ul>
-
+<summary>
+<strong>I want to move data to another computer</strong>
+</summary>
+<p><strong>Method 1 (recommended):</strong> 1. On the old computer:
+Settings &gt; Data &gt; <strong>Export</strong> – save the JSON file 2.
+On the new computer: install the dashboard, then Settings &gt; Data &gt;
+<strong>Import</strong> – select the file</p>
+<p><strong>Method 2 (manual copy):</strong> - Copy the entire
+<code>data/</code> folder from the old computer and paste it into the
+same location inside the project folder on the new computer</p>
 </details>
-
-<hr>
-
-<h2 id="frequently-asked-questions-faq">Frequently Asked Questions (FAQ)</h2>
-
-<blockquote><p>If "Troubleshooting" is for when <strong>something is broken</strong>, this section is for</p>
-<p><strong>questions you have even when nothing is wrong.</strong></p></blockquote>
-
+<hr />
+<h2 id="frequently-asked-questions-faq">Frequently Asked Questions
+(FAQ)</h2>
+<blockquote>
+<p>If “Troubleshooting” is for when <strong>something is
+broken</strong>, this section is for <strong>questions you have even
+when nothing is wrong.</strong></p>
+</blockquote>
 <details>
-<summary><strong>Is this actually safe? Could my information leak out somewhere?</strong></summary>
-
-<p>Yes, it's safe. This dashboard only runs inside your own computer, and the server is built</p>
-<p>to respond only on <code>127.0.0.1</code> (a special address that always means "this computer, and</p>
-<p>only this computer") -- so there is structurally no way for it to reach the internet. The</p>
-<p>one exception is the weather widget, which sends only a city name to an external service</p>
-<p>(OpenWeatherMap) to fetch the forecast -- and even that never happens unless you turn the</p>
-<p>weather widget on. Everything else (bookmarks, notes, to-dos, etc.) is stored only as files</p>
-<p>on your own computer, in the <code>data/</code> folder.</p>
-
+<summary>
+<strong>Is this actually safe? Could my information leak out
+somewhere?</strong>
+</summary>
+<p>Yes, it’s safe. This dashboard only runs inside your own computer,
+and the server is built to respond only on <code>127.0.0.1</code> (a
+special address that always means “this computer, and only this
+computer”) – so there is structurally no way for it to reach the
+internet. The one exception is the weather widget, which sends only a
+city name to an external service (OpenWeatherMap) to fetch the forecast
+– and even that never happens unless you turn the weather widget on.
+Everything else (bookmarks, notes, to-dos, etc.) is stored only as files
+on your own computer, in the <code>data/</code> folder.</p>
 </details>
-
 <details>
-<summary><strong>Does this cost money? Will it become paid later?</strong></summary>
-
-<p>No. This project is completely free and distributed under the MIT License (see</p>
-<p><a href="#license--legal-notice">License & Legal Notice</a> for details). It cannot suddenly become</p>
-<p>paid on you, and you're free to keep using it, or even modify the code yourself, forever.</p>
-
+<summary>
+<strong>Does this cost money? Will it become paid later?</strong>
+</summary>
+<p>No. This project is completely free and distributed under the MIT
+License (see <a href="#license--legal-notice">License &amp; Legal
+Notice</a> for details). It cannot suddenly become paid on you, and
+you’re free to keep using it, or even modify the code yourself,
+forever.</p>
 </details>
-
 <details>
-<summary><strong>Can I use it without an internet connection?</strong></summary>
-
-<p>Yes -- everything except the weather widget works fully offline, because the server runs</p>
-<p>entirely inside your own computer.</p>
-
+<summary>
+<strong>Can I use it without an internet connection?</strong>
+</summary>
+<p>Yes – everything except the weather widget works fully offline,
+because the server runs entirely inside your own computer.</p>
 </details>
-
 <details>
-<summary><strong>Can other people on the same Wi-Fi (family, roommates, etc.) see my dashboard?</strong></summary>
-
-<p>No. The server is locked to respond only on <code>127.0.0.1</code> (an address that only ever means</p>
-<p>"this exact computer"), so there is no way for another device on the same network to reach</p>
-<p>it.</p>
-
+<summary>
+<strong>Can other people on the same Wi-Fi (family, roommates, etc.) see
+my dashboard?</strong>
+</summary>
+<p>No. The server is locked to respond only on <code>127.0.0.1</code>
+(an address that only ever means “this exact computer”), so there is no
+way for another device on the same network to reach it.</p>
 </details>
-
 <details>
-<summary><strong>Can I use it the same way on another computer or laptop?</strong></summary>
-
-<p>You need to install the project separately on each computer (see <a href="#installation">Installation</a></p>
-<p>above). If you want to bring your data along, follow the</p>
-<p><a href="#data-safety">Moving to Another Computer</a> instructions to export and import it. The two</p>
-<p>computers will not stay synced in real time, though -- each is an independent copy.</p>
-
+<summary>
+<strong>Can I use it the same way on another computer or
+laptop?</strong>
+</summary>
+<p>You need to install the project separately on each computer (see <a
+href="#installation">Installation</a> above). If you want to bring your
+data along, follow the <a href="#data-safety">Moving to Another
+Computer</a> instructions to export and import it. The two computers
+will not stay synced in real time, though – each is an independent
+copy.</p>
 </details>
-
 <details>
-<summary><strong>Who owns the content I create (my bookmark list, notes, background images, etc.)?</strong></summary>
-
-<p>You do, entirely. This project claims no rights whatsoever over any data you enter or</p>
-<p>upload -- and that data is never even transmitted to the project's creator in the first</p>
-<p>place. See <a href="#license--legal-notice">License & Legal Notice</a> for the full explanation.</p>
-
+<summary>
+<strong>Who owns the content I create (my bookmark list, notes,
+background images, etc.)?</strong>
+</summary>
+<p>You do, entirely. This project claims no rights whatsoever over any
+data you enter or upload – and that data is never even transmitted to
+the project’s creator in the first place. See <a
+href="#license--legal-notice">License &amp; Legal Notice</a> for the
+full explanation.</p>
 </details>
-
 <details>
-<summary><strong>Can I use this at my company for work? Can I redistribute or sell it?</strong></summary>
-
-<p>Yes, all of that is allowed. The MIT License explicitly permits use, copying, modification,</p>
-<p>redistribution, and sale, including for commercial purposes. Please read</p>
-<p><a href="#license--legal-notice">License & Legal Notice</a> yourself for the exact terms -- in</p>
-<p>particular, the "no warranty" clause is something you should be aware of if you plan to use</p>
-<p>it at a company.</p>
-
+<summary>
+<strong>Can I use this at my company for work? Can I redistribute or
+sell it?</strong>
+</summary>
+<p>Yes, all of that is allowed. The MIT License explicitly permits use,
+copying, modification, redistribution, and sale, including for
+commercial purposes. Please read <a
+href="#license--legal-notice">License &amp; Legal Notice</a> yourself
+for the exact terms – in particular, the “no warranty” clause is
+something you should be aware of if you plan to use it at a company.</p>
 </details>
-
 <details>
-<summary><strong>I accidentally deleted the whole project folder. Can I get my data back?</strong></summary>
-
-<p>If the <code>data/</code> folder itself was deleted, this project has no way to recover it on its own</p>
-<p>(unless you have a Recycle Bin copy or some other backup). To protect against this, it's a</p>
-<p>good habit to periodically use Settings > Data > <strong>Export</strong> to save a JSON backup somewhere</p>
-<p>else entirely (a cloud drive, an external hard drive, etc.) -- this project's automatic</p>
-<p>backups are always created inside that same folder, so if the whole folder disappears, the</p>
-<p>automatic backups disappear with it.</p>
-
+<summary>
+<strong>I accidentally deleted the whole project folder. Can I get my
+data back?</strong>
+</summary>
+<p>If the <code>data/</code> folder itself was deleted, this project has
+no way to recover it on its own (unless you have a Recycle Bin copy or
+some other backup). To protect against this, it’s a good habit to
+periodically use Settings &gt; Data &gt; <strong>Export</strong> to save
+a JSON backup somewhere else entirely (a cloud drive, an external hard
+drive, etc.) – this project’s automatic backups are always created
+inside that same folder, so if the whole folder disappears, the
+automatic backups disappear with it.</p>
 </details>
-
-<hr>
-
+<hr />
 <h2 id="file-structure">File Structure</h2>
-
-<blockquote><p>Here is what each file in the project does. You do not need to understand all of this -- it is here for reference.</p></blockquote>
-
+<blockquote>
+<p>Here is what each file in the project does. You do not need to
+understand all of this – it is here for reference.</p>
+</blockquote>
 <pre><code>Chrome_Starting-Page/
 │
 │  === Setup &amp; Management Tools ===
@@ -1053,329 +1504,623 @@ sudo systemctl daemon-reload</code></pre>
     ├── profiles/                   Saved profiles
     └── backups/                    Automatic backup files
         └── safety-before-setup.json    Pre-setup safety backup</code></pre>
-
-<blockquote><p>The <code>data/</code> folder contains all your personal data. Keep this folder safe and you can always restore your dashboard.</p></blockquote>
-
-<hr>
-
+<blockquote>
+<p>The <code>data/</code> folder contains all your personal data. Keep
+this folder safe and you can always restore your dashboard.</p>
+</blockquote>
+<hr />
 <h2 id="command-reference">Command Reference</h2>
-
-<blockquote><p>Every one of these is a file you <strong>double-click to run</strong> -- you never need to open a</p>
-<p>terminal or type a command yourself. On Windows, double-click the <code>.bat</code> files; on Mac,</p>
-<p>double-click (or right-click > Open) the <code>.sh</code> files.</p></blockquote>
-
-<div class="table-wrap"><table>
-<thead><tr><th>File</th><th>Platform</th><th>What it does</th><th>When to use it</th></tr></thead>
+<blockquote>
+<p>Every one of these is a file you <strong>double-click to run</strong>
+– you never need to open a terminal or type a command yourself. On
+Windows, double-click the <code>.bat</code> files; on Mac, double-click
+(or right-click &gt; Open) the <code>.sh</code> files.</p>
+</blockquote>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 20%" />
+<col style="width: 31%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>File</th>
+<th>Platform</th>
+<th>What it does</th>
+<th>When to use it</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><code>setup_windows.bat</code></td><td>Windows</td><td>First-time install + registers auto-start</td><td>Once, when first installing</td></tr>
-<tr><td><code>setup_mac.sh</code></td><td>Mac</td><td>First-time install + registers auto-start</td><td>Once, when first installing</td></tr>
-<tr><td><code>restart.bat</code></td><td>Windows</td><td>Fully stops and restarts the server</td><td>When the dashboard looks wrong or won't load</td></tr>
-<tr><td><code>uninstall.bat</code></td><td>Windows</td><td>Removes auto-start registration + stops the server (does not delete your data)</td><td>When you want to fully remove it</td></tr>
-<tr><td><code>uninstall_mac.sh</code></td><td>Mac</td><td>Removes auto-start registration + stops the server (does not delete your data)</td><td>When you want to fully remove it</td></tr>
-<tr><td><code>set-port.bat</code></td><td>Windows</td><td>Changes the port number (e.g. 1111) your browser connects to</td><td>When another program is already using that port</td></tr>
-<tr><td><code>run_server_background.bat</code></td><td>Windows</td><td>Restarts just the server in the background (no window)</td><td>When the server is off but you don't want to reboot</td></tr>
-<tr><td><code>start_hidden.vbs</code></td><td>Windows</td><td>Helper that runs <code>run_server_background.bat</code> without a visible black window</td><td>Usually called automatically by other scripts -- you'll rarely run this yourself</td></tr>
-</tbody></table></div>
-
-<p><strong>Two ways to use <code>set-port.bat</code>:</strong></p>
-<ul>
-<li>Just double-click it -- it shows your current port and asks you to type a new one.</li>
-<li>If you're comfortable with it, right-click the file, choose "Open in Terminal" /</li>
-</ul>
-<p>  "Open command window here," and run <code>set-port.bat 8080</code> with your desired port number</p>
-<p>  appended directly (optional -- not knowing this is completely fine).</p>
-
-<blockquote><p>None of these files touch anything outside the project folder. The only exception is one</p>
-<p>"run at login" registration in Windows/Mac system settings -- nothing else on your</p>
-<p>computer is changed.</p></blockquote>
-
-<hr>
-
+<tr>
+<td><code>setup_windows.bat</code></td>
+<td>Windows</td>
+<td>First-time install + registers auto-start</td>
+<td>Once, when first installing</td>
+</tr>
+<tr>
+<td><code>setup_mac.sh</code></td>
+<td>Mac</td>
+<td>First-time install + registers auto-start</td>
+<td>Once, when first installing</td>
+</tr>
+<tr>
+<td><code>restart.bat</code></td>
+<td>Windows</td>
+<td>Fully stops and restarts the server</td>
+<td>When the dashboard looks wrong or won’t load</td>
+</tr>
+<tr>
+<td><code>uninstall.bat</code></td>
+<td>Windows</td>
+<td>Removes auto-start registration + stops the server (does not delete
+your data)</td>
+<td>When you want to fully remove it</td>
+</tr>
+<tr>
+<td><code>uninstall_mac.sh</code></td>
+<td>Mac</td>
+<td>Removes auto-start registration + stops the server (does not delete
+your data)</td>
+<td>When you want to fully remove it</td>
+</tr>
+<tr>
+<td><code>set-port.bat</code></td>
+<td>Windows</td>
+<td>Changes the port number (e.g. 1111) your browser connects to</td>
+<td>When another program is already using that port</td>
+</tr>
+<tr>
+<td><code>run_server_background.bat</code></td>
+<td>Windows</td>
+<td>Restarts just the server in the background (no window)</td>
+<td>When the server is off but you don’t want to reboot</td>
+</tr>
+<tr>
+<td><code>start_hidden.vbs</code></td>
+<td>Windows</td>
+<td>Helper that runs <code>run_server_background.bat</code> without a
+visible black window</td>
+<td>Usually called automatically by other scripts – you’ll rarely run
+this yourself</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Two ways to use <code>set-port.bat</code>:</strong> - Just
+double-click it – it shows your current port and asks you to type a new
+one. - If you’re comfortable with it, right-click the file, choose “Open
+in Terminal” / “Open command window here,” and run
+<code>set-port.bat 8080</code> with your desired port number appended
+directly (optional – not knowing this is completely fine).</p>
+<blockquote>
+<p>None of these files touch anything outside the project folder. The
+only exception is one “run at login” registration in Windows/Mac system
+settings – nothing else on your computer is changed.</p>
+</blockquote>
+<hr />
 <details>
-<summary><h2>Technical Details (for curious readers)</h2></summary>
-
-<p>If you are a developer or just curious about how this works under the hood:</p>
-
+<summary>
+<h2>
+Technical Details (for curious readers)
+</h2>
+</summary>
+<p>If you are a developer or just curious about how this works under the
+hood:</p>
 <h3 id="architecture">Architecture</h3>
-
 <pre><code>Chrome Browser  &lt;--HTTP--&gt;  Local Node.js Server (port 1111)  &lt;--Read/Write--&gt;  JSON files on disk
                                   (server.js)                                     (data/*.json)</code></pre>
-
-<p>The server is a single-file HTTP server using only Node.js built-in modules. No npm packages are used. The frontend is a single-page application with no build tools or transpilation needed.</p>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Detail</th></tr></thead>
+<p>The server is a single-file HTTP server using only Node.js built-in
+modules. No npm packages are used. The frontend is a single-page
+application with no build tools or transpilation needed.</p>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Server</strong></td><td>Node.js using only built-in modules (<code>http</code>, <code>fs</code>, <code>path</code>, <code>zlib</code>, <code>crypto</code>) -- no <code>npm install</code> required</td></tr>
-<tr><td><strong>Frontend</strong></td><td>Plain HTML + CSS + JavaScript -- no frameworks, no build step, no transpilation</td></tr>
-<tr><td><strong>Default port</strong></td><td>1111 (configurable via <code>port.conf</code>, command-line argument, dashboard UI, or <code>set-port.bat</code>)</td></tr>
-<tr><td><strong>Binding</strong></td><td><code>127.0.0.1</code> only -- cannot be accessed from other computers on your network</td></tr>
-<tr><td><strong>Data storage</strong></td><td>Local JSON files in the <code>data/</code> directory</td></tr>
-</tbody></table></div>
-
+<tr>
+<td><strong>Server</strong></td>
+<td>Node.js using only built-in modules (<code>http</code>,
+<code>fs</code>, <code>path</code>, <code>zlib</code>,
+<code>crypto</code>) – no <code>npm install</code> required</td>
+</tr>
+<tr>
+<td><strong>Frontend</strong></td>
+<td>Plain HTML + CSS + JavaScript – no frameworks, no build step, no
+transpilation</td>
+</tr>
+<tr>
+<td><strong>Default port</strong></td>
+<td>1111 (configurable via <code>port.conf</code>, command-line
+argument, dashboard UI, or <code>set-port.bat</code>)</td>
+</tr>
+<tr>
+<td><strong>Binding</strong></td>
+<td><code>127.0.0.1</code> only – cannot be accessed from other
+computers on your network</td>
+</tr>
+<tr>
+<td><strong>Data storage</strong></td>
+<td>Local JSON files in the <code>data/</code> directory</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="performance">Performance</h3>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Detail</th></tr></thead>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Compression</strong></td><td>Gzip for HTML, CSS, JS, JSON, SVG, and webmanifest</td></tr>
-<tr><td><strong>Caching</strong></td><td>SHA-256 ETag + in-memory file cache with 5-minute TTL</td></tr>
-<tr><td><strong>Offline support</strong></td><td>Service Worker pre-caches critical files</td></tr>
-<tr><td><strong>Memory usage</strong></td><td>~15 MB at idle</td></tr>
-<tr><td><strong>Max request body</strong></td><td>10 MB</td></tr>
-<tr><td><strong>Error log rotation</strong></td><td>Logs capped at 10 MB with automatic rotation</td></tr>
-<tr><td><strong>Boot sequence</strong></td><td>3-phase: instant render > deferred init > background checks after 30 seconds</td></tr>
-</tbody></table></div>
-
+<tr>
+<td><strong>Compression</strong></td>
+<td>Gzip for HTML, CSS, JS, JSON, SVG, and webmanifest</td>
+</tr>
+<tr>
+<td><strong>Caching</strong></td>
+<td>SHA-256 ETag + in-memory file cache with 5-minute TTL</td>
+</tr>
+<tr>
+<td><strong>Offline support</strong></td>
+<td>Service Worker pre-caches critical files</td>
+</tr>
+<tr>
+<td><strong>Memory usage</strong></td>
+<td>~15 MB at idle</td>
+</tr>
+<tr>
+<td><strong>Max request body</strong></td>
+<td>10 MB</td>
+</tr>
+<tr>
+<td><strong>Error log rotation</strong></td>
+<td>Logs capped at 10 MB with automatic rotation</td>
+</tr>
+<tr>
+<td><strong>Boot sequence</strong></td>
+<td>3-phase: instant render &gt; deferred init &gt; background checks
+after 30 seconds</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="security">Security</h3>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Detail</th></tr></thead>
+<div class="table-wrap">
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Path traversal prevention</strong></td><td>Server blocks access to files outside the project folder</td></tr>
-<tr><td><strong>Filename sanitization</strong></td><td>Malicious filenames are filtered out</td></tr>
-<tr><td><strong>Write locks</strong></td><td>Timeout-based write locks ensure data integrity</td></tr>
-<tr><td><strong>Localhost-only binding</strong></td><td><code>127.0.0.1</code> only -- even other computers on the same network cannot access it</td></tr>
-<tr><td><strong>Process management</strong></td><td>PID file (<code>.server.pid</code>) for safe restart without affecting other programs</td></tr>
-<tr><td><strong>Portable mode</strong></td><td>Windows setup downloads Node.js into local <code>node/</code> folder for full independence from system Node.js</td></tr>
-<tr><td><strong>Custom CSS XSS filter</strong></td><td>User-provided custom CSS is sanitized to prevent cross-site scripting attacks</td></tr>
-<tr><td><strong>Bookmark URL scheme validation</strong></td><td>Blocks code-executing addresses like <code>javascript:</code> at save time, both in the browser and on the server (only <code>http/https/ftp/mailto</code> are accepted)</td></tr>
-<tr><td><strong>Output escaping on render</strong></td><td>Every user-entered value shown on screen (category names, labels, etc.) is HTML-escaped (<code>&amp;&lt;&gt;"'</code>) before rendering, so a tampered value coming in through backup import cannot execute as code</td></tr>
-<tr><td><strong>Safe bounds on the backup interval</strong></td><td>Even if the backup interval setting is somehow invalid (negative, non-numeric), the server always clamps it to a safe 1-168 hour range, preventing runaway repeated backups</td></tr>
-</tbody></table></div>
-
+<tr>
+<td><strong>Path traversal prevention</strong></td>
+<td>Server blocks access to files outside the project folder</td>
+</tr>
+<tr>
+<td><strong>Filename sanitization</strong></td>
+<td>Malicious filenames are filtered out</td>
+</tr>
+<tr>
+<td><strong>Write locks</strong></td>
+<td>Timeout-based write locks ensure data integrity</td>
+</tr>
+<tr>
+<td><strong>Localhost-only binding</strong></td>
+<td><code>127.0.0.1</code> only – even other computers on the same
+network cannot access it</td>
+</tr>
+<tr>
+<td><strong>Process management</strong></td>
+<td>PID file (<code>.server.pid</code>) for safe restart without
+affecting other programs</td>
+</tr>
+<tr>
+<td><strong>Portable mode</strong></td>
+<td>Windows setup downloads Node.js into local <code>node/</code> folder
+for full independence from system Node.js</td>
+</tr>
+<tr>
+<td><strong>Custom CSS XSS filter</strong></td>
+<td>User-provided custom CSS is sanitized to prevent cross-site
+scripting attacks</td>
+</tr>
+<tr>
+<td><strong>Bookmark URL scheme validation</strong></td>
+<td>Blocks code-executing addresses like <code>javascript:</code> at
+save time, both in the browser and on the server (only
+<code>http/https/ftp/mailto</code> are accepted)</td>
+</tr>
+<tr>
+<td><strong>Output escaping on render</strong></td>
+<td>Every user-entered value shown on screen (category names, labels,
+dates, etc.) is HTML-escaped (<code>&amp;&lt;&gt;"'</code>) before
+rendering, so a tampered value coming in through backup import cannot
+execute as code</td>
+</tr>
+<tr>
+<td><strong>Safe bounds on the backup interval</strong></td>
+<td>Even if the backup interval setting is somehow invalid (negative,
+non-numeric), the server always clamps it to a safe 1-168 hour range,
+preventing runaway repeated backups</td>
+</tr>
+<tr>
+<td><strong>Origin validation — CSRF (cross-site request forgery)
+protection</strong> (new in v7.4)</td>
+<td>This server runs in the background at all times once your computer
+is on, so a malicious website you visit could try to secretly send
+data-changing requests through your browser. The server now checks the
+Origin of every data-changing request and blocks any that didn’t come
+from this dashboard itself.</td>
+</tr>
+<tr>
+<td><strong>Request size limit</strong></td>
+<td>The amount of data a single request can send is capped at 10MB,
+preventing an abnormally large request from freezing the server (returns
+a proper “too large” error instead)</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="dependencies">Dependencies</h3>
-
 <pre><code>External libraries: none (0)
 npm install: not required
 node_modules: never created</code></pre>
-
-<p>This project uses only Node.js <strong>built-in modules</strong> (<code>http</code>, <code>fs</code>, <code>path</code>, <code>zlib</code>, <code>crypto</code>). Like a self-contained travel bag, it carries everything it needs -- no extra parts to find or install.</p>
-
+<p>This project uses only Node.js <strong>built-in modules</strong>
+(<code>http</code>, <code>fs</code>, <code>path</code>,
+<code>zlib</code>, <code>crypto</code>). Like a self-contained travel
+bag, it carries everything it needs – no extra parts to find or
+install.</p>
+<h3 id="testing-build">Testing / Build</h3>
+<pre><code>Build step: none (no transpiling or bundling -- files run as-is)
+Tests: node --test  (= npm test)
+Self-check scanner (advisory, not a pass/fail gate): npm run check:xss</code></pre>
+<p><code>npm test</code> runs the regression tests in the
+<code>test/</code> folder (input validation, HTML escaping, and other
+security-related logic). After changing code, running
+<code>npm test</code> is recommended to confirm nothing existing broke.
+The frontend (<code>script.js</code>, <code>style.css</code>,
+<code>index.html</code>) is read by the browser as-is with no build step
+needed.</p>
 </details>
-
-<hr>
-
-<h2 id="license-legal-notice">License & Legal Notice</h2>
-
-<blockquote><p>This section is not legal advice. If you're using this at an organization, or need</p>
-<p>absolute legal certainty about anything here, please read the original text yourself</p>
-<p>(the <a href="LICENSE">LICENSE</a> file) or consult a legal professional. What follows is a</p>
-<p>plain-language explanation of that text, and **if this explanation and the</p>
-<p><a href="LICENSE">LICENSE</a> file ever appear to disagree, the original LICENSE file text always</p>
-<p>governs.**</p></blockquote>
-
-<h3 id="this-projects-license">This Project's License</h3>
-
-<p>This project is distributed under the <strong><a href="LICENSE">MIT License</a></strong>.</p>
-<p>Copyright (c) 2026 Sodam AI Studio.</p>
-
-<p>The MIT License is one of the simplest and most permissive open-source licenses that</p>
-<p>exists. Below is exactly what its full text actually permits and requires, spelled out</p>
-<p>plainly -- with no guessing or embellishment beyond what's written in the <a href="LICENSE">LICENSE</a></p>
-<p>file itself.</p>
-
-<p><strong>Explicitly permitted (all free, no permission request needed):</strong></p>
-<ul>
-<li>✅ <strong>Personal use</strong> -- freely, at home, on your own computer</li>
-<li>✅ <strong>Use at a company or organization</strong> -- you may use it as an internal work tool</li>
-<li>✅ <strong>Modify the code</strong> -- change anything, add whatever features you want</li>
-<li>✅ <strong>Redistribute it</strong> -- share the original or your modified version with others</li>
-<li>✅ <strong>Commercial use, including selling it</strong> -- the license explicitly permits selling</li>
-</ul>
-<p>  copies of the software, as-is or modified. The MIT License text's phrase "sell copies of</p>
-<p>  the Software" means exactly this.</p>
-<ul>
-<li>✅ <strong>Include it in a private project</strong> -- you may take this code and use it as part of</li>
-</ul>
-<p>  another (even closed-source) project.</p>
-
-<p><strong>The one and only condition:</strong></p>
-<ul>
-<li>⚠️ If you redistribute the software (original or modified), you must **include the</li>
-</ul>
-<p>  original copyright notice and the full license text** -- in other words, keep the</p>
-<p>  <a href="LICENSE">LICENSE</a> file included when you pass it along. (Note: this does not mean you</p>
-<p>  need to contact or ask permission from this project's author -- it is purely a</p>
-<p>  documentation requirement, satisfied simply by keeping one file intact.)</p>
-
-<p><strong>No warranty (please be aware of this part):</strong></p>
-<ul>
-<li>This software is provided <strong>"AS IS."</strong> The author makes no guarantee that it is fit for</li>
-</ul>
-<p>  any particular purpose, free of bugs, or will keep working indefinitely.</p>
-<ul>
-<li>The author (copyright holder) <strong>is not legally liable</strong> for any problem that arises from</li>
-</ul>
-<p>  using this software (data loss, system issues, etc.). This is a standard clause found in</p>
-<p>  the vast majority of free open-source software -- it is not a special restriction unique</p>
-<p>  to this project.</p>
-<ul>
-<li><strong>In plain terms</strong>: "It's given to you free, as-is. Use it well, but if something goes</li>
-</ul>
-<p>  wrong, you cannot seek damages from the author." This is how most legitimate open-source</p>
-<p>  projects are distributed (the Linux kernel, Node.js itself, and many of the libraries this</p>
-<p>  project's ecosystem depends on all follow the same principle).</p>
-
-<h3 id="copyright-over-the-content-data-you-create">Copyright Over the Content (Data) You Create</h3>
-
-<p>This project asserts <strong>no rights whatsoever</strong> over anything you type or upload (your</p>
-<p>bookmark list, notes, to-dos, uploaded background images, etc.). That data is never even</p>
-<p>transmitted off your computer to begin with (see <a href="#technical-details-for-the-curious">Security</a>),</p>
-<p>and it belongs 100% to you.</p>
-
-<h3 id="about-the-trademark-brand-name">About the Trademark (Brand Name)</h3>
-
-<p>"Sodam AI Studio" is the creator credit for this project and does not assert any registered</p>
-<p>trademark claim. You are free to fork this project or redistribute it under a different name,</p>
-<p>as long as you do not use the project name or this credit in a way that would make people</p>
-<p>mistakenly believe Sodam AI Studio directly operates or endorses your version (and, per the</p>
-<p>"one condition" above, you must still keep the original copyright notice intact).</p>
-
-<h3 id="third-party-external-services----separate-from-this-projects-license">Third-Party (External) Services -- Separate From This Project's License</h3>
-
-<p>This project itself never sends your data to an external server, but **the following</p>
-<p>features, only when you actively turn them on,** connect to their own respective external</p>
-<p>services. These services are not owned or operated by this project, and **each has its own</p>
-<p>separate terms of service and privacy policy** -- this project's MIT License has no bearing</p>
-<p>on the terms of these external services.</p>
-
-<div class="table-wrap"><table>
-<thead><tr><th>Feature</th><th>External service it connects to</th><th>Information sent</th><th>When it connects</th></tr></thead>
+<hr />
+<h2 id="license-legal-notice">License &amp; Legal Notice</h2>
+<blockquote>
+<p>This section is not legal advice. If you’re using this at an
+organization, or need absolute legal certainty about anything here,
+please read the original text yourself (the <a
+href="LICENSE">LICENSE</a> file) or consult a legal professional. What
+follows is a plain-language explanation of that text, and <strong>if
+this explanation and the <a href="LICENSE">LICENSE</a> file ever appear
+to disagree, the original LICENSE file text always governs.</strong></p>
+</blockquote>
+<h3 id="this-projects-license">This Project’s License</h3>
+<p>This project is distributed under the <strong><a href="LICENSE">MIT
+License</a></strong>. Copyright (c) 2026 SoDam AI Studio.</p>
+<p>The MIT License is one of the simplest and most permissive
+open-source licenses that exists. Below is exactly what its full text
+actually permits and requires, spelled out plainly – with no guessing or
+embellishment beyond what’s written in the <a href="LICENSE">LICENSE</a>
+file itself.</p>
+<p><strong>Explicitly permitted (all free, no permission request
+needed):</strong> - ✅ <strong>Personal use</strong> – freely, at home,
+on your own computer - ✅ <strong>Use at a company or
+organization</strong> – you may use it as an internal work tool - ✅
+<strong>Modify the code</strong> – change anything, add whatever
+features you want - ✅ <strong>Redistribute it</strong> – share the
+original or your modified version with others - ✅ <strong>Commercial
+use, including selling it</strong> – the license explicitly permits
+selling copies of the software, as-is or modified. The MIT License
+text’s phrase “sell copies of the Software” means exactly this. - ✅
+<strong>Include it in a private project</strong> – you may take this
+code and use it as part of another (even closed-source) project.</p>
+<p><strong>The one and only condition:</strong> - ⚠️ If you redistribute
+the software (original or modified), you must <strong>include the
+original copyright notice and the full license text</strong> – in other
+words, keep the <a href="LICENSE">LICENSE</a> file included when you
+pass it along. (Note: this does not mean you need to contact or ask
+permission from this project’s author – it is purely a documentation
+requirement, satisfied simply by keeping one file intact.)</p>
+<p><strong>No warranty (please be aware of this part):</strong> - This
+software is provided <strong>“AS IS.”</strong> The author makes no
+guarantee that it is fit for any particular purpose, free of bugs, or
+will keep working indefinitely. - The author (copyright holder)
+<strong>is not legally liable</strong> for any problem that arises from
+using this software (data loss, system issues, etc.). This is a standard
+clause found in the vast majority of free open-source software – it is
+not a special restriction unique to this project. - <strong>In plain
+terms</strong>: “It’s given to you free, as-is. Use it well, but if
+something goes wrong, you cannot seek damages from the author.” This is
+how most legitimate open-source projects are distributed (the Linux
+kernel, Node.js itself, and many of the libraries this project’s
+ecosystem depends on all follow the same principle).</p>
+<h3 id="copyright-over-the-content-data-you-create">Copyright Over the
+Content (Data) You Create</h3>
+<p>This project asserts <strong>no rights whatsoever</strong> over
+anything you type or upload (your bookmark list, notes, to-dos, uploaded
+background images, etc.). That data is never even transmitted off your
+computer to begin with (see <a
+href="#technical-details-for-the-curious">Security</a>), and it belongs
+100% to you.</p>
+<h3 id="about-the-trademark-brand-name">About the Trademark (Brand
+Name)</h3>
+<p>“SoDam AI Studio” is the creator credit for this project and does not
+assert any registered trademark claim. You are free to fork this project
+or redistribute it under a different name, as long as you do not use the
+project name or this credit in a way that would make people mistakenly
+believe SoDam AI Studio directly operates or endorses your version (and,
+per the “one condition” above, you must still keep the original
+copyright notice intact).</p>
+<h3
+id="third-party-external-services-separate-from-this-projects-license">Third-Party
+(External) Services – Separate From This Project’s License</h3>
+<p>This project itself never sends your data to an external server, but
+<strong>the following features, only when you actively turn them
+on,</strong> connect to their own respective external services. These
+services are not owned or operated by this project, and <strong>each has
+its own separate terms of service and privacy policy</strong> – this
+project’s MIT License has no bearing on the terms of these external
+services.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 41%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>Feature</th>
+<th>External service it connects to</th>
+<th>Information sent</th>
+<th>When it connects</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>Weather widget</td><td><a href="https://openweathermap.org/api">OpenWeatherMap</a></td><td>The city name you entered</td><td>Only when the weather widget is turned on</td></tr>
-<tr><td>Bookmark icon (favicon) display</td><td>Google (<code>s2/favicons</code>), DuckDuckGo (<code>icons.duckduckgo.com</code>), icon.horse, and the bookmarked site's own <code>favicon.ico</code></td><td>The domain name of the bookmarked website</td><td>Every time a bookmark card is displayed (minimized after icons are cached)</td></tr>
-</tbody></table></div>
-
-<p>If you would rather not agree to these external services' terms of service and privacy</p>
-<p>policies, you can simply not use the weather widget (it can be turned off in Settings) and</p>
-<p>use the dashboard without bookmark icons.</p>
-
-<hr>
-
+<tr>
+<td>Weather widget</td>
+<td><a href="https://openweathermap.org/api">OpenWeatherMap</a></td>
+<td>The city name you entered</td>
+<td>Only when the weather widget is turned on</td>
+</tr>
+<tr>
+<td>Bookmark icon (favicon) display</td>
+<td>Google (<code>s2/favicons</code>), DuckDuckGo
+(<code>icons.duckduckgo.com</code>), icon.horse, and the bookmarked
+site’s own <code>favicon.ico</code></td>
+<td>The domain name of the bookmarked website</td>
+<td>Every time a bookmark card is displayed (minimized after icons are
+cached)</td>
+</tr>
+</tbody>
+</table>
+<p>If you would rather not agree to these external services’ terms of
+service and privacy policies, you can simply not use the weather widget
+(it can be turned off in Settings) and use the dashboard without
+bookmark icons.</p>
+<hr />
+<h2 id="original-project-acknowledgments">🙏 Original Project &amp;
+Acknowledgments</h2>
+<p>This project began from the idea in <strong><a
+href="https://github.com/kinkos1234">kinkos1234</a></strong>’s original
+project, <strong><a
+href="https://github.com/kinkos1234/chrome-starting-page">kinkos1234/chrome-starting-page</a></strong>.
+Our sincere thanks go to the original author, kinkos1234, for creating
+and publishing this project in the first place.</p>
+<blockquote>
+<p><strong>A note on licensing (not legal advice):</strong> As of this
+writing (September 2026), the original repository has no open-source
+license registered on GitHub (<code>license: null</code>). As a general
+rule, a repository with no declared license cannot be freely copied,
+modified, or redistributed without separate permission. This project
+proceeds with <strong>direct, personal permission obtained from the
+original author, kinkos1234,</strong> to use, modify, and distribute the
+work. However, this is an informal personal agreement, not a license
+reflected in GitHub’s public license field – so if you intend to reuse
+this project further (especially for commercial purposes), we recommend
+you also check directly with the original author (kinkos1234),
+separately from the MIT License applied to this repository. If you need
+legal certainty, please consult a legal professional.</p>
+</blockquote>
+<hr />
 <h2 id="changelog-summary">Changelog Summary</h2>
-
-<blockquote><p>The complete, item-by-item version history lives in <a href="CHANGELOG.md">CHANGELOG.md</a>. Below is</p>
-<p>a condensed summary per version -- click any entry to expand it.</p></blockquote>
-
+<blockquote>
+<p>The complete, item-by-item version history lives in <a
+href="CHANGELOG.md">CHANGELOG.md</a>. Below is a condensed summary per
+version – click any entry to expand it.</p>
+</blockquote>
 <details>
-<summary><strong>v7.3</strong> (current version) -- Background slideshow overhaul, pin bookmarks, automatic data integrity checks, stronger security</summary>
-
+<summary>
+<strong>v7.4</strong> (current version) – Real CSRF vulnerability found
+&amp; fixed, dual auto-start registration + self-healing
+</summary>
 <ul>
-<li>Complete overhaul of the background image slideshow system (on/off toggle, adjustable interval, manual switching)</li>
-<li>"Pin to top" for bookmarks, drag bookmarks onto page tabs to move them</li>
-<li>On startup, the server automatically validates all 9 data files and auto-recovers corrupted ones from the latest backup</li>
-<li>Backup list/restore UI, import preview, undo stack expanded to 10 levels</li>
-<li>Automatic port fallback, duplicate-server prevention, automatic offline reconnect</li>
-<li>Accessibility improvements (keyboard focus indicators, ARIA labels), mobile-responsive layout</li>
-<li>Security hardening: path traversal prevention, XSS filtering for custom CSS</li>
+<li><strong><a href="#security">Security</a> Blocked forged-origin
+requests</strong>: Found and fixed, via an actual reproduced attack, a
+vulnerability where another website could use your browser to secretly
+send data-changing requests to this dashboard. Requests that don’t
+originate from the dashboard itself are now blocked.</li>
+<li><strong><a href="#security">Security</a> More accurate error
+responses</strong>: The server now distinguishes a syntactically-broken
+request from a validly-formed-but-invalid one (previously both returned
+the same generic message).</li>
+<li><strong><a href="#security">Security</a> More stable handling of
+oversized requests</strong>: Fixed a defect where sending very large
+data made the server hang with no response – it now correctly replies
+with a “too large” error.</li>
+<li><strong><a href="#security">Security</a> Fixed 4 missing
+output-escaping spots</strong>: Found and fixed places (task due dates,
+D-Day dates) where a tampered value could have executed as code on
+screen.</li>
+<li><strong>[Stability] Dual auto-start registration +
+self-healing</strong>: On Windows, sign-in auto-start is now registered
+in two places at once (Registry + Startup folder), and the server checks
+and repairs this itself every time it starts (addresses antivirus false
+positives that were removing the auto-start entry).</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v7.2</strong> -- Multiple to-do cards</summary>
-
+<summary>
+<strong>v7.3</strong> – Background slideshow overhaul, pin bookmarks,
+automatic data integrity checks, stronger security
+</summary>
 <ul>
-<li>To-do lists can now be split into several independent cards instead of just one</li>
+<li>Complete overhaul of the background image slideshow system (on/off
+toggle, adjustable interval, manual switching)</li>
+<li>“Pin to top” for bookmarks, drag bookmarks onto page tabs to move
+them</li>
+<li>On startup, the server automatically validates all 9 data files and
+auto-recovers corrupted ones from the latest backup</li>
+<li>Backup list/restore UI, import preview, undo stack expanded to 10
+levels</li>
+<li>Automatic port fallback, duplicate-server prevention, automatic
+offline reconnect</li>
+<li>Accessibility improvements (keyboard focus indicators, ARIA labels),
+mobile-responsive layout</li>
+<li>Security hardening: path traversal prevention, XSS filtering for
+custom CSS</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v7.1</strong> -- Notes expanded to multiple cards, widget show/hide</summary>
-
+<summary>
+<strong>v7.2</strong> – Multiple to-do cards
+</summary>
 <ul>
-<li>Notes reorganized from a single list into multiple independent cards (each with its own title and line count)</li>
+<li>To-do lists can now be split into several independent cards instead
+of just one</li>
+</ul>
+</details>
+<details>
+<summary>
+<strong>v7.1</strong> – Notes expanded to multiple cards, widget
+show/hide
+</summary>
+<ul>
+<li>Notes reorganized from a single list into multiple independent cards
+(each with its own title and line count)</li>
 <li>Markdown preview inside notes (bold, code, links)</li>
-<li>To-do/Calendar/Habit cards can be shown or hidden (recoverable via undo)</li>
+<li>To-do/Calendar/Habit cards can be shown or hidden (recoverable via
+undo)</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v7.0</strong> -- Habit tracker, layout presets, search shortcuts</summary>
-
+<summary>
+<strong>v7.0</strong> – Habit tracker, layout presets, search shortcuts
+</summary>
 <ul>
 <li>Habit tracker added, resetting daily at midnight</li>
 <li>4 layout presets (Default/Compact/Wide/Magazine)</li>
-<li>Pomodoro auto-session (25 min focus -> 5 min break)</li>
+<li>Pomodoro auto-session (25 min focus -&gt; 5 min break)</li>
 <li>Search keyword shortcuts like <code>yt cats</code></li>
 <li>Browser notification 10 minutes before calendar events</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v6.0</strong> -- Calendar, Pomodoro, profiles, unified search (Spotlight)</summary>
-
+<summary>
+<strong>v6.0</strong> – Calendar, Pomodoro, profiles, unified search
+(Spotlight)
+</summary>
 <ul>
-<li>Calendar card (monthly/weekly view) and Pomodoro timer introduced for the first time</li>
-<li>Profiles feature to save/switch between multiple dashboard setups</li>
-<li>Ctrl+click multi-select, unified search (<code>F</code> key), Korean initial-consonant search</li>
-<li>Drag links from the browser address bar onto a card; drag a JSON backup file to import it</li>
+<li>Calendar card (monthly/weekly view) and Pomodoro timer introduced
+for the first time</li>
+<li>Profiles feature to save/switch between multiple dashboard
+setups</li>
+<li>Ctrl+click multi-select, unified search (<code>F</code> key), Korean
+initial-consonant search</li>
+<li>Drag links from the browser address bar onto a card; drag a JSON
+backup file to import it</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v5.0</strong> -- Multiple pages, D-Day, weather, first automatic server backups</summary>
-
+<summary>
+<strong>v5.0</strong> – Multiple pages, D-Day, weather, first automatic
+server backups
+</summary>
 <ul>
 <li>Bookmarks can be split across multiple pages (tabs)</li>
-<li>D-Day countdown, world clock, weather widget (OpenWeatherMap) added</li>
+<li>D-Day countdown, world clock, weather widget (OpenWeatherMap)
+added</li>
 <li>Automatic dark/light switching, 6 accent colors, custom CSS</li>
-<li>The server's atomic file writes (temp file + swap) and smart-retention automatic backups were introduced for the first time in this version</li>
+<li>The server’s atomic file writes (temp file + swap) and
+smart-retention automatic backups were introduced for the first time in
+this version</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v4.0</strong> -- Category drag-to-reorder, right-click menu, trash</summary>
-
+<summary>
+<strong>v4.0</strong> – Category drag-to-reorder, right-click menu,
+trash
+</summary>
 <ul>
 <li>Drag category cards to reorder them, collapse/expand cards</li>
-<li>Right-click menu on bookmarks (edit, open in new tab, move, delete)</li>
-<li>Deleted bookmarks move to trash and are recoverable for 30 days, with a Ctrl+Z undo toast</li>
+<li>Right-click menu on bookmarks (edit, open in new tab, move,
+delete)</li>
+<li>Deleted bookmarks move to trash and are recoverable for 30 days,
+with a Ctrl+Z undo toast</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v3.0</strong> -- To-do list, recurring events, notes cards introduced</summary>
-
+<summary>
+<strong>v3.0</strong> – To-do list, recurring events, notes cards
+introduced
+</summary>
 <ul>
 <li>To-do list with priority, due dates, and tags</li>
 <li>Daily/weekly/biweekly/monthly recurring events, subtasks</li>
 <li>Simple text note cards (with automatic link detection)</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v2.0</strong> -- Dark/Light theme, glass-morphism UI</summary>
-
+<summary>
+<strong>v2.0</strong> – Dark/Light theme, glass-morphism UI
+</summary>
 <ul>
 <li>Dark/Light theme switch with a circular transition animation</li>
 <li>Glass-morphism UI with adjustable card transparency and blur</li>
-<li>Customizable keyboard shortcuts, multiple search engine switching</li>
+<li>Customizable keyboard shortcuts, multiple search engine
+switching</li>
 </ul>
-
 </details>
-
 <details>
-<summary><strong>v1.0</strong> -- Initial release</summary>
-
+<summary>
+<strong>v1.0</strong> – Initial release
+</summary>
 <ul>
-<li>A pure server using only Node.js built-in modules (zero external dependencies)</li>
+<li>A pure server using only Node.js built-in modules (zero external
+dependencies)</li>
 <li>Category-based bookmark cards with drag-to-reorder</li>
 <li>Offline support (Service Worker), Windows/Mac auto-start</li>
 <li>Automatic portable Node.js download for Windows</li>
 </ul>
-
 </details>
-
-<hr>
+<hr />
+<p align="center">
+<strong>If you like this project, please give it a star!</strong><br>
+<em>You do not need to know how to code to have your own beautiful
+dashboard.</em>
+</p>
 
 <p align="center">
   <strong>If you like this project, please give it a star!</strong><br>
