@@ -1,10 +1,12 @@
 {
   "name": "chrome-starting-page",
-  "version": "7.3.0",
+  "version": "7.4.0",
   "description": "A beautiful, private Chrome start page dashboard that runs locally on your computer. Zero dependencies, no coding required.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node --test",
+    "check:xss": "node tools/check-unescaped-html.js"
   },
   "keywords": [
     "chrome",

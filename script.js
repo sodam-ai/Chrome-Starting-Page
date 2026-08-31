@@ -1,5 +1,5 @@
 // ====================================================================
-//  Chrome Starting Page v7.3 — Full Featured Dashboard
+//  Chrome Starting Page v7.4 — Full Featured Dashboard
 // ====================================================================
 
 let BM={},CFG={},NOTES=[],USAGE={},TODOS=[],DDAYS=[],TRASH=[],EVENTS=[],POMO_STATS=[];
@@ -512,7 +512,7 @@ function renderDDays(){
     sorted.forEach(dd=>{const diff=Math.ceil((new Date(dd.date)-new Date().setHours(0,0,0,0))/(864e5));
         const chip=document.createElement('div');chip.className='dday-chip'+(diff<0?' past':'')+(diff>=0&&diff<=3?' urgent':'')+(diff===0?' today':'');
         const dateStr=(dd.date||'').slice(5).replace('-','/');
-        chip.innerHTML=`<span class="dday-label">${esc(dd.label)}</span><span class="dday-date">${dateStr}</span><span class="dday-num">${diff===0?'D-Day':diff>0?'D-'+diff:'D+'+Math.abs(diff)}</span>`;
+        chip.innerHTML=`<span class="dday-label">${esc(dd.label)}</span><span class="dday-date">${esc(dateStr)}</span><span class="dday-num">${diff===0?'D-Day':diff>0?'D-'+diff:'D+'+Math.abs(diff)}</span>`;
         bar.appendChild(chip)});
 }
 
@@ -2107,7 +2107,7 @@ function populateEngineSettings(){const c=document.getElementById('engine-settin
 
 function populateDDaySettings(){const c=document.getElementById('dday-settings');c.innerHTML='';
     DDAYS.forEach((dd,i)=>{const r=document.createElement('div');r.className='dday-setting-row';
-        r.innerHTML=`<input type="text" value="${esc(dd.label)}" placeholder="이벤트명" data-dd-label="${i}" class="setting-input" style="max-width:120px"><input type="date" value="${dd.date}" data-dd-date="${i}" class="setting-input" style="max-width:160px"><button class="btn-icon-sm" data-rm-dd="${i}">×</button>`;c.appendChild(r)});
+        r.innerHTML=`<input type="text" value="${esc(dd.label)}" placeholder="이벤트명" data-dd-label="${i}" class="setting-input" style="max-width:120px"><input type="date" value="${esc(dd.date)}" data-dd-date="${i}" class="setting-input" style="max-width:160px"><button class="btn-icon-sm" data-rm-dd="${i}">×</button>`;c.appendChild(r)});
     c.querySelectorAll('[data-rm-dd]').forEach(b=>b.addEventListener('click',()=>{DDAYS.splice(parseInt(b.dataset.rmDd),1);populateDDaySettings()}))}
 
 function populateCardSizeSettings(){const c=document.getElementById('card-size-settings');c.innerHTML='';const p=curPage();
@@ -2760,15 +2760,11 @@ function persistEvents(){_persist('events','/api/events',()=>({items:EVENTS}))}
 function persistDDays(){_persist('dd','/api/ddays',()=>({items:DDAYS}))}
 function persistTrash(){_persist('trash','/api/trash',()=>({items:TRASH}),500)}
 function persistPomoStats(){_persist('pomo','/api/pomo-stats',()=>({sessions:POMO_STATS}),1000)}
-const ESC_MAP={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
-// 2026-08-20 수정: 기존 DOM textContent 방식은 &<> 만 이스케이프하고 큰따옴표(")는
-// 안 건드림 — esc()가 텍스트 위치뿐 아니라 속성값 위치(value="${esc(x)}" 등, 카테고리명/
-// D-Day 라벨/단축키/프로필 이름 등 최소 15곳)에도 쓰이고 있어서, 그런 자리에서는
-// "가 그대로 통과해 속성을 탈출시키는 XSS가 가능했다(백업 가져오기로 조작된 값이 들어올
-// 수 있는 경로). 5개 특수문자(&<>"')를 전부 이스케이프하도록 바꿔 텍스트/속성 양쪽 다
-// 안전하게 만든다 — 텍스트 위치에서는 "가 그대로 렌더링되던 것과 동일하게 보이므로
-// 기존 화면 표시는 그대로다(HTML 파싱 시 엔티티가 다시 문자로 풀림).
-function esc(s){if(s===null||s===undefined)return '';return String(s).replace(/[&<>"']/g,c=>ESC_MAP[c])}
+// esc()/ESC_MAP moved to lib/esc.js (2026-08-31) — loaded via <script src="lib/esc.js">
+// before this file in index.html, so both stay globally available here unchanged.
+// Extracted so the same code path used by the live app can also be required directly
+// from test/esc.test.js (script.js itself can't be require()'d — it references
+// document/window at load time).
 
 // D1: Save indicator
 function showSaveIndicator(state){
@@ -3475,7 +3471,7 @@ function renderTodoKanban(){
             const card=document.createElement('div');card.className='kanban-card';card.draggable=true;
             card.dataset.todoId=t.id;
             const priColors=['','#f87171','#fbbf24','#4ade80'];
-            card.innerHTML=`<div class="kc-top">${t.priority?'<span class="kc-pri" style="background:'+priColors[t.priority]+'"></span>':''}${t.tags?.map(tag=>'<span class="kc-tag">'+esc(tag)+'</span>').join('')||''}</div><div class="kc-text">${esc(t.text||'(비어있음)')}</div>${t.dueDate?'<div class="kc-due">'+t.dueDate+'</div>':''}`;
+            card.innerHTML=`<div class="kc-top">${t.priority?'<span class="kc-pri" style="background:'+priColors[t.priority]+'"></span>':''}${t.tags?.map(tag=>'<span class="kc-tag">'+esc(tag)+'</span>').join('')||''}</div><div class="kc-text">${esc(t.text||'(비어있음)')}</div>${t.dueDate?'<div class="kc-due">'+esc(t.dueDate)+'</div>':''}`;
             card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',t.id);card.classList.add('dragging')});
             card.addEventListener('dragend',()=>card.classList.remove('dragging'));
             list.appendChild(card);
@@ -3592,7 +3588,7 @@ function openDailyPlanner(){
     // Todos
     const todayTodos=TODOS.filter(t=>!t.done&&(!t.dueDate||t.dueDate<=today));
     html+=`<div class="dp-section"><div class="dp-label">📋 할 일 (${todayTodos.length})</div>`;
-    todayTodos.forEach(t=>{html+=`<div class="dp-item dp-todo">${t.done?'✅':'☐'} ${esc(t.text)} ${t.dueDate===''+today?'<span class="dp-badge dp-today">오늘</span>':t.dueDate?'<span class="dp-badge">'+t.dueDate+'</span>':''}</div>`});
+    todayTodos.forEach(t=>{html+=`<div class="dp-item dp-todo">${t.done?'✅':'☐'} ${esc(t.text)} ${t.dueDate===''+today?'<span class="dp-badge dp-today">오늘</span>':t.dueDate?'<span class="dp-badge">'+esc(t.dueDate)+'</span>':''}</div>`});
     html+=`</div>`;
     // Pomodoro
     html+=`<div class="dp-section"><div class="dp-label">🍅 포모도로</div><div class="dp-pomo-today">오늘 집중: <b>${POMO_STATS.filter(s=>s.date===today).reduce((sum,s)=>sum+s.minutes,0)}분</b></div></div>`;
