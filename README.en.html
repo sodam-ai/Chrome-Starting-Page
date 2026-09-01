@@ -63,7 +63,7 @@ p[align="center"], p[align=center]{text-align:center}
 
 <h1 id="chrome-starting-page-a-personal-chrome-new-tab-dashboard">Chrome
 Starting Page — A Personal Chrome New-Tab Dashboard</h1>
-<p><img src="https://img.shields.io/badge/version-7.4.0-blue"
+<p><img src="https://img.shields.io/badge/version-7.4.1-blue"
 alt="Version" /> <img
 src="https://img.shields.io/badge/license-MIT-green" alt="License" />
 <img src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen"
@@ -640,14 +640,13 @@ quietly re-registers it (<code>ensureAutoStart()</code> in
 that carries the marker file (<code>.autostart-installed</code>) left
 behind by a real install, so a development copy of this project can
 never accidentally hijack the real auto-start registration.</p>
-<p><strong>A known, currently unfixed, low-severity gap</strong>: six
-places in <code>server.js</code> return a raw filesystem error message
-in their response if something goes wrong internally, which could
-include a fragment of an internal file path. Because this server only
-ever answers <code>localhost</code>, the only person who could ever see
-that response is you, and the CSRF protection above means no external
-webpage can read it either — so the real-world risk is assessed as low,
-but it’s disclosed here honestly rather than hidden.</p>
+<p><strong>One low-severity gap, now fixed</strong>: six places in
+<code>server.js</code> (profile save/load/delete, backup restore,
+import, and the port-change endpoint) used to return a raw filesystem
+error message in their response if something went wrong internally,
+which could include a fragment of an internal file path. All six now
+return a generic, safe message to the client, and the real error detail
+is only ever logged to the server’s own console.</p>
 <p><strong>Where your data actually lives</strong>: see the <a
 href="#file-document-locations">File &amp; Document Locations</a> table
 below. It’s all on your own hard drive — nobody, including this
@@ -722,6 +721,19 @@ repository’s Issues tab, with steps to reproduce it.</li>
 <h2 id="whats-new-changelog-summary">What’s New — Changelog Summary</h2>
 <p>Expand any version below to see its details. The full history lives
 in <a href="./CHANGELOG.md"><code>CHANGELOG.md</code></a>.</p>
+<details>
+<summary>
+<b>v7.4.1 (2026-09-01) — Fixed internal-path disclosure in error
+responses</b>
+</summary>
+<ul>
+<li>Removed a low-severity gap in 6 endpoints (profile save/load/delete,
+backup restore, import, port change) where an internal server path could
+leak into an error response — clients now always get a safe, generic
+message, and the real error is logged only to the server’s own
+console</li>
+</ul>
+</details>
 <details>
 <summary>
 <b>v7.4 (2026-09-01) — Security hardening · auto-start reliability</b>

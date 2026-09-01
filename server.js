@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const VERSION = '7.4';
+const VERSION = '7.4.1';
 
 // Port priority: command line arg > port.conf file > default 1111
 const PREFERRED_PORT = (() => {
@@ -524,7 +524,7 @@ const server = http.createServer((req, res) => {
                 // Clear file cache so restored images are served immediately
                 clearFileCache();
                 json(res, 200, { success:true, bookmarksDroppedCount });
-            } catch (e) { json(res, 400, { error:e.message }); }
+            } catch (e) { console.error('[Import]', e.message); json(res, 400, { error:'Import failed' }); }
         });
         return;
     }
@@ -610,7 +610,7 @@ const server = http.createServer((req, res) => {
                     config: rJson(path.join(DATA,'config.json'),{}), todos: rJson(path.join(DATA,'todos.json'),{items:[]}), ddays: rJson(path.join(DATA,'ddays.json'),{items:[]}) };
                 wJson(path.join(DATA, 'profiles', name + '.json'), pd);
                 json(res, 200, { success:true });
-            } catch (e) { json(res, 400, { error:e.message }); }
+            } catch (e) { console.error('[Profile Save]', e.message); json(res, 400, { error:'Save failed' }); }
         });
         return;
     }
@@ -630,7 +630,7 @@ const server = http.createServer((req, res) => {
                 if (d.ddays) wJson(path.join(DATA,'ddays.json'), d.ddays);
                 if (d.config) { d.config.activeProfile=name; wJson(path.join(DATA,'config.json'), d.config); }
                 json(res, 200, { success:true });
-            } catch (e) { json(res, 400, { error:e.message }); }
+            } catch (e) { console.error('[Profile Load]', e.message); json(res, 400, { error:'Load failed' }); }
         });
         return;
     }
@@ -642,7 +642,7 @@ const server = http.createServer((req, res) => {
                 const pf = path.join(DATA, 'profiles', name + '.json');
                 if (fs.existsSync(pf)) fs.unlinkSync(pf);
                 json(res, 200, { success:true });
-            } catch (e) { json(res, 400, { error:e.message }); }
+            } catch (e) { console.error('[Profile Delete]', e.message); json(res, 400, { error:'Delete failed' }); }
         });
         return;
     }
@@ -690,7 +690,7 @@ const server = http.createServer((req, res) => {
                 });
                 clearFileCache();
                 json(res, 200, { success: true, message: 'Restored from ' + safeName, bookmarksDroppedCount });
-            } catch (e) { json(res, 400, { error: e.message }); }
+            } catch (e) { console.error('[Backup Restore]', e.message); json(res, 400, { error: 'Restore failed' }); }
         });
         return;
     }
@@ -705,14 +705,14 @@ const server = http.createServer((req, res) => {
     if (url === '/api/port' && m === 'POST') {
         readBody(req, (err, body) => {
             if (err) return json(res, 413, { error:'Too large' });
+            let p;
+            try { p = parseInt(JSON.parse(body).port); } catch (e) { return json(res, 400, { error:'Invalid JSON' }); }
+            if (!p || p < 1024 || p > 65535) return json(res, 400, { error: 'Port must be between 1024 and 65535' });
             try {
-                const { port } = JSON.parse(body);
-                const p = parseInt(port);
-                if (!p || p < 1024 || p > 65535) throw new Error('Port must be between 1024 and 65535');
                 // Save to port.conf
                 fs.writeFileSync(path.join(DIR, 'port.conf'), String(p), 'utf8');
                 json(res, 200, { success: true, port: p, message: 'Port saved. Restart server to apply.' });
-            } catch (e) { json(res, 400, { error: e.message }); }
+            } catch (e) { console.error('[Port Save]', e.message); json(res, 500, { error: 'Save failed' }); }
         });
         return;
     }

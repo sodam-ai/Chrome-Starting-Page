@@ -1,6 +1,6 @@
 # Chrome Starting Page — A Personal Chrome New-Tab Dashboard
 
-![Version](https://img.shields.io/badge/version-7.4.0-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
+![Version](https://img.shields.io/badge/version-7.4.1-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
 
 > A **personal start screen** that appears the moment you open a new tab in Chrome.
 > Bookmarks, to-dos, notes, D-Day countdowns, a calendar, and a Pomodoro timer — all
@@ -358,13 +358,12 @@ folder that carries the marker file (`.autostart-installed`) left behind by
 a real install, so a development copy of this project can never
 accidentally hijack the real auto-start registration.
 
-**A known, currently unfixed, low-severity gap**: six places in `server.js`
-return a raw filesystem error message in their response if something goes
+**One low-severity gap, now fixed**: six places in `server.js` (profile
+save/load/delete, backup restore, import, and the port-change endpoint) used
+to return a raw filesystem error message in their response if something went
 wrong internally, which could include a fragment of an internal file path.
-Because this server only ever answers `localhost`, the only person who could
-ever see that response is you, and the CSRF protection above means no
-external webpage can read it either — so the real-world risk is assessed as
-low, but it's disclosed here honestly rather than hidden.
+All six now return a generic, safe message to the client, and the real error
+detail is only ever logged to the server's own console.
 
 **Where your data actually lives**: see the [File & Document Locations](#file-document-locations)
 table below. It's all on your own hard drive — nobody, including this
@@ -446,6 +445,16 @@ just using the app, feel free to skip it.
 
 Expand any version below to see its details. The full history lives in
 [`CHANGELOG.md`](./CHANGELOG.md).
+
+<details>
+<summary><b>v7.4.1 (2026-09-01) — Fixed internal-path disclosure in error responses</b></summary>
+
+- Removed a low-severity gap in 6 endpoints (profile save/load/delete, backup
+  restore, import, port change) where an internal server path could leak into
+  an error response — clients now always get a safe, generic message, and the
+  real error is logged only to the server's own console
+
+</details>
 
 <details>
 <summary><b>v7.4 (2026-09-01) — Security hardening · auto-start reliability</b></summary>

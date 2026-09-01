@@ -1,6 +1,6 @@
 # Chrome Starting Page — 개인용 크롬 새 탭 대시보드
 
-![버전](https://img.shields.io/badge/version-7.4.0-blue) ![라이선스](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![의존성](https://img.shields.io/badge/dependencies-0-orange)
+![버전](https://img.shields.io/badge/version-7.4.1-blue) ![라이선스](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![의존성](https://img.shields.io/badge/dependencies-0-orange)
 
 > 컴퓨터를 켜자마자, 또는 크롬에서 새 탭을 열자마자 뜨는 **나만의 시작 화면**입니다.
 > 북마크·할 일·메모·D-Day·캘린더·뽀모도로 타이머를 한 화면에 모아두고, 모든 데이터는
@@ -324,11 +324,10 @@ npm run check:xss        # 이스케이프 누락 여부를 점검하는 보조 
 정식 설치가 남긴 표식 파일(`.autostart-installed`)이 있는 폴더에서만 동작하므로,
 개발용 사본이 실수로 진짜 자동 시작을 가로채는 사고는 구조적으로 일어나지 않습니다.
 
-**현재 알려진, 아직 고치지 않은 낮은 위험**: 서버 내부의 6곳에서 파일 시스템 오류가
-나면 오류 메시지에 내부 경로 일부가 그대로 포함될 수 있습니다. 이 서버는 localhost
-전용이라 그 응답을 볼 수 있는 사람은 사용자 자신뿐이고, 위 CSRF 방어 덕분에 외부
-웹페이지가 그 응답을 읽어갈 방법도 없어 실제 위험은 낮게 평가하고 있지만, 정직하게
-남겨둡니다.
+**수정 완료된 낮은 위험 하나**: 예전에는 서버 내부 6곳(프로필 저장/불러오기/삭제,
+백업 복원, 가져오기, 포트 변경)에서 파일 시스템 오류가 나면 오류 메시지에 내부 경로
+일부가 그대로 포함될 수 있었습니다. 지금은 이 6곳 모두 사용자에게는 안전한 일반
+메시지만 보여주고, 실제 오류 내용은 서버 콘솔 로그에만 남도록 고쳤습니다.
 
 **데이터가 저장되는 곳**: 아래 [파일 · 문서 위치](#파일-문서-위치) 표를 참고하세요.
 전부 여러분의 컴퓨터 하드디스크 안이며, 이 프로그램 개발자를 포함해 그 누구도
@@ -406,6 +405,15 @@ Chrome-Starting-Page/
 ## 업데이트 내용 요약
 
 가장 최근 버전부터 펼쳐서 볼 수 있습니다. 전체 이력은 [`CHANGELOG.md`](./CHANGELOG.md)에 있습니다.
+
+<details>
+<summary><b>v7.4.1 (2026-09-01) — 오류 메시지 경로 노출 수정</b></summary>
+
+- 프로필 저장/불러오기/삭제, 백업 복원, 가져오기, 포트 변경 6곳에서 오류 발생 시
+  서버 내부 경로가 섞여 나갈 수 있던 낮은 위험을 제거 — 이제 사용자에게는 안전한
+  일반 메시지만 보이고, 실제 오류는 서버 콘솔 로그에만 남습니다
+
+</details>
 
 <details>
 <summary><b>v7.4 (2026-09-01) — 보안 강화 · 자동 시작 신뢰성 개선</b></summary>
