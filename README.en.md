@@ -358,13 +358,12 @@ folder that carries the marker file (`.autostart-installed`) left behind by
 a real install, so a development copy of this project can never
 accidentally hijack the real auto-start registration.
 
-**A known, currently unfixed, low-severity gap**: six places in `server.js`
-return a raw filesystem error message in their response if something goes
+**One low-severity gap, now fixed**: six places in `server.js` (profile
+save/load/delete, backup restore, import, and the port-change endpoint) used
+to return a raw filesystem error message in their response if something went
 wrong internally, which could include a fragment of an internal file path.
-Because this server only ever answers `localhost`, the only person who could
-ever see that response is you, and the CSRF protection above means no
-external webpage can read it either — so the real-world risk is assessed as
-low, but it's disclosed here honestly rather than hidden.
+All six now return a generic, safe message to the client, and the real error
+detail is only ever logged to the server's own console.
 
 **Where your data actually lives**: see the [File & Document Locations](#file-document-locations)
 table below. It's all on your own hard drive — nobody, including this
