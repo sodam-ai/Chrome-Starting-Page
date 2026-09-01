@@ -1,6 +1,6 @@
 # Chrome Starting Page — A Personal Chrome New-Tab Dashboard
 
-![Version](https://img.shields.io/badge/version-7.4.0-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
+![Version](https://img.shields.io/badge/version-7.4.1-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
 
 > A **personal start screen** that appears the moment you open a new tab in Chrome.
 > Bookmarks, to-dos, notes, D-Day countdowns, a calendar, and a Pomodoro timer — all
@@ -445,6 +445,16 @@ just using the app, feel free to skip it.
 
 Expand any version below to see its details. The full history lives in
 [`CHANGELOG.md`](./CHANGELOG.md).
+
+<details>
+<summary><b>v7.4.1 (2026-09-01) — Fixed internal-path disclosure in error responses</b></summary>
+
+- Removed a low-severity gap in 6 endpoints (profile save/load/delete, backup
+  restore, import, port change) where an internal server path could leak into
+  an error response — clients now always get a safe, generic message, and the
+  real error is logged only to the server's own console
+
+</details>
 
 <details>
 <summary><b>v7.4 (2026-09-01) — Security hardening · auto-start reliability</b></summary>

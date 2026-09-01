@@ -63,7 +63,7 @@ p[align="center"], p[align=center]{text-align:center}
 
 <h1 id="chrome-starting-page-a-personal-chrome-new-tab-dashboard">Chrome
 Starting Page — A Personal Chrome New-Tab Dashboard</h1>
-<p><img src="https://img.shields.io/badge/version-7.4.0-blue"
+<p><img src="https://img.shields.io/badge/version-7.4.1-blue"
 alt="Version" /> <img
 src="https://img.shields.io/badge/license-MIT-green" alt="License" />
 <img src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen"
@@ -721,6 +721,19 @@ repository’s Issues tab, with steps to reproduce it.</li>
 <h2 id="whats-new-changelog-summary">What’s New — Changelog Summary</h2>
 <p>Expand any version below to see its details. The full history lives
 in <a href="./CHANGELOG.md"><code>CHANGELOG.md</code></a>.</p>
+<details>
+<summary>
+<b>v7.4.1 (2026-09-01) — Fixed internal-path disclosure in error
+responses</b>
+</summary>
+<ul>
+<li>Removed a low-severity gap in 6 endpoints (profile save/load/delete,
+backup restore, import, port change) where an internal server path could
+leak into an error response — clients now always get a safe, generic
+message, and the real error is logged only to the server’s own
+console</li>
+</ul>
+</details>
 <details>
 <summary>
 <b>v7.4 (2026-09-01) — Security hardening · auto-start reliability</b>

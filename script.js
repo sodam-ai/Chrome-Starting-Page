@@ -1,5 +1,5 @@
 // ====================================================================
-//  Chrome Starting Page v7.4 — Full Featured Dashboard
+//  Chrome Starting Page v7.4.1 — Full Featured Dashboard
 // ====================================================================
 
 let BM={},CFG={},NOTES=[],USAGE={},TODOS=[],DDAYS=[],TRASH=[],EVENTS=[],POMO_STATS=[];

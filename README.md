@@ -1,6 +1,6 @@
 # Chrome Starting Page — 개인용 크롬 새 탭 대시보드
 
-![버전](https://img.shields.io/badge/version-7.4.0-blue) ![라이선스](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![의존성](https://img.shields.io/badge/dependencies-0-orange)
+![버전](https://img.shields.io/badge/version-7.4.1-blue) ![라이선스](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![의존성](https://img.shields.io/badge/dependencies-0-orange)
 
 > 컴퓨터를 켜자마자, 또는 크롬에서 새 탭을 열자마자 뜨는 **나만의 시작 화면**입니다.
 > 북마크·할 일·메모·D-Day·캘린더·뽀모도로 타이머를 한 화면에 모아두고, 모든 데이터는
@@ -405,6 +405,15 @@ Chrome-Starting-Page/
 ## 업데이트 내용 요약
 
 가장 최근 버전부터 펼쳐서 볼 수 있습니다. 전체 이력은 [`CHANGELOG.md`](./CHANGELOG.md)에 있습니다.
+
+<details>
+<summary><b>v7.4.1 (2026-09-01) — 오류 메시지 경로 노출 수정</b></summary>
+
+- 프로필 저장/불러오기/삭제, 백업 복원, 가져오기, 포트 변경 6곳에서 오류 발생 시
+  서버 내부 경로가 섞여 나갈 수 있던 낮은 위험을 제거 — 이제 사용자에게는 안전한
+  일반 메시지만 보이고, 실제 오류는 서버 콘솔 로그에만 남습니다
+
+</details>
 
 <details>
 <summary><b>v7.4 (2026-09-01) — 보안 강화 · 자동 시작 신뢰성 개선</b></summary>

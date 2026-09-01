@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const VERSION = '7.4';
+const VERSION = '7.4.1';
 
 // Port priority: command line arg > port.conf file > default 1111
 const PREFERRED_PORT = (() => {

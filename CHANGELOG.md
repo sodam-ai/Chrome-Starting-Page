@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v7.4.1] - 2026-09-01
+
+### Security
+- **6 internal-path-disclosure sites fixed** — `/api/profiles/save`, `/api/profiles/load`, `/api/profiles/delete`, `/api/backups/restore`, `/api/import`, and `/api/port` previously returned the raw exception message (`e.message`) to the client on failure, which could include a fragment of an absolute server filesystem path if the underlying file write/unlink call failed. All six now return a generic, safe error message to the client; the real error is logged server-side via `console.error` only. `/api/port` keeps its existing safe, specific validation message (`"Port must be between 1024 and 65535"`) since that string never contains path info — only the subsequent file write is now isolated in its own try/catch. Verified with an isolated smoke-test server (generic message to client, real cause in server console). This was a previously-disclosed, low-severity gap noted in the v7.4 README.
+
+### Docs
+- README/README.en updated to reflect the fix above (previously described as a known, unfixed gap)
+
+---
+
 ## [v7.4] - 2026-09-01
 
 ### Security
