@@ -1,1278 +1,673 @@
-<p align="center">
-  <img src="assets/icon-512.svg" width="80" alt="Dashboard icon">
-</p>
+# Chrome Starting Page — A Personal Chrome New-Tab Dashboard
 
-<h1 align="center">Chrome Starting Page Dashboard</h1>
+![Version](https://img.shields.io/badge/version-7.4.0-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
 
-<p align="center">
-  <strong>Your personal homepage that lives on your computer -- beautiful, private, and truly yours.</strong>
-</p>
+> A **personal start screen** that appears the moment you open a new tab in Chrome.
+> Bookmarks, to-dos, notes, D-Day countdowns, a calendar, and a Pomodoro timer — all
+> in one screen, and every piece of data stays **inside your own computer**. No sign-up,
+> no cloud upload, no ads.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/version-7.4-blue?style=flat-square" alt="Version 7.4">
-  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Linux-lightgrey?style=flat-square" alt="Platform">
-  <img src="https://img.shields.io/badge/dependencies-zero-brightgreen?style=flat-square" alt="Zero Dependencies">
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT License">
-  <img src="https://img.shields.io/badge/data-100%25%20local-orange?style=flat-square" alt="100% Local Data">
-  <img src="https://img.shields.io/badge/coding-not%20required-purple?style=flat-square" alt="No Coding Required">
-</p>
-
-<p align="center">
-  <a href="README.md">한국어 버전 (Korean)</a>
-</p>
+This document is written so that even someone using **AI tools, messaging apps,
+computers, or mobile/electronic devices for the very first time** can install and
+use this project just by following along. Any technical term is explained on the
+spot.
 
 ---
 
 ## Table of Contents
 
-- [What Is This?](#what-is-this)
-- [Quick Start (3 Steps)](#quick-start-3-steps)
-- [Preview](#preview)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [How to Use](#how-to-use)
-- [Workflow (How You'll Actually Use It Day to Day)](#workflow-how-youll-actually-use-it-day-to-day)
-- [Settings & Customization](#settings--customization)
-- [Data Safety](#data-safety)
-- [Updating to a New Version](#updating-to-a-new-version)
-- [Command Reference](#command-reference)
-- [Uninstalling (Clean Removal)](#uninstalling-clean-removal)
-- [Troubleshooting](#troubleshooting)
-- [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
-- [File Structure](#file-structure)
-- [Technical Details](#technical-details-for-the-curious)
-- [License & Legal Notice](#license--legal-notice)
-- [Original Project & Acknowledgments](#original-project--acknowledgments)
-- [Changelog Summary](#changelog-summary)
+1. [What Is This Program?](#what-is-this-program)
+2. [Prerequisites](#prerequisites)
+3. [How to Download](#how-to-download)
+4. [Quick Start (3 Steps)](#quick-start-3-steps)
+5. [Installation (Detailed)](#installation-detailed)
+6. [Running · Stopping · Restarting](#running-stopping-restarting)
+7. [How to Use](#how-to-use)
+8. [Commands & Scripts Reference](#commands-scripts-reference)
+9. [How It Works (Architecture)](#how-it-works-architecture)
+10. [Security & Data Flow](#security-data-flow)
+11. [File & Document Locations](#file-document-locations)
+12. [Development Workflow (Tests · Code Structure)](#development-workflow-tests-code-structure)
+13. [What's New — Changelog Summary](#whats-new-changelog-summary)
+14. [Troubleshooting](#troubleshooting)
+15. [FAQ](#faq)
+16. [Legal · Copyright · License · Commercial Use](#legal-copyright-license-commercial-use)
+17. [Original Project & Acknowledgments](#original-project-acknowledgments)
 
 ---
 
-## What Is This?
+## What Is This Program?
 
-Every time you open your web browser (a program like Google Chrome that lets you visit websites), it shows a **start page** (the first page you see when the browser opens). Usually, that is just Google's search page or something the browser chose for you.
+This program **completely replaces the screen you see when you open a new tab in
+Chrome, with a page you control.** Unlike a typical "new tab extension," this
+project is a tiny server that runs directly on your own computer, and Chrome
+simply displays what that server shows. Because of that, your data never leaves
+your machine for some unfamiliar company's cloud — everything is stored inside
+your own hard drive, in the `data` folder.
 
-**This project replaces that page with your own custom dashboard** -- a beautiful, personal homepage where you can organize your bookmarks (favorite websites), write notes, manage to-do lists, track habits, and more.
+One screen holds all of the following:
 
-The dashboard runs as a tiny **server** (a small program running quietly in the background on your computer, like a helpful assistant waiting for requests). It uses something called **Node.js** (explained later in the Requirements section) as its engine. Your data stays private -- nothing is ever sent to any company or server on the internet. You do not need to know how to code. You do not need to install complicated software. Just run one setup file, and you are done.
+- Category-based **bookmark cards** (drag to reorder, split across multiple pages)
+- A **to-do list** — priority, due dates, recurring schedules, subtasks, and a
+  list view ↔ **Kanban board** toggle
+- A **calendar** and **D-Day countdowns**
+- A **notes/memo** widget (with Markdown preview)
+- A **Pomodoro timer** and a **habit tracker**
+- A **weekly report** — a popup summarizing the past week's activity, shown
+  automatically the first time you open the dashboard each day
+- **World clocks**, an optional **weather widget**, and **unified search**
+  (Spotlight, with Korean initial-consonant fuzzy matching)
+- Dark/light themes, glass-morphism effects, custom backgrounds and slideshows
 
-> **Three key points:**
-> - **No coding knowledge required** -- double-click one file and the installation is done (this includes people who only use natural language or "vibe coding" to build software)
-> - **Your data stays on your computer only** -- nothing is ever sent to any external server
-> - **No extra software to install** -- it downloads what it needs and runs independently
+**You don't need to know how to code.** Just follow the steps below and click along.
+
+---
+
+## Prerequisites
+
+| Item | Required? | Notes |
+|---|---|---|
+| Windows 10/11 or macOS | Required | The operating system this runs on. (Linux can run the server itself, but there is no auto-start script for it.) |
+| Chrome (or another Chromium-based browser like Edge) | Required | The window this project uses as your new-tab page. |
+| Node.js (v18 or newer) | **May not be needed** | If you already have it, the setup script uses it. If not, the Windows installer **downloads it automatically** for you (see below). |
+| Internet connection | Required once during setup; optional after | Needed to auto-download Node.js. Once set up, core features work fully offline — the on-screen fonts are loaded from Google Fonts, so offline they simply fall back to your system's default font (no loss of function). The optional weather widget also needs internet. |
+| Account sign-up / payment info | Not required | This program never asks you to create an account. |
+
+> **What is "Node.js"?** It's a runtime that lets a programming language called
+> JavaScript run directly on your computer, outside a browser. This entire
+> project is a single server built on Node.js. You don't need to understand it
+> to install or use this project.
+
+---
+
+## How to Download
+
+1. Go to the GitHub repository page: **https://github.com/sodam-ai/Chrome-Starting-Page**
+2. Click the green **`Code`** button.
+3. Click **`Download ZIP`**. (If you're comfortable with Git, `git clone` works too.)
+4. Extract the downloaded zip file wherever you like, e.g. `C:\Dashboard`.
+   - **Note**: a folder path containing spaces or non-English characters can
+     cause problems in some environments. A short, English-letters-and-numbers-only
+     path is recommended.
 
 ---
 
 ## Quick Start (3 Steps)
 
-> For people who just want to get it running fast, without reading every detail. Curious
-> what each step actually does? The [Installation](#installation) section below walks
-> through it step by step.
-
-1. **Download** -- save this whole project folder anywhere on your computer.
-2. **Run the setup script** -- double-click `setup_windows.bat` (Windows) or run
-   `setup_mac.sh` (Mac) inside the folder. Wait until you see "Setup Complete!"
-3. **Open it in Chrome** -- type `http://localhost:1111` into Chrome's address bar and
-   press Enter.
-
-That's it. From now on, the server starts automatically every time you turn on your
-computer -- you never need to reinstall. Just open that address in Chrome.
-
----
-
-## Preview
-
-> Replace these placeholders with actual screenshots of your dashboard.
-
-| Dark Theme | Light Theme |
-|:----------:|:-----------:|
-| ![Dark theme screenshot](https://via.placeholder.com/600x380?text=Dark+Theme+Screenshot) | ![Light theme screenshot](https://via.placeholder.com/600x380?text=Light+Theme+Screenshot) |
-
-| Bookmarks & Cards | Settings Panel |
-|:------------------:|:--------------:|
-| ![Bookmarks screenshot](https://via.placeholder.com/600x380?text=Bookmarks+and+Cards) | ![Settings screenshot](https://via.placeholder.com/600x380?text=Settings+Panel) |
-
----
-
-## Features
-
-### :bookmark_tabs: Bookmarks & Organization
-
-- **Bookmark cards** -- group your favorite websites into neat categories (Work, Social, Shopping, etc.)
-- **Multiple pages** -- split bookmarks across separate tabs when one page is not enough (e.g., "Work", "Personal", "Study")
-- **Unified search** -- search your bookmarks, notes, to-dos, and events all at once with one keystroke
-- **Smart paste** -- copy a website address (URL) and press Ctrl+V anywhere on the page; a category picker appears automatically
-- **Drag and drop** -- drag links from Chrome's address bar directly onto a card
-- **Dead link detection** -- automatically finds bookmarks that no longer work
-- **Multi-select** -- hold Ctrl and click to select several bookmarks at once, then move or delete them together
-- **Pin to top** -- pin your most important bookmarks so they always appear at the top of their card
-
-### :mag: Search
-
-- **Web search** -- type in the search bar at the top and press Enter to search the web
-- **Multi-search engine** -- switch between Google, YouTube, Naver, and others with one click
-- **Unified search (Spotlight)** -- press `F` to search bookmarks, to-dos, notes, and calendar events all at once
-- **Korean initial consonant search** -- type just the first consonants (e.g., "ㄴㅇㅂ") and matching bookmarks like "네이버" appear
-- **Keyword shortcuts** -- type `yt cats` to search YouTube for "cats" directly
-- **Command mode** -- in unified search, type `>settings`, `>theme`, `>timer`, etc. to run commands instantly
-
-### :white_check_mark: Productivity Tools
-
-- **To-do list** -- tasks with priority levels (high / medium / low), tags, due dates, and recurring schedules; drag to reorder; completed items automatically move to the bottom
-- **Notes** -- create as many note cards as you need for simple text notes (multiple cards supported)
-- **Calendar** -- monthly or weekly view with event creation and browser notifications
-- **Pomodoro timer** -- a 25-minute focus timer with optional automatic 5-minute breaks (auto-session continues cycles)
-- **Habit tracker** -- daily checklist that resets every midnight
-
-### :art: Appearance & Customization
-
-- **Dark / Light theme** -- switch with one click (with a smooth circle transition animation), or automatically follow your computer's setting
-- **6 accent colors** -- blue, purple, rose, emerald, amber, cyan
-- **Custom backgrounds** -- upload your own images; with 1 image it stays fixed, with 2 or more they become a slideshow (ON/OFF toggle, adjustable interval, manual previous/next buttons)
-- **Glass-morphism UI** -- adjustable card transparency (blur slider) and opacity (opacity slider) for a modern frosted-glass look
-- **Layout presets** -- 4 types: Default, Compact, Wide, or Magazine
-- **Custom CSS** -- for advanced users who want to write their own styling rules
-
-### :cloud: Weather & Clock
-
-- **Weather widget** -- shows current weather for your city using [OpenWeatherMap](https://openweathermap.org/api) (requires a free API key -- explained below)
-- **World clock** -- display multiple time zones at the top of the dashboard (e.g., New York, London, Tokyo)
-
-### :calendar: D-Day Countdown
-
-- Track important dates with "D-7", "D-3", "D-Day", "D+1" style countdowns
-- Displayed at the top of the dashboard for quick reference
-- Past dates show how many days have passed
-
-### :keyboard: Keyboard Shortcuts
-
-| Key | What it does |
-|-----|-------------|
-| `/` | Move cursor to the search bar |
-| `F` | Open unified search (bookmarks + to-dos + notes + events) |
-| `S` | Open settings |
-| `E` | Toggle edit mode (shows card management buttons) |
-| `1` through `9` | Jump to the 1st, 2nd, ... 9th card |
-| `Esc` | Close any open popup or modal |
-| `Ctrl+Z` | Undo the last action (delete, move, etc.) |
-
-### :shield: Safety & Privacy
-
-- **100% local** -- your data never leaves your computer; no accounts, no cloud, no tracking
-- **Automatic backups** -- the server creates backups on a smart retention schedule, keeping up to 50 files
-- **Full export / import** -- download everything (bookmarks, notes, settings, icons, backgrounds) as one JSON, Markdown, or HTML file
-- **Trash with undo** -- accidentally deleted something? Press Ctrl+Z to bring it back (10-level undo stack -- you can undo up to 10 actions in a row)
-- **Localhost only** -- the server only listens on `127.0.0.1` (your computer); nobody else on your network can access it
-- **Zero dependencies** -- the server uses only built-in features of Node.js; nothing extra to download or update
-- **Offline support** -- the dashboard works even without an internet connection (except weather)
-- **Profiles** -- save and switch between different dashboard setups
-- **Backup list and restore UI** -- browse all your backups with dates and sizes, and restore any one with a single click
-- **Import preview** -- before applying an import, see a summary of exactly how many bookmarks, notes, and other items will be imported
-- **Tab sync** -- if you have the dashboard open in multiple browser tabs, changes sync instantly between them (uses BroadcastChannel API)
-
----
-
-## Requirements
-
-> "Requirements" means the things you need before you can start.
-
-| What | Why | How to get it |
-|------|-----|---------------|
-| **A computer** | Windows 10/11, macOS, or Linux | You probably already have this |
-| **Google Chrome** (or any browser) | To view the dashboard | [Download Chrome](https://www.google.com/chrome/) |
-| **Internet connection** | Only needed for the first-time setup | After setup, the dashboard works offline |
-| **Node.js** | A small program that runs the dashboard in the background | **Windows:** the setup file downloads it for you automatically. **Mac/Linux:** install from [nodejs.org](https://nodejs.org) |
-
-> **What is Node.js?** Think of it as a tiny engine that powers the dashboard behind the scenes. If the dashboard is a "car", Node.js is the "engine" that makes it go. It runs quietly in the background and uses very little memory (about 15 MB -- less than a single browser tab). On Windows, the setup file (`setup_windows.bat`) downloads a portable copy of Node.js automatically, so you do not need to install anything yourself. If Node.js is already installed on your system, it will use that; if not, it downloads a private copy just for this project.
-
-> **Do I need any environment variables?** No, this project uses none at all. Every
-> personal setting -- including API keys like the weather widget's -- is stored through
-> the dashboard's own Settings screen or in `data/config.json`, never in a `.env` file, so
-> there is no environment-variable step before running the server.
-
-> **How do I "deploy" this?** This isn't a cloud web service -- it's a program you **install
-> and run on your own computer only**. There is no separate deployment step; running the
-> setup script in the [Installation](#installation) section below *is* the deployment.
-> There is no `npm publish`, no server upload, no domain to configure.
-
----
-
-## Installation
-
-### :computer: Windows (Easiest -- No Coding Needed)
-
-> **Time needed:** About 2-5 minutes.
-
-**Step 1: Download the project**
-
-Download this project folder and place it anywhere you like.
-
-Example: `C:\Users\YourName\Dashboard`
-
-> Your Desktop, Documents folder, or any location is fine. Just avoid system folders like `C:\Windows` or `C:\Program Files`. Remember: if you delete this folder later, the dashboard goes with it, so put it somewhere safe.
-
-**Step 2: Run the setup**
-
-Open the folder and find the file called **`setup_windows.bat`**. It has a gear-like icon and looks like a small script file. **Double-click** it.
-
-A black window (called "Command Prompt" -- a text-based way to give instructions to your computer) will appear with progress messages:
-1. It checks if Node.js (the engine) is already on your computer
-2. If not, it automatically downloads a portable copy (~30 MB -- this only happens once)
-3. If Node.js is already installed system-wide, it uses that instead
-4. The dashboard server starts in the background (no visible window)
-5. Auto-start is registered so it launches every time you turn on your computer
-
-Wait until you see **"Setup Complete!"** -- then the black window is safe to close.
-
-**Step 3: Open it in Chrome**
-
-Open Chrome and type this address in the **address bar** (the long text box at the very top of the browser window where you normally see website addresses):
-
-```
-http://localhost:1111
-```
-
-Then press **Enter**.
-
-> **What does `localhost:1111` mean?** "localhost" means "this computer" -- you are telling Chrome to look at your own computer instead of the internet. "1111" is the **port** number (think of it as a door number -- explained more in the Settings section).
-
-**You are done!** From now on, the dashboard starts automatically every time you turn on your computer -- no popups, no extra windows.
-
-<details>
-<summary>What does setup_windows.bat actually do? (click to read)</summary>
-
-1. Checks if you already have data and creates a safety backup first (`safety-before-setup.json`)
-2. Downloads a portable copy of Node.js into the `node/` folder (if not already there and no system Node.js is found)
-3. Stops any previously running dashboard server
-4. Registers auto-start so the dashboard launches when you log in (no admin rights needed) --
-   using **two methods at once**: a Windows Registry entry and a Startup-folder shortcut. Some
-   antivirus tools mistakenly flag "something that quietly launches every login" and remove
-   one of the two, so registering both means one always survives (since v7.4). On top of that,
-   the server checks every time it starts whether this registration is still intact and
-   silently re-registers it if not (self-healing) -- since you likely open the dashboard many
-   times a day, most breaks fix themselves the next time it starts.
-5. Starts the server silently in the background (no visible window)
-
-It does NOT install anything system-wide. It does NOT modify your Windows settings beyond a single auto-start entry. Everything stays inside the project folder.
-
-</details>
-
----
-
-### :apple: Mac
-
-> **Time needed:** About 3 minutes. You will need to type a few commands.
-
-**Step 1: Install Node.js**
-
-Go to [nodejs.org](https://nodejs.org) and click the big green button on the website. Follow the instructions to install it.
-
-**Step 2: Open Terminal**
-
-You need to open an app called **Terminal** (a text-based window where you type commands to control your computer -- think of it as talking to your computer by typing instead of clicking):
-
-- Press `Cmd + Space` on your keyboard (this opens Spotlight search)
-- Type `Terminal` and press Enter
-- A window with a text prompt will appear -- this is where you type commands
-
-**Step 3: Navigate to the project folder**
-
-Type the following command and press Enter. This tells Terminal to "go to" the folder where you put the project:
-
-```bash
-cd ~/Dashboard
-```
-
-> Replace `~/Dashboard` with the actual path to where you put the project folder. The `cd` command means "change directory" (go to a folder). The `~` symbol means your home folder.
-
-**Step 4: Give the setup file permission to run**
-
-```bash
-chmod +x setup_mac.sh
-```
-
-> The `chmod` command gives the setup file permission to run. Mac requires this step for security.
-
-**Step 5: Run the setup**
-
-```bash
-./setup_mac.sh
-```
-
-> The `./` prefix means "run this file in the current folder".
-
-**Step 6: Open it in Chrome**
-
-Open Chrome and go to:
-
-```
-http://localhost:1111
-```
-
-**Step 7: Done!**
-
-The dashboard will auto-start every time you log in. You can close Terminal now.
-
----
-
-### :penguin: Linux
-
-1. Install Node.js from [nodejs.org](https://nodejs.org) or your package manager (e.g., `sudo apt install nodejs`)
-2. Open a **terminal** (a text window for typing commands -- most Linux systems open it with `Ctrl+Alt+T`)
-3. Navigate to the project folder and run the server:
+**On Windows**
+
+1. In the extracted folder, **double-click `setup_windows.bat`**.
+2. A black console window opens and installs everything automatically. Wait for
+   it to finish (usually a few seconds to a minute; up to 1–2 minutes if Node.js
+   needs to be downloaded).
+3. Open Chrome, go to `chrome://settings/onStartup`, choose "Open a specific
+   page or set of pages," and add the address shown at the end of setup
+   (default: `http://localhost:1111`).
+
+**On macOS**
+
+1. Open the Terminal app.
+2. Navigate to the extracted folder and run, in order:
    ```bash
-   cd ~/Dashboard
-   node server.js
+   chmod +x setup_mac.sh
+   ./setup_mac.sh
    ```
-4. Open Chrome and go to `http://localhost:1111`
+3. In Chrome's settings, set your start page to `http://localhost:1111`.
 
-<details>
-<summary>Set up auto-start with systemd (click to read)</summary>
+From now on, this dashboard appears every time you open a new tab or launch Chrome.
 
-**systemd** is a tool built into most Linux systems that can automatically start programs when your computer boots. Create a systemd "service" so the dashboard starts automatically:
+---
 
-```bash
-sudo tee /etc/systemd/system/dashboard.service << EOF
-[Unit]
-Description=Chrome Starting Page Dashboard
-After=network.target
+## Installation (Detailed)
 
-[Service]
-Type=simple
-User=$USER
-WorkingDirectory=$HOME/Dashboard
-ExecStart=$(which node) server.js
-Restart=on-failure
+### Windows — What `setup_windows.bat` actually does
 
-[Install]
-WantedBy=multi-user.target
-EOF
+A single double-click runs these 5 steps in order:
 
-sudo systemctl enable dashboard
-sudo systemctl start dashboard
-```
+1. **Protects your existing data**: if `data\bookmarks.json` already exists (a
+   reinstall), it is left untouched, and an extra safety backup
+   (`data\backups\safety-before-setup.json`) is created. On a fresh install, the
+   required empty folders (`data`, `data\backups`, `data\icons`, `data\profiles`,
+   `assets`) are created. **Re-running setup never deletes existing bookmarks or
+   settings.**
+2. **Checks for Node.js**: it looks for ① a portable Node.js already downloaded
+   into this folder, then ② a system-wide Node.js install. If neither is found,
+   it automatically downloads a portable version (~30MB) from the official
+   nodejs.org distribution into this folder's own `node\` subfolder — this does
+   not touch anything system-wide.
+3. **Stops any existing server**: if a previous instance is running (reinstall
+   or update scenario), it is shut down safely first.
+4. **Registers auto-start**: so the dashboard launches automatically when you
+   log in, **two** methods are registered at the same time — ① a Windows
+   Registry login-startup entry, and ② a shortcut (`.lnk`) file in the Startup
+   folder. Why both at once is explained in [Security & Data Flow](#security-data-flow).
+5. **Starts the server**: launched in the background, with no visible window.
 
-> Replace `$HOME/Dashboard` with the actual path to your project folder if different.
+When setup finishes, it prints the address to use, which kind of Node.js was
+used (system or portable), and confirms your data was preserved.
 
-</details>
+### macOS — What `setup_mac.sh` actually does
+
+1. Locates the system's installed Node.js (if none is found, it prints a
+   message and exits — macOS has no auto-download step, so you'll need to
+   install Node.js from [nodejs.org](https://nodejs.org) first).
+2. Generates a `com.dashboard.startpage.plist` file with paths matching your
+   current folder, and copies it into `~/Library/LaunchAgents/`. This is
+   macOS's way of registering "run automatically at login" (a LaunchAgent).
+3. Runs `launchctl load` to start the server immediately.
+
+### Do I need administrator privileges?
+
+**No.** Both scripts only touch per-user areas (the Registry key is under
+`HKCU`, meaning "current user only"; on macOS, `~/Library/LaunchAgents` is a
+personal folder), so they run fine under a normal user account.
+
+---
+
+## Running · Stopping · Restarting
+
+Once installed, the server starts automatically every time you turn your
+computer on, so you normally never need any of this. It's here for when you
+want to control things manually.
+
+| I want to... | Windows | macOS |
+|---|---|---|
+| Restart right now | Double-click `restart.bat` | `launchctl kickstart -k gui/$(id -u)/com.dashboard.startpage` |
+| Turn it off completely | Dashboard Settings (⚙️) > Server > Shutdown, or run `uninstall.bat` | `launchctl unload ~/Library/LaunchAgents/com.dashboard.startpage.plist` |
+| Start quietly with no window | Double-click `run_server_background.bat` | Already runs in the background by default |
+| Change the port (address) | Double-click `set-port.bat` and enter a new port number | Edit the `port.conf` file with a text editor and change the number |
+| Remove it completely | Double-click `uninstall.bat` | Run `uninstall_mac.sh` |
+
+After changing the port you must restart the server for it to take effect —
+and remember to also update Chrome's start-page address to the new port.
 
 ---
 
 ## How to Use
 
-### Setting It as Your Chrome Start Page
+### First screen
 
-This makes the dashboard appear every time you open Chrome:
+After installing, your first visit shows a short onboarding tutorial. You can
+skip it — every feature can always be found later through Settings (the gear
+icon ⚙️ in the top right).
 
-1. Open Chrome
-2. Type `chrome://settings/onStartup` in the address bar and press **Enter**
-3. Select **"Open a specific page or set of pages"**
-4. Click **"Add a new page"**
-5. Type `http://localhost:1111` and click **Add**
+### Adding bookmarks
 
-> Now every time you open Chrome, your dashboard will greet you.
+- Paste a URL into the empty input at the bottom of any card and press Enter —
+  the fastest way.
+- Drag the site icon/lock icon from your browser's address bar and drop it
+  onto a card.
+- Press `Ctrl+V` anywhere on the page — it recognizes a URL on your clipboard
+  and asks which category to file it under.
+- Right-click a bookmark for edit, change-icon, move-to-another-page, and
+  delete options.
+- Hold `Ctrl` and click multiple bookmarks to move or delete several at once.
 
-### Setting It as Your New Tab Page (Optional)
+### Unified search (Spotlight)
 
-If you also want to see the dashboard when you open a **new tab** (not just when Chrome starts):
+Press **`F`** on your keyboard to open the search box. It searches bookmarks,
+to-dos, notes, and events all at once, and understands Korean initial-consonant
+input (e.g. typing "ㄴㅇㅂ" finds "네이버"). Typing a `>`-prefixed command like
+`>settings`, `>theme`, or `>timer` jumps straight to that feature.
 
-1. Install the free Chrome extension [New Tab Redirect](https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna)
-2. Set the redirect URL to `http://localhost:1111`
+### To-dos / Calendar / D-Day / Notes / Pomodoro
 
----
+Use the `+` button in the top-right corner of each widget card to add a new
+item. To-dos support priority, due dates, tags, recurrence (daily/weekly/
+biweekly/monthly), and subtasks. The Pomodoro timer automatically cycles
+25 minutes of focus and 5 minutes of break, and every session is logged to
+your stats.
 
-### Basic Usage Guide
+Once your to-do list passes 10 items, a **"Kanban view"** button appears below
+the card. Click it to switch to a **Kanban board** grouped by status (e.g.
+To Do / In Progress / Done) — drag a card into another column to change its
+status. Click "List view" at the top of the board to switch back.
 
-| What you want to do | How to do it |
-|----------------------|--------------|
-| **Add a bookmark** | Type or paste a URL in the input box at the bottom of any card, press Enter |
-| **Add by dragging** | Drag a URL from Chrome's address bar and drop it on a card |
-| **Add by pasting** | Copy a URL, then press Ctrl+V anywhere on the page -- a category picker appears |
-| **Rename a bookmark** | Double-click on a bookmark's name |
-| **Edit a bookmark** | Right-click on a bookmark > "Edit" |
-| **Delete a bookmark** | Hover over a bookmark and click the X button (you can undo with Ctrl+Z) |
-| **Reorder bookmarks** | Drag a bookmark up or down within a card |
-| **Move to another card** | Drag a bookmark from one card to another |
-| **Move to another page** | Right-click on a bookmark > "Move to another page" |
-| **Pin a bookmark to top** | Right-click on a bookmark > "Pin to top" |
-| **Select multiple** | Hold Ctrl and click several bookmarks, then use the action bar |
-| **Add a new card** | Click the **"+ Add Card"** button at the bottom of the page |
-| **Open settings** | Press the `S` key or click the settings icon |
+The first time you open the dashboard each day, a **weekly report** popup
+appears automatically, summarizing the past week's activity (such as how many
+to-dos you completed). Once dismissed, it won't reappear until the next day.
 
-### Pages
+### Customizing the look (Settings > Theme)
 
-If you have many bookmarks, split them across multiple **pages** (like having separate tabs for "Work", "Personal", "Study"):
+Choose dark, light, or automatic (follows your OS setting); 6 accent colors;
+3 levels of glass effect (clear / normal / frosted) plus a blur-intensity
+slider; 4 layout presets (Default / Compact / Wide / Magazine); and even
+inject your own custom CSS. Backgrounds can be a single uploaded image
+(Settings > Background) or a slideshow of multiple images, with a
+configurable rotation interval from 1 minute to 24 hours.
 
-- **Add a page:** Settings > Widgets > Page Management > "+ Add Page"
-- **Switch pages:** Click the tabs at the top of the dashboard
-- **Move a category to another page:** In edit mode (press `E`), click the page button on a card's title bar
-- **Move a bookmark to another page:** Right-click on a bookmark > "Move to another page"
+### Exporting, importing, and restoring backups
 
-### Cards
+Under Settings > Data:
 
-Your dashboard is made of **cards**. Each card serves a different purpose. Think of them like different sections on your desk -- one for links, one for notes, one for tasks, and so on.
-
-| Card | What it does |
-|------|-------------|
-| **Bookmarks** | A collection of links organized by category |
-| **Notes** | Simple text notes -- create as many note cards as you need |
-| **To-do** | Task list with priority levels, tags, due dates, recurring tasks, and drag-to-sort |
-| **Calendar** | Monthly or weekly calendar view with event creation |
-| **Pomodoro** | A 25-minute focus timer with auto-session (press play to start) |
-| **Habits** | Daily habit checklist that resets every midnight |
-
-To add a new card, click the **"+ Add Card"** button at the bottom of the page. In edit mode (press `E`), you can also change a card's width by clicking the size button on the card.
-
-### Search Features
-
-| What you want to do | How to do it |
-|----------------------|--------------|
-| **Search the web** | Type in the search bar at the top and press Enter |
-| **Change search engine** | Click the icon to the left of the search bar (Google, YouTube, Naver, etc.) |
-| **Search everything at once** | Press the `F` key -- searches bookmarks, to-dos, notes, and events together |
-| **Korean initial consonant search** | Type just the first consonants (e.g., "ㄴㅇㅂ") and matching bookmarks appear |
-| **Keyword shortcuts** | Type `yt cats` to search YouTube for "cats" directly |
-| **Run commands** | In unified search, type `>settings`, `>theme`, `>timer`, etc. |
+- **Export**: downloads all your data as a JSON file. You can choose whether
+  to include background/icon images.
+- **Import**: restores from a previously exported JSON file. Before applying,
+  it shows a summary like "42 bookmarks, 15 to-dos, 3 notes."
+- **Automatic backups**: the server backs up all your data by itself on a
+  configurable interval (default 24 hours, adjustable 1–168 hours). Pick any
+  point in the backup list to restore everything to that moment in one click.
+- **Profiles**: save your entire bookmark/notes/to-do/D-Day/settings setup
+  under a name, and switch between different profiles (e.g. "Work" vs.
+  "Personal").
 
 ---
 
-## Workflow (How You'll Actually Use It Day to Day)
+## Commands & Scripts Reference
 
-> "Workflow" just means the loop you'll repeat every day you use this dashboard. You don't
-> need to memorize it -- it's here to give you a sense of what's happening behind the scenes.
+| File | Platform | What it does |
+|---|---|---|
+| `setup_windows.bat` | Windows | Installs, registers auto-start, and launches the server (first run, or reinstall) |
+| `uninstall.bat` | Windows | Stops the server, removes auto-start, optionally deletes data |
+| `restart.bat` | Windows | Restarts the server (prints status to a console window) |
+| `run_server_background.bat` | Windows | Starts the server quietly, with no window |
+| `set-port.bat` | Windows | Changes the port (saved to `port.conf`) |
+| `start_hidden.vbs` | Windows | Used internally by auto-start — you never need to run this yourself |
+| `setup_mac.sh` | macOS | Installs, registers a LaunchAgent for auto-start, and launches the server |
+| `uninstall_mac.sh` | macOS | Stops the server, removes the LaunchAgent, optionally deletes data |
 
-```
-1. You open Chrome
-        |
-        v
-2. The dashboard appears automatically as your start page (no login, no loading screen)
-        |
-        v
-3. You use it however you like: click bookmarks, check off to-dos, write notes, start a timer
-        |
-        v
-4. Anything you change is sent to the local server instantly and saved into a file in data/
-   (most items save automatically -- no "Save" button to click; the save indicator in the
-   bottom-right corner shows "Saved" so you know it worked)
-        |
-        v
-5. On a schedule (every 24 hours by default), the server automatically creates a full backup
-        |
-        v
-6. If something goes wrong (accidental deletion, corrupted file), open Settings > Data,
-   browse the backup list, and restore whichever point in time you need
+**For developers**, from a terminal/PowerShell in the project folder:
+
+```bash
+node server.js          # Run the server directly (default port 1111)
+node server.js 8080     # Run on port 8080 instead
+npm start                 # Same as above (package.json's start script)
+npm test                  # Run the 17 automated tests (Node's built-in test runner)
+npm run check:xss         # Run the advisory scanner for missing output-escaping
 ```
 
-**When you restart your computer**: the server is already registered to start automatically
-(this was set up during installation), so you don't need to run anything manually -- just
-open Chrome and it's there.
+---
 
-**When your internet goes down**: everything except the weather widget keeps working. This
-dashboard only talks to your own computer, so it was never dependent on the internet to
-begin with.
+## How It Works (Architecture)
+
+```
+[Chrome, a new tab]
+        │  http://127.0.0.1:1111
+        ▼
+[server.js] ── uses only Node.js's built-in http module (0 npm dependencies)
+        │
+        ├─ Serves static files: index.html, style.css, script.js
+        │   (in-memory cache + gzip compression + ETag to minimize re-fetches)
+        │
+        ├─ Serves a JSON REST API: /api/bookmarks, /api/todos, /api/config, etc.
+        │   GET  = read data
+        │   POST = write data (only after verifying the request's origin)
+        │
+        └─ Reads and writes data/*.json files directly (no database server)
+```
+
+- **Server**: a single file, `server.js`. It uses only modules built into
+  Node.js itself — `http`, `fs`, `path`, `zlib`, `crypto`, `net`,
+  `child_process`. **Not one external library needs to be `npm install`ed.**
+- **Client (what you see)**: just three files — `index.html`, `style.css`, and
+  `script.js` (roughly 240,000 characters). There's no framework like React or
+  Vue and no build step; the browser reads and runs these files as-is.
+- **Storage**: instead of a database server (MySQL, MongoDB, etc.), data is
+  read from and written directly to plain JSON text files inside the `data/`
+  folder — one file per feature (bookmarks, to-dos, settings, and so on).
+- **Reachability**: the server only accepts connections on `127.0.0.1` (aka
+  "localhost," the special address meaning "this computer, talking to
+  itself"). No other computer or phone on the same Wi-Fi network can reach
+  this address — it only ever opens on this one machine.
+- **Port**: 1111 by default. If something else is already using port 1111, it
+  automatically tries 1112, 1113, and so on, up to 10 ports, until it finds a
+  free one.
+- **Offline support**: a service worker (`sw.js`) pre-caches the screen's own
+  files, so the dashboard's interface keeps opening even without internet
+  (saving data still requires the server to be running — but since the server
+  runs on this computer, that has nothing to do with your internet connection).
+- **Outbound internet traffic**: this app makes exactly two kinds of requests
+  to the outside world. ① **Fonts**: the IBM Plex Sans KR and JetBrains Mono
+  fonts used in the design are loaded from Google Fonts
+  (`fonts.googleapis.com`, `fonts.gstatic.com`) — offline, the browser simply
+  falls back to your system's default font, with no loss of function.
+  ② **Weather widget** (optional): only if you've entered your own API key in
+  Settings, it sends a city name to OpenWeatherMap to fetch weather data.
+  Outside of these two, nothing — no ads, tracking scripts, or analytics of
+  any kind — is ever sent to an external server.
 
 ---
 
-## Settings & Customization
+## Security & Data Flow
 
-### Changing the Port Number
+Because this program is "a server on your own computer that's always running
+in the background," it needed a different security posture than a typical
+new-tab extension. Everything below is a protection that is **actually
+implemented in the code — and has been reproduced and verified directly**, as
+of v7.4.
 
-> **What is a "port"?** Think of it like a door number on a building. Your computer has thousands of these "doors", and each program uses a different one. The dashboard uses door number 1111 by default. If another program is already using that door, you need to pick a different number.
+| Threat | Mitigation |
+|---|---|
+| Someone on another computer viewing or tampering with your dashboard data | The server only accepts connections on `127.0.0.1` (localhost), so access from outside this machine is impossible by design. |
+| A malicious website silently overwriting your bookmarks/to-dos through your own browser (CSRF) | Every request that changes state (POST) is checked against the `Origin` header your browser sends along with it (the address of the site that made the request). If it's present and doesn't match the server's own address, the request is rejected immediately (403). |
+| A bookmark storing a dangerous address like `javascript:` that runs code when clicked | Bookmark URLs are checked against an allowlist of five schemes only — `http`, `https`, `ftp`, `ftps`, `mailto` — validated independently on both the client and the server. |
+| Manipulated text (titles, notes, dates, etc.) executing as a script when rendered (XSS) | Every value rendered to the screen passes through an `esc()` function that replaces the five HTML-significant characters `& < > " '` with safe equivalents. This function lives in exactly one place, `lib/esc.js`, and is covered by automated regression tests. |
+| A file upload planting a file outside the intended folder (path traversal) | Both upload and restore paths reject `..` and `~` patterns, re-verify that the final resolved path is strictly inside an allowed folder, and only accept image file extensions. |
+| An oversized request hanging or crashing the server | Every request body is capped at 10MB, and exceeding it returns a proper error response (413) instead of hanging. |
+| Data files getting corrupted from simultaneous writes across multiple windows | Per-file write locks plus atomic writes (write to a temp file, then rename) mean a mid-write crash can never leave a half-written, corrupted file. |
+| A data file becoming corrupted for any reason | On every server start, all 9 data files are validated, and any corrupted file is automatically restored from the most recent valid backup (or a safe empty default if no backup exists). |
 
-The dashboard runs on port `1111` by default. To change it:
+**Why register auto-start two different ways?** Some antivirus software
+flags "a script silently launched at every login" as resembling a common
+malware persistence technique, and removes the registration. To guard
+against that, both the Registry entry and the Startup-folder shortcut are
+registered at the same time, and every time the server starts, it checks
+whether either one has gone missing and quietly re-registers it
+(`ensureAutoStart()` in `server.js`). This self-healing only activates in a
+folder that carries the marker file (`.autostart-installed`) left behind by
+a real install, so a development copy of this project can never
+accidentally hijack the real auto-start registration.
 
-| Method | How |
-|--------|-----|
-| **From the dashboard** (easiest) | Settings > Data > Server Management > enter new port > click "Change" |
-| **Double-click a file** | Run `set-port.bat`, type a number (e.g., `8080`), press Enter |
-| **Edit a text file** | Create or edit `port.conf` in the project folder, write just the number inside |
-| **Command line** | Run `node server.js 8080` |
+**A known, currently unfixed, low-severity gap**: six places in `server.js`
+return a raw filesystem error message in their response if something goes
+wrong internally, which could include a fragment of an internal file path.
+Because this server only ever answers `localhost`, the only person who could
+ever see that response is you, and the CSRF protection above means no
+external webpage can read it either — so the real-world risk is assessed as
+low, but it's disclosed here honestly rather than hidden.
 
-> After changing the port, update your Chrome start page address too (e.g., `http://localhost:8080`).
-
-### Themes and Appearance
-
-| Setting | How to change it |
-|---------|-----------------|
-| **Dark / Light theme** | Click the moon/sun icon at the top of the dashboard (smooth circle transition) |
-| **Follow your OS theme** | Settings > General > Theme Mode > "Follow OS" |
-| **Accent color** | Settings > General > Accent Color (6 choices: blue, purple, rose, emerald, amber, cyan) |
-| **Glass effect** | Settings > Appearance > adjust card blur (blur slider) and opacity (opacity slider) |
-| **Layout** | Settings > Appearance > Layout (Default / Compact / Wide / Magazine) |
-| **Custom CSS** | Settings > Appearance > Custom CSS (for advanced users) |
-
-### Background Images
-
-| What you set | What happens |
-|-------------|-------------|
-| **1 image** | The image stays fixed as your background |
-| **2 or more images** | Slideshow mode becomes available with ON/OFF toggle, adjustable interval (1 minute to 24 hours), and manual previous/next buttons |
-
-How to set backgrounds:
-
-1. Go to **Settings > Appearance > Background Images**
-2. Click **"Add Images"** to upload pictures from your computer
-3. If you uploaded 2 or more images, a slideshow toggle appears -- turn it ON or OFF as you like
-4. When slideshow is ON, choose a rotation interval (1 minute to 24 hours) and use the manual previous/next buttons anytime
-5. Click **"Reset All"** to go back to the default background
-
-### Weather Widget
-
-1. Go to **Settings > General > Weather**
-2. Get a free API key from [OpenWeatherMap](https://openweathermap.org/api) (sign up for a free account -- it takes 1 minute)
-3. Paste the API key and type your city name (e.g., "Seoul", "New York")
-4. Choose Celsius or Fahrenheit
-
-### World Clock
-
-1. Go to **Settings > General > World Clock**
-2. Click **"+ Add Clock"**
-3. Enter a label (e.g., "New York") and select the timezone
-
-### D-Day Countdown
-
-- Go to **Settings > Widgets > D-Day** to add important dates
-- Shows "D-7", "D-3", "D-Day", "D+1", etc. at the top of the dashboard
-- Past dates show how many days have passed
+**Where your data actually lives**: see the [File & Document Locations](#file-document-locations)
+table below. It's all on your own hard drive — nobody, including this
+project's developers, can reach it over the internet.
 
 ---
 
-## Data Safety
+## File & Document Locations
 
-### Where is my data stored?
+```
+Chrome-Starting-Page/
+├── index.html              Page skeleton (HTML)
+├── style.css                 Visual design (CSS)
+├── script.js                 All client-side behavior (JavaScript)
+├── server.js                 The server itself (Node.js)
+├── manifest.webmanifest      PWA ("install as an app") configuration
+├── sw.js                     Service worker for offline support
+├── lib/
+│   ├── esc.js                 XSS-prevention escape function (shared by server + client)
+│   └── validators.js          URL / backup-interval validation logic (shared by server + tests)
+├── test/
+│   ├── esc.test.js             Regression tests for esc()
+│   └── validators.test.js      Regression tests for validation logic
+├── tools/
+│   └── check-unescaped-html.js   Advisory scanner for missing output-escaping
+├── data/                     ← Where your actual data is stored
+│   ├── bookmarks.json          Bookmarks
+│   ├── notes.json              Notes
+│   ├── config.json             All settings
+│   ├── todos.json               To-dos
+│   ├── ddays.json               D-Days
+│   ├── events.json              Calendar events
+│   ├── usage.json               Bookmark-usage statistics
+│   ├── trash.json               Trash (auto-deleted after 30 days)
+│   ├── pomo-stats.json          Pomodoro session history
+│   ├── backups/                 Automatic backup files
+│   ├── icons/                   Uploaded custom bookmark icons
+│   └── profiles/                Saved profiles
+├── assets/                   Background images, PWA icons
+├── setup_windows.bat / uninstall.bat / restart.bat / set-port.bat  ← Windows scripts
+├── setup_mac.sh / uninstall_mac.sh                                   ← macOS scripts
+├── package.json                Project metadata (version, license, etc.)
+├── CHANGELOG.md                 Full version history
+├── LICENSE                      License text (MIT)
+├── README.md                    Korean version of this document
+└── README.en.md                 This document (English)
+```
 
-All your data lives in the `data/` folder inside the project. This folder is **never deleted** by setup, restart, or update scripts. Nothing is ever sent to any external server.
-
-Think of it like keeping a diary in your desk drawer -- it stays in your folder on your computer, and only you can see it.
-
-### Automatic Backups
-
-The server automatically creates backups on a smart retention schedule. You do not need to do anything.
-
-| Time range | How many backups are kept |
-|-----------|--------------------------|
-| Last 7 days | Every backup is kept |
-| Days 8 through 30 | One backup per day |
-| Older than 30 days | Automatically removed |
-| Maximum total | 50 backup files |
-
-Backups are stored in `data/backups/`.
-
-### Backup List and Restore
-
-You can browse and restore any backup directly from the dashboard:
-
-1. Go to **Settings > Data**
-2. You will see a **list of all backups** with their dates and file sizes
-3. Click **"Restore"** next to any backup to restore your dashboard to that exact point in time
-
-This is useful if you accidentally deleted something or changed your settings and want to go back.
-
-### Manual Export and Import
-
-| Action | Steps |
-|--------|-------|
-| **Export as JSON** (save everything to one file) | Press `S` > Data tab > click "Export" > a file downloads containing all your bookmarks, notes, settings, icons, backgrounds, and profiles |
-| **Export as Markdown** | Press `S` > Data tab > choose Markdown format |
-| **Export as HTML** | Press `S` > Data tab > choose HTML format |
-| **Import** (restore from a file) | Press `S` > Data tab > click "Import" > select your backup file > see a **preview** showing exactly how many bookmarks, notes, to-dos, and other items will be imported > confirm to apply |
-| **Quick restore (drag and drop)** | Drag and drop any backup JSON file directly onto the dashboard page |
-
-> **Import preview:** Before any import is applied, you will see a summary screen showing the count of each type of item (e.g., "42 bookmarks, 5 notes, 12 to-dos"). This lets you verify the file is correct before overwriting your current data.
-
-> Save your export file to a USB drive or cloud storage (like Google Drive) for extra safety.
-
-### Moving to Another Computer
-
-1. On the old computer: **Export** your data (Settings > Data > Export)
-2. Copy the downloaded file to the new computer (USB, email, cloud drive -- anything works)
-3. On the new computer: set up the dashboard, then **Import** the file (Settings > Data > Import)
-4. Done -- your dashboard looks exactly the same
-
-> **Alternative method:** Copy the entire `data/` folder from the old computer and paste it into the same location inside the project folder on the new computer.
-
-### What Happens on Reinstall?
-
-Running `setup_windows.bat` again will:
-
-1. **Create a safety backup** of your current data first (saved as `safety-before-setup.json` in the backups folder)
-2. **Keep all your existing data untouched** -- nothing is deleted
-3. **Re-register auto-start** so the dashboard launches on boot
-4. **Restart the server** with the latest files
-
-Your bookmarks, notes, to-dos, and settings will still be there. Nothing is lost.
+Files like `.autostart-installed`, `.server.pid`, `port.conf`, and
+`server.log` are internal state the running server manages on its own — you
+never need to edit them by hand.
 
 ---
 
-## Updating to a New Version
+## Development Workflow (Tests · Code Structure)
 
-When a new version is released:
+This section is for anyone who wants to read or modify the code. If you're
+just using the app, feel free to skip it.
 
-1. **Export your data first** (Settings > Data > Export) -- just to be extra safe
-2. **Replace the project files** with the new version (overwrite the old files with the new ones)
-   - Your `data/` folder will not be overwritten because it contains your personal data -- **do not touch or delete it**
-3. **Run `setup_windows.bat`** (or `setup_mac.sh` on Mac) again, or double-click `restart.bat`
-4. Your data is preserved automatically
+- **There's no build step.** No transpiler (Babel, etc.) and no bundler
+  (Webpack, etc.) — edit a file, save it, and the change is live. Just
+  refresh the browser (or restart the server).
+- **Tests**: `npm test` runs Node's built-in test runner (`node --test`).
+  There are currently 17 tests (`test/esc.test.js` has 6, `test/validators.test.js`
+  has 11) locking down the key scenarios — normal values, edge cases, and
+  malicious input — for the XSS-escaping function and the URL/backup-interval
+  validation logic. No separate framework like Jest or Mocha needs to be
+  installed.
+- **Advisory tool**: `npm run check:xss` scans `script.js` for places that
+  render a value to the screen without going through `esc()`, and lists them
+  as candidates. It's a heuristic, not a perfect automatic verdict — treat
+  its output as "a list a human should double-check," not a pass/fail gate.
+- **Found a bug?** Please open it on the GitHub repository's Issues tab, with
+  steps to reproduce it.
+
+---
+
+## What's New — Changelog Summary
+
+Expand any version below to see its details. The full history lives in
+[`CHANGELOG.md`](./CHANGELOG.md).
 
 <details>
-<summary>If the page looks broken after updating (click to fix)</summary>
+<summary><b>v7.4 (2026-09-01) — Security hardening · auto-start reliability</b></summary>
 
-This is caused by your browser remembering old files (called "cache" -- a temporary storage area where the browser keeps copies of pages it has visited before). To fix it:
+**Security**
+- Reproduced and fixed, at the root cause, a CSRF vulnerability that let a
+  malicious website silently overwrite your data through your own browser
+  (added Origin-header validation)
+- Distinguished between malformed JSON and validly-formed-but-invalid data in
+  error responses
+- Fixed a bug where oversized requests never got a proper error response at
+  all (413 handling now works correctly)
+- Found and fixed 4 places where a value was rendered to the screen without
+  escaping (to-do due dates, D-Day dates)
+- Extracted the escaping/validation logic into `lib/`, locked it down with
+  automated tests, and added a scanner for future gaps
 
-1. Press `Ctrl+Shift+Delete` in Chrome
-2. Check "Cached images and files" and set the time range to "Last hour"
-3. Click "Clear data"
-4. Reload the page (`Ctrl+R` or `F5`)
+**Reliability**
+- Windows auto-start is now registered two ways at once (Registry + Startup
+  folder shortcut)
+- The server now checks, on every startup, whether its own auto-start
+  registration is still intact, and repairs it if not
+- Fixed a conditional-logic bug in the installer that silenced its own
+  success/failure message entirely
 
 </details>
 
----
-
-## Uninstalling (Clean Removal)
-
-### Windows (Recommended)
-
-1. Double-click **`uninstall.bat`**
-2. It will automatically:
-   - Stop the server
-   - Remove auto-start from Windows Registry and Startup folder
-   - Ask if you want to keep or delete your data (you choose)
-   - Clean up log files and temporary files
-3. After that, you can safely delete the entire project folder
-4. In Chrome, go to `chrome://settings/onStartup` and remove the localhost entry
-
-No traces left on your system. No other programs are affected. This program does not modify system files, so deleting the folder is all it takes for a clean removal.
-
-### Mac
-
-The easiest way: open Terminal, navigate to the project folder, and run the uninstall script:
-
-```bash
-cd ~/Dashboard
-chmod +x uninstall_mac.sh
-./uninstall_mac.sh
-```
-
-The script will stop the server, remove auto-start, and ask if you want to keep or delete your data.
-
 <details>
-<summary>Manual uninstall (if you prefer)</summary>
+<summary><b>v7.3 (2025-03-19) — Unified background system · data safety</b></summary>
 
-Open Terminal and run these commands:
-
-```bash
-launchctl unload ~/Library/LaunchAgents/com.dashboard.startpage.plist
-rm ~/Library/LaunchAgents/com.dashboard.startpage.plist
-```
-
-Then delete the project folder.
+- Unified background/slideshow system with automatic migration
+- Pin bookmarks to the top, drag them onto page tabs, drag-to-sort to-dos
+- Server-side data integrity check (auto-recovers corrupted files from backup), backup list + restore UI
+- Import preview, export-complete notifications, 10-level undo
+- Automatic port fallback, auto-stopping a previous server instance, stale PID-file cleanup
+- Auto-reconnect (15s → 5s), an offline banner, real-time sync across open tabs
+- Keyboard focus visibility, ARIA labels, a print stylesheet, mobile responsiveness (768px)
+- Complete README rewrite, added `.gitattributes` (consistent line endings)
 
 </details>
 
-### Linux
+<details>
+<summary><b>v7.2 (2025-03) — Multiple to-do cards</b></summary>
 
-Open a terminal and run these commands:
+- Create multiple independent to-do cards
+- Rename/delete cards individually, drag to-dos between cards
 
-```bash
-sudo systemctl stop dashboard
-sudo systemctl disable dashboard
-sudo rm /etc/systemd/system/dashboard.service
-sudo systemctl daemon-reload
-```
+</details>
 
-Then delete the project folder.
+<details>
+<summary><b>v7.1 (2025-03) — Card-based notes system</b></summary>
 
-> After uninstalling on any platform, go to `chrome://settings/onStartup` in Chrome and remove the localhost entry.
+- Notes are now managed as cards, each with its own title, line count, and order
+- Markdown preview inside notes (bold, code, links)
+
+</details>
+
+<details>
+<summary><b>v7.0 (2025-02) — Habit tracker · layout presets</b></summary>
+
+- A habit checklist that resets every midnight
+- 4 layout presets, automatic Pomodoro work/break cycling
+- Search keyword shortcuts (`yt cats`, `nv weather`, etc.), 10-minute-before event notifications
+- Per-category card colors, 3 glass-effect presets plus a blur slider
+
+</details>
+
+<details>
+<summary><b>v6.0 (2025-02) — Calendar · Pomodoro · profiles</b></summary>
+
+- Monthly/weekly calendar, 25-minute Pomodoro timer
+- Save and switch between multiple dashboard setups as profiles
+- Multi-select for bulk move/delete, double-click inline rename
+- Unified search (Spotlight, `F` key), Korean initial-consonant search, command mode (`>settings`, etc.)
+- Category emoji, list view mode, an onboarding tutorial
+
+</details>
+
+<details>
+<summary><b>v5.0 (2025-02) — Multiple pages · weather · server stability</b></summary>
+
+- Split bookmarks across multiple tabbed pages, D-Day countdowns, world clocks
+- Weather widget (OpenWeatherMap, optional), automatic dark/light theme
+- Atomic file writes, a smart backup-retention policy, server restart/port-change APIs
+
+</details>
+
+<details>
+<summary><b>v4.0 (2025-02) — Advanced card management</b></summary>
+
+- Drag-to-reorder and collapsible categories, resizable cards, a right-click context menu
+- A 30-day-recoverable trash bin, a "NEW" badge on recently added items
+- Custom background/icon uploads, a write lock preventing concurrent-save corruption
+
+</details>
+
+<details>
+<summary><b>v3.0 and earlier (2025-02, initial versions)</b></summary>
+
+- v3.0: to-do list (priority, recurrence, subtasks), card-based notes
+- v2.0: dark/light theme, glass effects, gzip compression, ETag caching
+- v1.0: initial release — a server built from nothing but Node's built-in
+  modules, category-based bookmark cards, Windows/Mac auto-start, JSON-file
+  storage
+
+</details>
 
 ---
 
 ## Troubleshooting
 
-<details>
-<summary><strong>The page will not open ("This site can't be reached")</strong></summary>
-
-1. Double-click `restart.bat` to restart the server
-2. Make sure the address is `http://localhost:1111` -- not "https" (no "s"), just "http"
-3. If you changed the port, use the correct number (e.g., `http://localhost:8080`)
-4. Check if Node.js is working: open Command Prompt (press the Windows key, type `cmd`, press Enter), type `node -v`, and press Enter. You should see a version number like `v22.19.0`
-   - If you see a version number, Node.js is fine -- try running `setup_windows.bat` again
-   - If you see "not recognized as a command", run `setup_windows.bat` again to re-download Node.js
-
-</details>
-
-<details>
-<summary><strong>"Port already in use" error</strong></summary>
-
-Another program on your computer is already using that port number (door number).
-
-How to fix:
-1. Double-click `set-port.bat` and choose a different number (e.g., `2222`, `8080`, or `9999`)
-2. Double-click `restart.bat` to restart the server
-3. Update your Chrome start page address to match the new port (e.g., `http://localhost:8080`)
-
-</details>
-
-<details>
-<summary><strong>Bookmark icons are not showing</strong></summary>
-
-Icons are automatically downloaded from the internet. If they are missing:
-- You need an internet connection for icons to load the first time
-- Some websites do not provide icons -- you will see the first two letters of the site name instead
-- The system tries 4 different sources automatically before giving up
-- If your internet is connected but icons still do not appear, wait a while and they will be retried automatically
-
-</details>
-
-<details>
-<summary><strong>Data is not saving ("Save failed" message)</strong></summary>
-
-1. The server might have stopped -- double-click `restart.bat`
-2. Check that the `data/` folder exists inside the project folder
-3. If the folder does not exist, create an empty folder named `data`
-4. Make sure the folder is not set to "read-only" (right-click the project folder > Properties > uncheck "Read-only")
-
-</details>
-
-<details>
-<summary><strong>The page looks broken after an update</strong></summary>
-
-Your browser is using old cached files. To fix:
-1. Press `Ctrl+Shift+Delete` in Chrome
-2. Check "Cached images and files" and set the time range to "Last hour"
-3. Click "Clear data"
-4. Reload the page (`Ctrl+R` or `F5`)
-
-</details>
-
-<details>
-<summary><strong>The server does not auto-start after reboot</strong></summary>
-
-Since v7.4, Windows registers auto-start in two places at once (Registry + Startup folder)
-and the server self-checks and repairs this every time it starts, so this happens much less
-often now. If it still happens:
-
-- **Windows:** Run `setup_windows.bat` again to re-register auto-start (if antivirus removed
-  both registration methods, re-running this restores them)
-- **Mac:** Run `./setup_mac.sh` again
-- **Linux:** Run `sudo systemctl enable dashboard`
-
-</details>
-
-<details>
-<summary><strong>I want to restart the server</strong></summary>
-
-Two ways:
-- **From the dashboard:** Settings > Data > "Restart Server" button
-- **From your files:** Double-click `restart.bat`
-
-Both methods safely stop only the dashboard server. Other programs on your computer are never affected.
-
-</details>
-
-<details>
-<summary><strong>A black window briefly appears on startup</strong></summary>
-
-Normally, the server starts invisibly in the background and no window should appear. If you see a brief black window (Command Prompt) every time you start your computer:
-
-1. Run `setup_windows.bat` again
-2. This re-registers the auto-start correctly so the server runs in the background without any visible window
-
-</details>
-
-<details>
-<summary><strong>I want to move data to another computer</strong></summary>
-
-**Method 1 (recommended):**
-1. On the old computer: Settings > Data > **Export** -- save the JSON file
-2. On the new computer: install the dashboard, then Settings > Data > **Import** -- select the file
-
-**Method 2 (manual copy):**
-- Copy the entire `data/` folder from the old computer and paste it into the same location inside the project folder on the new computer
-
-</details>
+| Symptom | Cause & fix |
+|---|---|
+| A new tab doesn't show the dashboard at all | The server may be off. Restart it with `restart.bat` (Windows) or `launchctl load ~/Library/LaunchAgents/com.dashboard.startpage.plist` (Mac). Also try typing `http://localhost:1111` directly into the address bar. |
+| Auto-start stops working after a reboot | As of v7.4 the server tries to self-repair this automatically (see [Security & Data Flow](#security-data-flow) for how), but if it still happens, run `setup_windows.bat` again to re-register. If your antivirus keeps removing it, try adding this folder as an exception in your antivirus settings. |
+| "Port already in use" error | The server automatically tries 1112, 1113, and so on, so this usually resolves itself. Check the actual port number shown when setup finished, and update Chrome's start-page address to match. |
+| Bookmarks/settings suddenly disappeared | Don't panic — open Settings > Data > Backup list. The server keeps making periodic backups automatically, so picking a recent one and clicking "Restore" recovers most situations. |
+| Uploading a file gives a "Bad type" error | Background/icon images only accept `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif` (icons also accept `.svg`, `.ico`). Convert the file with an image editor and try again. |
+| "File too large" / a 413 error | Request bodies (including uploads) are capped at 10MB. Try a smaller file. |
+| The weather widget isn't showing | It's optional. Enter your own OpenWeatherMap API key under Settings > Weather (free to obtain) to enable it. It's expected behavior for the widget to stay hidden until a key is entered. |
+| The installer says "download failed" | Automatically downloading Node.js requires internet access. Check your connection and try again, or install Node.js manually from [nodejs.org](https://nodejs.org) and re-run the script. |
+| Can't reach it from another computer or phone | That's expected. The server is designed, for security, to only ever open on the exact computer it's running on (see [How It Works (Architecture)](#how-it-works-architecture)). |
+| The problem persists | Open `server.error.log` in the project folder — it records what actually went wrong. Paste that content into a new GitHub Issue and we can help from there. |
 
 ---
 
-## Frequently Asked Questions (FAQ)
+## FAQ
 
-> If "Troubleshooting" is for when **something is broken**, this section is for
-> **questions you have even when nothing is wrong.**
+**Q. Is my bookmark or note data sent to the developer?**
+A. No. There is no code anywhere in this project that sends your actual data —
+bookmarks, notes, to-dos, and so on — anywhere else. The exceptions are the
+Google Fonts used for on-screen text, and the optional weather widget (which
+only sends a city name, and only if you've entered your own API key) — see
+"Outbound internet traffic" in [How It Works (Architecture)](#how-it-works-architecture)
+for details. All of your actual data is stored only inside your `data/` folder.
 
-<details>
-<summary><strong>Is this actually safe? Could my information leak out somewhere?</strong></summary>
+**Q. I want to see the same bookmarks on another computer.**
+A. Export a backup under Settings > Data > Export, then Import it after
+installing on the other computer. There is no real-time automatic sync
+feature — that's a deliberate consequence of not using any cloud server.
 
-Yes, it's safe. This dashboard only runs inside your own computer, and the server is built
-to respond only on `127.0.0.1` (a special address that always means "this computer, and
-only this computer") -- so there is structurally no way for it to reach the internet. The
-one exception is the weather widget, which sends only a city name to an external service
-(OpenWeatherMap) to fetch the forecast -- and even that never happens unless you turn the
-weather widget on. Everything else (bookmarks, notes, to-dos, etc.) is stored only as files
-on your own computer, in the `data/` folder.
+**Q. Does this work in browsers other than Chrome (Edge, Whale, etc.)?**
+A. Yes. Any Chromium-based browser lets you set a new-tab address the same
+way, so it should work without issues. Firefox and Safari set their new-tab
+page differently and haven't been officially tested.
 
-</details>
+**Q. If I uninstall, is my data deleted too?**
+A. Running `uninstall.bat` / `uninstall_mac.sh` explicitly asks whether to
+keep or delete your data. If you simply delete the whole folder yourself,
+the files inside `data/` go with it — so it's a good idea to export a backup
+first.
 
-<details>
-<summary><strong>Does this cost money? Will it become paid later?</strong></summary>
+**Q. Will this slow down my computer?**
+A. The server is a tiny Node.js program with zero npm dependencies, so its
+memory footprint is small (typically tens of megabytes). The screen's static
+files are served from an in-memory cache with gzip compression for fast
+responses.
 
-No. This project is completely free and distributed under the MIT License (see
-[License & Legal Notice](#license--legal-notice) for details). It cannot suddenly become
-paid on you, and you're free to keep using it, or even modify the code yourself, forever.
+**Q. Can I use this commercially? Can I build and sell a product based on
+this code?**
+A. See [Legal · Copyright · License · Commercial Use](#legal-copyright-license-commercial-use) below.
 
-</details>
-
-<details>
-<summary><strong>Can I use it without an internet connection?</strong></summary>
-
-Yes -- everything except the weather widget works fully offline, because the server runs
-entirely inside your own computer.
-
-</details>
-
-<details>
-<summary><strong>Can other people on the same Wi-Fi (family, roommates, etc.) see my dashboard?</strong></summary>
-
-No. The server is locked to respond only on `127.0.0.1` (an address that only ever means
-"this exact computer"), so there is no way for another device on the same network to reach
-it.
-
-</details>
-
-<details>
-<summary><strong>Can I use it the same way on another computer or laptop?</strong></summary>
-
-You need to install the project separately on each computer (see [Installation](#installation)
-above). If you want to bring your data along, follow the
-[Moving to Another Computer](#data-safety) instructions to export and import it. The two
-computers will not stay synced in real time, though -- each is an independent copy.
-
-</details>
-
-<details>
-<summary><strong>Who owns the content I create (my bookmark list, notes, background images, etc.)?</strong></summary>
-
-You do, entirely. This project claims no rights whatsoever over any data you enter or
-upload -- and that data is never even transmitted to the project's creator in the first
-place. See [License & Legal Notice](#license--legal-notice) for the full explanation.
-
-</details>
-
-<details>
-<summary><strong>Can I use this at my company for work? Can I redistribute or sell it?</strong></summary>
-
-Yes, all of that is allowed. The MIT License explicitly permits use, copying, modification,
-redistribution, and sale, including for commercial purposes. Please read
-[License & Legal Notice](#license--legal-notice) yourself for the exact terms -- in
-particular, the "no warranty" clause is something you should be aware of if you plan to use
-it at a company.
-
-</details>
-
-<details>
-<summary><strong>I accidentally deleted the whole project folder. Can I get my data back?</strong></summary>
-
-If the `data/` folder itself was deleted, this project has no way to recover it on its own
-(unless you have a Recycle Bin copy or some other backup). To protect against this, it's a
-good habit to periodically use Settings > Data > **Export** to save a JSON backup somewhere
-else entirely (a cloud drive, an external hard drive, etc.) -- this project's automatic
-backups are always created inside that same folder, so if the whole folder disappears, the
-automatic backups disappear with it.
-
-</details>
+**Q. I found a security vulnerability — where do I report it?**
+A. Please open it on the GitHub repository's Issues tab. For something
+sensitive, contacting the repository owner directly instead of a public
+issue is also an option.
 
 ---
 
-## File Structure
+## Legal · Copyright · License · Commercial Use
 
-> Here is what each file in the project does. You do not need to understand all of this -- it is here for reference.
+This project is distributed under the **[MIT License](./LICENSE)**.
+Copyright is held by **SoDam AI Studio** (© 2026).
 
-```
-Chrome_Starting-Page/
-│
-│  === Setup & Management Tools ===
-├── setup_windows.bat ........... One-click setup for Windows (double-click this!)
-├── setup_mac.sh ................ One-click setup for Mac
-├── restart.bat ................. Restart the server if something is wrong
-├── uninstall.bat ............... Clean removal tool (Windows)
-├── uninstall_mac.sh ............ Clean removal tool (Mac)
-├── set-port.bat ................ Change the port number
-├── start_hidden.vbs ............ Helper that starts the server invisibly
-├── run_server_background.bat ... Helper for running server in background
-│
-│  === The Dashboard Itself ===
-├── server.js ................... The server (the engine that powers everything)
-├── index.html .................. Page structure (the skeleton of the dashboard)
-├── style.css ................... Visual design (colors, fonts, layout, animations)
-├── script.js ................... Dashboard logic (what happens when you click)
-├── sw.js ....................... Offline support (works without internet)
-├── manifest.webmanifest ........ Browser app configuration
-├── package.json ................ Project metadata (name, version)
-│
-│  === Auto-Generated (do not edit) ===
-├── port.conf ................... Your custom port number
-├── .server.pid ................. Server process info
-│
-│  === Your Files ===
-├── assets/ ..................... Background images and app icons
-│   ├── icon-192.svg              App icon (small)
-│   ├── icon-512.svg              App icon (large)
-│   └── background_custom.jpg     Your custom background
-│
-└── data/ ....................... YOUR DATA (the most important folder!)
-    ├── bookmarks.json              Your bookmarks
-    ├── config.json                 Your settings
-    ├── notes.json                  Your notes
-    ├── todos.json                  Your to-do items
-    ├── events.json                 Your calendar events
-    ├── ddays.json                  Your D-Day countdown dates
-    ├── usage.json                  Usage statistics
-    ├── trash.json                  Deleted items (recoverable)
-    ├── icons/                      Cached bookmark icons
-    ├── profiles/                   Saved profiles
-    └── backups/                    Automatic backup files
-        └── safety-before-setup.json    Pre-setup safety backup
-```
+The MIT License is a very permissive open-source license. In summary
+(**the following is a general, plain-language explanation, not legal
+advice** — always refer to the [full LICENSE text](./LICENSE) for your
+exact rights and obligations):
 
-> The `data/` folder contains all your personal data. Keep this folder safe and you can always restore your dashboard.
+- ✅ You may **use it freely** — personally or commercially.
+- ✅ You may **modify it freely**.
+- ✅ You may **redistribute it**, whether for free or for a price.
+- ✅ You may use it **commercially** — the license itself permits building
+  and selling a product based on this code.
+- ⚠️ When redistributing, you must **include the original copyright notice
+  and the full license text** (i.e. ship the `LICENSE` file alongside it).
+- ⚠️ The software is provided **"AS IS," with no warranty of any kind**. The
+  copyright holder is not liable for any issues that arise from using it.
+
+**Privacy**: this program itself does not collect any personal data from
+you — everything is stored locally only. However, bookmark URLs or note
+content that you type in yourself may contain personal information, so
+please review the contents yourself before sharing an exported backup file
+with anyone else.
 
 ---
 
-## Command Reference
+## Original Project & Acknowledgments
 
-> Every one of these is a file you **double-click to run** -- you never need to open a
-> terminal or type a command yourself. On Windows, double-click the `.bat` files; on Mac,
-> double-click (or right-click > Open) the `.sh` files.
+This project started from **kinkos1234**'s open-source repository,
+**[chrome-starting-page](https://github.com/kinkos1234/chrome-starting-page)**.
+Deep thanks to the original author for the core new-tab-dashboard idea and
+the initial structure.
 
-| File | Platform | What it does | When to use it |
-|------|----------|---------------|-----------------|
-| `setup_windows.bat` | Windows | First-time install + registers auto-start | Once, when first installing |
-| `setup_mac.sh` | Mac | First-time install + registers auto-start | Once, when first installing |
-| `restart.bat` | Windows | Fully stops and restarts the server | When the dashboard looks wrong or won't load |
-| `uninstall.bat` | Windows | Removes auto-start registration + stops the server (does not delete your data) | When you want to fully remove it |
-| `uninstall_mac.sh` | Mac | Removes auto-start registration + stops the server (does not delete your data) | When you want to fully remove it |
-| `set-port.bat` | Windows | Changes the port number (e.g. 1111) your browser connects to | When another program is already using that port |
-| `run_server_background.bat` | Windows | Restarts just the server in the background (no window) | When the server is off but you don't want to reboot |
-| `start_hidden.vbs` | Windows | Helper that runs `run_server_background.bat` without a visible black window | Usually called automatically by other scripts -- you'll rarely run this yourself |
+Since then, this repository has gone through substantial changes — security
+hardening (CSRF protection, XSS-escaping hardening, URL scheme validation),
+auto-start reliability improvements (dual registration plus self-healing),
+data-integrity checks, an automated test suite, and a full documentation
+rewrite — and is now maintained separately by **SoDam AI Studio** at
+`sodam-ai/Chrome-Starting-Page`.
 
-**Two ways to use `set-port.bat`:**
-- Just double-click it -- it shows your current port and asks you to type a new one.
-- If you're comfortable with it, right-click the file, choose "Open in Terminal" /
-  "Open command window here," and run `set-port.bat 8080` with your desired port number
-  appended directly (optional -- not knowing this is completely fine).
-
-> None of these files touch anything outside the project folder. The only exception is one
-> "run at login" registration in Windows/Mac system settings -- nothing else on your
-> computer is changed.
+The original repository had no license file specified, and **personal,
+direct permission from the original author was obtained** to continue,
+publish, and modify this project. (This paragraph is a factual disclosure,
+not legal advice. If you need a precise understanding of the copyright
+relationship, please consult the original author or a legal professional
+directly.)
 
 ---
 
-<details>
-<summary><h2>Technical Details (for curious readers)</h2></summary>
+<div align="center">
 
-If you are a developer or just curious about how this works under the hood:
+**[⬆ Back to Table of Contents](#table-of-contents)** · [한국어 버전](./README.md)
 
-### Architecture
-
-```
-Chrome Browser  <--HTTP-->  Local Node.js Server (port 1111)  <--Read/Write-->  JSON files on disk
-                                  (server.js)                                     (data/*.json)
-```
-
-The server is a single-file HTTP server using only Node.js built-in modules. No npm packages are used. The frontend is a single-page application with no build tools or transpilation needed.
-
-| Item | Detail |
-|------|--------|
-| **Server** | Node.js using only built-in modules (`http`, `fs`, `path`, `zlib`, `crypto`) -- no `npm install` required |
-| **Frontend** | Plain HTML + CSS + JavaScript -- no frameworks, no build step, no transpilation |
-| **Default port** | 1111 (configurable via `port.conf`, command-line argument, dashboard UI, or `set-port.bat`) |
-| **Binding** | `127.0.0.1` only -- cannot be accessed from other computers on your network |
-| **Data storage** | Local JSON files in the `data/` directory |
-
-### Performance
-
-| Item | Detail |
-|------|--------|
-| **Compression** | Gzip for HTML, CSS, JS, JSON, SVG, and webmanifest |
-| **Caching** | SHA-256 ETag + in-memory file cache with 5-minute TTL |
-| **Offline support** | Service Worker pre-caches critical files |
-| **Memory usage** | ~15 MB at idle |
-| **Max request body** | 10 MB |
-| **Error log rotation** | Logs capped at 10 MB with automatic rotation |
-| **Boot sequence** | 3-phase: instant render > deferred init > background checks after 30 seconds |
-
-### Security
-
-| Item | Detail |
-|------|--------|
-| **Path traversal prevention** | Server blocks access to files outside the project folder |
-| **Filename sanitization** | Malicious filenames are filtered out |
-| **Write locks** | Timeout-based write locks ensure data integrity |
-| **Localhost-only binding** | `127.0.0.1` only -- even other computers on the same network cannot access it |
-| **Process management** | PID file (`.server.pid`) for safe restart without affecting other programs |
-| **Portable mode** | Windows setup downloads Node.js into local `node/` folder for full independence from system Node.js |
-| **Custom CSS XSS filter** | User-provided custom CSS is sanitized to prevent cross-site scripting attacks |
-| **Bookmark URL scheme validation** | Blocks code-executing addresses like `javascript:` at save time, both in the browser and on the server (only `http/https/ftp/mailto` are accepted) |
-| **Output escaping on render** | Every user-entered value shown on screen (category names, labels, dates, etc.) is HTML-escaped (`&<>"'`) before rendering, so a tampered value coming in through backup import cannot execute as code |
-| **Safe bounds on the backup interval** | Even if the backup interval setting is somehow invalid (negative, non-numeric), the server always clamps it to a safe 1-168 hour range, preventing runaway repeated backups |
-| **Origin validation — CSRF (cross-site request forgery) protection** (new in v7.4) | This server runs in the background at all times once your computer is on, so a malicious website you visit could try to secretly send data-changing requests through your browser. The server now checks the Origin of every data-changing request and blocks any that didn't come from this dashboard itself. |
-| **Request size limit** | The amount of data a single request can send is capped at 10MB, preventing an abnormally large request from freezing the server (returns a proper "too large" error instead) |
-
-### Dependencies
-
-```
-External libraries: none (0)
-npm install: not required
-node_modules: never created
-```
-
-This project uses only Node.js **built-in modules** (`http`, `fs`, `path`, `zlib`, `crypto`). Like a self-contained travel bag, it carries everything it needs -- no extra parts to find or install.
-
-### Testing / Build
-
-```
-Build step: none (no transpiling or bundling -- files run as-is)
-Tests: node --test  (= npm test)
-Self-check scanner (advisory, not a pass/fail gate): npm run check:xss
-```
-
-`npm test` runs the regression tests in the `test/` folder (input validation, HTML
-escaping, and other security-related logic). After changing code, running `npm test` is
-recommended to confirm nothing existing broke. The frontend (`script.js`, `style.css`,
-`index.html`) is read by the browser as-is with no build step needed.
-
-</details>
-
----
-
-## License & Legal Notice
-
-> This section is not legal advice. If you're using this at an organization, or need
-> absolute legal certainty about anything here, please read the original text yourself
-> (the [LICENSE](LICENSE) file) or consult a legal professional. What follows is a
-> plain-language explanation of that text, and **if this explanation and the
-> [LICENSE](LICENSE) file ever appear to disagree, the original LICENSE file text always
-> governs.**
-
-### This Project's License
-
-This project is distributed under the **[MIT License](LICENSE)**.
-Copyright (c) 2026 SoDam AI Studio.
-
-The MIT License is one of the simplest and most permissive open-source licenses that
-exists. Below is exactly what its full text actually permits and requires, spelled out
-plainly -- with no guessing or embellishment beyond what's written in the [LICENSE](LICENSE)
-file itself.
-
-**Explicitly permitted (all free, no permission request needed):**
-- ✅ **Personal use** -- freely, at home, on your own computer
-- ✅ **Use at a company or organization** -- you may use it as an internal work tool
-- ✅ **Modify the code** -- change anything, add whatever features you want
-- ✅ **Redistribute it** -- share the original or your modified version with others
-- ✅ **Commercial use, including selling it** -- the license explicitly permits selling
-  copies of the software, as-is or modified. The MIT License text's phrase "sell copies of
-  the Software" means exactly this.
-- ✅ **Include it in a private project** -- you may take this code and use it as part of
-  another (even closed-source) project.
-
-**The one and only condition:**
-- ⚠️ If you redistribute the software (original or modified), you must **include the
-  original copyright notice and the full license text** -- in other words, keep the
-  [LICENSE](LICENSE) file included when you pass it along. (Note: this does not mean you
-  need to contact or ask permission from this project's author -- it is purely a
-  documentation requirement, satisfied simply by keeping one file intact.)
-
-**No warranty (please be aware of this part):**
-- This software is provided **"AS IS."** The author makes no guarantee that it is fit for
-  any particular purpose, free of bugs, or will keep working indefinitely.
-- The author (copyright holder) **is not legally liable** for any problem that arises from
-  using this software (data loss, system issues, etc.). This is a standard clause found in
-  the vast majority of free open-source software -- it is not a special restriction unique
-  to this project.
-- **In plain terms**: "It's given to you free, as-is. Use it well, but if something goes
-  wrong, you cannot seek damages from the author." This is how most legitimate open-source
-  projects are distributed (the Linux kernel, Node.js itself, and many of the libraries this
-  project's ecosystem depends on all follow the same principle).
-
-### Copyright Over the Content (Data) You Create
-
-This project asserts **no rights whatsoever** over anything you type or upload (your
-bookmark list, notes, to-dos, uploaded background images, etc.). That data is never even
-transmitted off your computer to begin with (see [Security](#technical-details-for-the-curious)),
-and it belongs 100% to you.
-
-### About the Trademark (Brand Name)
-
-"SoDam AI Studio" is the creator credit for this project and does not assert any registered
-trademark claim. You are free to fork this project or redistribute it under a different name,
-as long as you do not use the project name or this credit in a way that would make people
-mistakenly believe SoDam AI Studio directly operates or endorses your version (and, per the
-"one condition" above, you must still keep the original copyright notice intact).
-
-### Third-Party (External) Services -- Separate From This Project's License
-
-This project itself never sends your data to an external server, but **the following
-features, only when you actively turn them on,** connect to their own respective external
-services. These services are not owned or operated by this project, and **each has its own
-separate terms of service and privacy policy** -- this project's MIT License has no bearing
-on the terms of these external services.
-
-| Feature | External service it connects to | Information sent | When it connects |
-|---------|----------------------------------|-------------------|-------------------|
-| Weather widget | [OpenWeatherMap](https://openweathermap.org/api) | The city name you entered | Only when the weather widget is turned on |
-| Bookmark icon (favicon) display | Google (`s2/favicons`), DuckDuckGo (`icons.duckduckgo.com`), icon.horse, and the bookmarked site's own `favicon.ico` | The domain name of the bookmarked website | Every time a bookmark card is displayed (minimized after icons are cached) |
-
-If you would rather not agree to these external services' terms of service and privacy
-policies, you can simply not use the weather widget (it can be turned off in Settings) and
-use the dashboard without bookmark icons.
-
----
-
-## 🙏 Original Project & Acknowledgments
-
-This project began from the idea in **[kinkos1234](https://github.com/kinkos1234)**'s
-original project, **[kinkos1234/chrome-starting-page](https://github.com/kinkos1234/chrome-starting-page)**.
-Our sincere thanks go to the original author, kinkos1234, for creating and publishing this
-project in the first place.
-
-> **A note on licensing (not legal advice):** As of this writing (September 2026), the
-> original repository has no open-source license registered on GitHub (`license: null`).
-> As a general rule, a repository with no declared license cannot be freely copied,
-> modified, or redistributed without separate permission. This project proceeds with
-> **direct, personal permission obtained from the original author, kinkos1234,** to use,
-> modify, and distribute the work. However, this is an informal personal agreement, not a
-> license reflected in GitHub's public license field -- so if you intend to reuse this
-> project further (especially for commercial purposes), we recommend you also check
-> directly with the original author (kinkos1234), separately from the MIT License applied
-> to this repository. If you need legal certainty, please consult a legal professional.
-
----
-
-## Changelog Summary
-
-> The complete, item-by-item version history lives in [CHANGELOG.md](CHANGELOG.md). Below is
-> a condensed summary per version -- click any entry to expand it.
-
-<details>
-<summary><strong>v7.4</strong> (current version) -- Real CSRF vulnerability found & fixed, dual auto-start registration + self-healing</summary>
-
-- **[Security] Blocked forged-origin requests**: Found and fixed, via an actual reproduced
-  attack, a vulnerability where another website could use your browser to secretly send
-  data-changing requests to this dashboard. Requests that don't originate from the
-  dashboard itself are now blocked.
-- **[Security] More accurate error responses**: The server now distinguishes a
-  syntactically-broken request from a validly-formed-but-invalid one (previously both
-  returned the same generic message).
-- **[Security] More stable handling of oversized requests**: Fixed a defect where sending
-  very large data made the server hang with no response -- it now correctly replies with a
-  "too large" error.
-- **[Security] Fixed 4 missing output-escaping spots**: Found and fixed places (task due
-  dates, D-Day dates) where a tampered value could have executed as code on screen.
-- **[Stability] Dual auto-start registration + self-healing**: On Windows, sign-in
-  auto-start is now registered in two places at once (Registry + Startup folder), and the
-  server checks and repairs this itself every time it starts (addresses antivirus false
-  positives that were removing the auto-start entry).
-
-</details>
-
-<details>
-<summary><strong>v7.3</strong> -- Background slideshow overhaul, pin bookmarks, automatic data integrity checks, stronger security</summary>
-
-- Complete overhaul of the background image slideshow system (on/off toggle, adjustable interval, manual switching)
-- "Pin to top" for bookmarks, drag bookmarks onto page tabs to move them
-- On startup, the server automatically validates all 9 data files and auto-recovers corrupted ones from the latest backup
-- Backup list/restore UI, import preview, undo stack expanded to 10 levels
-- Automatic port fallback, duplicate-server prevention, automatic offline reconnect
-- Accessibility improvements (keyboard focus indicators, ARIA labels), mobile-responsive layout
-- Security hardening: path traversal prevention, XSS filtering for custom CSS
-
-</details>
-
-<details>
-<summary><strong>v7.2</strong> -- Multiple to-do cards</summary>
-
-- To-do lists can now be split into several independent cards instead of just one
-
-</details>
-
-<details>
-<summary><strong>v7.1</strong> -- Notes expanded to multiple cards, widget show/hide</summary>
-
-- Notes reorganized from a single list into multiple independent cards (each with its own title and line count)
-- Markdown preview inside notes (bold, code, links)
-- To-do/Calendar/Habit cards can be shown or hidden (recoverable via undo)
-
-</details>
-
-<details>
-<summary><strong>v7.0</strong> -- Habit tracker, layout presets, search shortcuts</summary>
-
-- Habit tracker added, resetting daily at midnight
-- 4 layout presets (Default/Compact/Wide/Magazine)
-- Pomodoro auto-session (25 min focus -> 5 min break)
-- Search keyword shortcuts like `yt cats`
-- Browser notification 10 minutes before calendar events
-
-</details>
-
-<details>
-<summary><strong>v6.0</strong> -- Calendar, Pomodoro, profiles, unified search (Spotlight)</summary>
-
-- Calendar card (monthly/weekly view) and Pomodoro timer introduced for the first time
-- Profiles feature to save/switch between multiple dashboard setups
-- Ctrl+click multi-select, unified search (`F` key), Korean initial-consonant search
-- Drag links from the browser address bar onto a card; drag a JSON backup file to import it
-
-</details>
-
-<details>
-<summary><strong>v5.0</strong> -- Multiple pages, D-Day, weather, first automatic server backups</summary>
-
-- Bookmarks can be split across multiple pages (tabs)
-- D-Day countdown, world clock, weather widget (OpenWeatherMap) added
-- Automatic dark/light switching, 6 accent colors, custom CSS
-- The server's atomic file writes (temp file + swap) and smart-retention automatic backups were introduced for the first time in this version
-
-</details>
-
-<details>
-<summary><strong>v4.0</strong> -- Category drag-to-reorder, right-click menu, trash</summary>
-
-- Drag category cards to reorder them, collapse/expand cards
-- Right-click menu on bookmarks (edit, open in new tab, move, delete)
-- Deleted bookmarks move to trash and are recoverable for 30 days, with a Ctrl+Z undo toast
-
-</details>
-
-<details>
-<summary><strong>v3.0</strong> -- To-do list, recurring events, notes cards introduced</summary>
-
-- To-do list with priority, due dates, and tags
-- Daily/weekly/biweekly/monthly recurring events, subtasks
-- Simple text note cards (with automatic link detection)
-
-</details>
-
-<details>
-<summary><strong>v2.0</strong> -- Dark/Light theme, glass-morphism UI</summary>
-
-- Dark/Light theme switch with a circular transition animation
-- Glass-morphism UI with adjustable card transparency and blur
-- Customizable keyboard shortcuts, multiple search engine switching
-
-</details>
-
-<details>
-<summary><strong>v1.0</strong> -- Initial release</summary>
-
-- A pure server using only Node.js built-in modules (zero external dependencies)
-- Category-based bookmark cards with drag-to-reorder
-- Offline support (Service Worker), Windows/Mac auto-start
-- Automatic portable Node.js download for Windows
-
-</details>
-
----
-
-<p align="center">
-  <strong>If you like this project, please give it a star!</strong><br>
-  <em>You do not need to know how to code to have your own beautiful dashboard.</em>
-</p>
+</div>
