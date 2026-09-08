@@ -767,6 +767,16 @@ const server = http.createServer((req, res) => {
     // === Static Files (cached + pre-gzip + ETag) ===
     const fp = safePath(url === '/' ? '/index.html' : url);
     if (!fp) { res.writeHead(403); res.end('Forbidden'); return; }
+    // safePath() only stops escaping the app folder — everything inside it was still
+    // served raw, including data/config.json (holds the user's weather API key),
+    // data/bookmarks.json and every file under data/backups/. The page never requests
+    // those directly (it reads them through /api/*), so serving them only widened what a
+    // browser extension or another local program could pull straight off the port.
+    // Custom images under data/icons/ stay served — bookmarks reference them by URL.
+    const rel = path.relative(DIR, fp).replace(/\\/g, '/');
+    const isDotFile = rel.split('/').some(seg => seg.startsWith('.'));
+    const isDataJson = rel.toLowerCase().startsWith('data/') && rel.toLowerCase().endsWith('.json');
+    if (isDotFile || isDataJson) { res.writeHead(403); res.end('Forbidden'); return; }
     const ct = MIME[path.extname(fp).toLowerCase()] || 'application/octet-stream';
     const ae = req.headers['accept-encoding'] || '';
     const wantGzip = ae.includes('gzip');
