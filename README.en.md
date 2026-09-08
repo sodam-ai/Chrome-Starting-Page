@@ -1,6 +1,6 @@
 # Chrome Starting Page — A Personal Chrome New-Tab Dashboard
 
-![Version](https://img.shields.io/badge/version-7.4.1-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
+![Version](https://img.shields.io/badge/version-7.5.0-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
 
 > A **personal start screen** that appears the moment you open a new tab in Chrome.
 > Bookmarks, to-dos, notes, D-Day countdowns, a calendar, and a Pomodoro timer — all
@@ -241,15 +241,49 @@ configurable rotation interval from 1 minute to 24 hours.
 Under Settings > Data:
 
 - **Export**: downloads all your data as a JSON file. You can choose whether
-  to include background/icon images.
+  to include background/icon images. If you run on a port other than the
+  default 1111, **that port setting is included too** (since v7.5.0).
 - **Import**: restores from a previously exported JSON file. Before applying,
-  it shows a summary like "42 bookmarks, 15 to-dos, 3 notes."
+  it shows a summary like "42 bookmarks, 15 to-dos, 3 notes." A port setting
+  in the backup is restored as well; if it differs from the port you are on,
+  a notice explains that the address will change after a restart. Backup files
+  are accepted up to 100MB (background photos make full backups large).
 - **Automatic backups**: the server backs up all your data by itself on a
   configurable interval (default 24 hours, adjustable 1–168 hours). Pick any
   point in the backup list to restore everything to that moment in one click.
 - **Profiles**: save your entire bookmark/notes/to-do/D-Day/settings setup
   under a name, and switch between different profiles (e.g. "Work" vs.
   "Personal").
+
+### Moving the folder, or reinstalling somewhere new (important)
+
+**This program works regardless of the folder's name or location.** Every path
+inside it is resolved relative to the folder the files sit in, so you can move
+it to `D:\MyDashboard`, rename it, or put it on a USB stick and it still runs.
+
+**What differs is *what you copied*.** This is where nearly all confusion comes
+from, so please read the distinction carefully.
+
+| How you moved it | Do bookmarks/settings come along? | Why |
+|---|---|---|
+| Copying the whole folder (File Explorer, USB, backup tool) | **Yes** | The `data` folder is copied along with everything else. This is the most reliable method. |
+| `Download ZIP` or `git clone` from GitHub | **No** | The repository contains **program code only**. Your bookmarks and settings are personal data and are deliberately excluded from it (`.gitignore`), so a freshly downloaded folder starts as a brand-new installation. |
+
+**So the safe way to move is:**
+
+1. **Before moving**, open the dashboard in the *old* folder and click
+   Settings > Data > **Export**. Save the backup file
+   (`dashboard-backup-<date>.json`).
+2. Install and run the program in the new folder (it is normal for it to look
+   empty at first).
+3. In the new dashboard, click Settings > Data > **Import** and upload the file
+   from step 1. Bookmarks, notes, to-dos, settings, icons, background photos and
+   the port setting all come back.
+
+> **Why does the new folder look empty at first?** Nothing is broken — you are
+> in the second row of the table above (code only was copied). The `data` folder
+> in your old location is still there, so nothing has been lost; just follow the
+> three steps.
 
 ---
 
@@ -274,6 +308,8 @@ node server.js 8080     # Run on port 8080 instead
 npm start                 # Same as above (package.json's start script)
 npm test                  # Run the 17 automated tests (Node's built-in test runner)
 npm run check:xss         # Run the advisory scanner for missing output-escaping
+npm run docs              # Regenerate the HTML READMEs from the Markdown sources
+npm run docs:check        # Only verify the HTML matches the Markdown (fails if stale)
 ```
 
 ---
@@ -316,15 +352,35 @@ npm run check:xss         # Run the advisory scanner for missing output-escaping
   files, so the dashboard's interface keeps opening even without internet
   (saving data still requires the server to be running — but since the server
   runs on this computer, that has nothing to do with your internet connection).
-- **Outbound internet traffic**: this app makes exactly two kinds of requests
-  to the outside world. ① **Fonts**: the IBM Plex Sans KR and JetBrains Mono
-  fonts used in the design are loaded from Google Fonts
-  (`fonts.googleapis.com`, `fonts.gstatic.com`) — offline, the browser simply
-  falls back to your system's default font, with no loss of function.
-  ② **Weather widget** (optional): only if you've entered your own API key in
-  Settings, it sends a city name to OpenWeatherMap to fetch weather data.
-  Outside of these two, nothing — no ads, tracking scripts, or analytics of
-  any kind — is ever sent to an external server.
+- **Outbound internet traffic**: the app makes three kinds of requests to the
+  outside world, and nothing else — no ads, tracking scripts, or analytics of
+  any kind. All three are sent **by your browser**; this project's own server
+  never sends anything out.
+
+  ① **Fonts**: the IBM Plex Sans KR and JetBrains Mono fonts used in the design
+  are loaded from Google Fonts (`fonts.googleapis.com`, `fonts.gstatic.com`) —
+  offline, the browser simply falls back to your system's default font, with no
+  loss of function.
+
+  ② **Bookmark icons (favicons)**: to show a site's icon on its bookmark card,
+  the page requests it from these three services in order (falling through to
+  the next one if a request fails):
+
+  - `https://www.google.com/s2/favicons?sz=64&domain=<domain>` (Google)
+  - `https://icons.duckduckgo.com/ip3/<domain>.ico` (DuckDuckGo)
+  - `https://icon.horse/icon/<domain>` (icon.horse)
+
+  **This means the domain name of each bookmark (e.g. `mail.naver.com`) is sent
+  to those providers.** The full URL (path, query string), the bookmark's title,
+  and your note contents are not — only the domain. If you would rather avoid
+  this, upload your own icons instead (`data/icons/`), or block those domains
+  with an extension or firewall: only the icons change to a default shape, and
+  everything else keeps working.
+
+  ③ **Weather widget** (optional): only if you have entered your own API key in
+  Settings, it sends a city name and that key to OpenWeatherMap
+  (`api.openweathermap.org`). Without a key the widget is hidden and no request
+  is made at all.
 
 ---
 
@@ -343,7 +399,9 @@ of v7.4.
 | A bookmark storing a dangerous address like `javascript:` that runs code when clicked | Bookmark URLs are checked against an allowlist of five schemes only — `http`, `https`, `ftp`, `ftps`, `mailto` — validated independently on both the client and the server. |
 | Manipulated text (titles, notes, dates, etc.) executing as a script when rendered (XSS) | Every value rendered to the screen passes through an `esc()` function that replaces the five HTML-significant characters `& < > " '` with safe equivalents. This function lives in exactly one place, `lib/esc.js`, and is covered by automated regression tests. |
 | A file upload planting a file outside the intended folder (path traversal) | Both upload and restore paths reject `..` and `~` patterns, re-verify that the final resolved path is strictly inside an allowed folder, and only accept image file extensions. |
-| An oversized request hanging or crashing the server | Every request body is capped at 10MB, and exceeding it returns a proper error response (413) instead of hanging. |
+| An oversized request hanging or crashing the server | Request bodies are capped at 10MB, and exceeding it returns a proper error response (413) instead of hanging. Backup import (`/api/import`) is the single exception at 100MB — a full backup containing background photos easily exceeds 10MB, which previously meant **the app could not read a backup it had produced itself** (fixed in v7.5.0). |
+| Reading your data by typing a file path into the browser's address bar | Files under `data/` ending in `.json` (bookmarks, settings, backups) and any file beginning with a dot are refused (403). Only the icons and background images the page genuinely needs are served. Before v7.5.0, a URL such as `http://localhost:1111/data/config.json` returned the entire settings file, including the weather API key. |
+| Settings and bookmarks drifting apart, leaving the screen looking empty | Categories that no page lists are recovered onto the first page, and the dashboard reports how many were restored (v7.5.0). This prevents the situation where the data is perfectly intact but nothing renders, which looks exactly like total data loss. |
 | Data files getting corrupted from simultaneous writes across multiple windows | Per-file write locks plus atomic writes (write to a temp file, then rename) mean a mid-write crash can never leave a half-written, corrupted file. |
 | A data file becoming corrupted for any reason | On every server start, all 9 data files are validated, and any corrupted file is automatically restored from the most recent valid backup (or a safe empty default if no backup exists). |
 
@@ -388,7 +446,8 @@ Chrome-Starting-Page/
 │   ├── esc.test.js             Regression tests for esc()
 │   └── validators.test.js      Regression tests for validation logic
 ├── tools/
-│   └── check-unescaped-html.js   Advisory scanner for missing output-escaping
+│   ├── check-unescaped-html.js   Advisory scanner for missing output-escaping
+│   └── build-readme-html.mjs     README.md → README.html generator (keeps both in sync)
 ├── data/                     ← Where your actual data is stored
 │   ├── bookmarks.json          Bookmarks
 │   ├── notes.json              Notes
@@ -416,6 +475,14 @@ Files like `.autostart-installed`, `.server.pid`, `port.conf`, and
 `server.log` are internal state the running server manages on its own — you
 never need to edit them by hand.
 
+**Do not hand-edit the HTML documents.** `README.html` and `README.en.html` are
+generated from `README.md` / `README.en.md` (`npm run docs`). Edit the Markdown
+and regenerate, and the two formats stay identical by construction.
+
+**To inspect files in the `data` folder**, open them in your file manager rather
+than the browser address bar — for security they are not served over HTTP (see
+[Security & Data Flow](#security-data-flow)).
+
 ---
 
 ## Development Workflow (Tests · Code Structure)
@@ -432,6 +499,11 @@ just using the app, feel free to skip it.
   malicious input — for the XSS-escaping function and the URL/backup-interval
   validation logic. No separate framework like Jest or Mocha needs to be
   installed.
+- **Documentation build**: `npm run docs` regenerates the HTML READMEs from
+  `README.md` / `README.en.md`, and `npm run docs:check` fails if the committed
+  HTML no longer matches — which catches the easy mistake of editing the
+  Markdown and forgetting the HTML. The generator
+  (`tools/build-readme-html.mjs`) has no external dependencies either.
 - **Advisory tool**: `npm run check:xss` scans `script.js` for places that
   render a value to the screen without going through `esc()`, and lists them
   as candidates. It's a heuristic, not a perfect automatic verdict — treat
@@ -445,6 +517,50 @@ just using the app, feel free to skip it.
 
 Expand any version below to see its details. The full history lives in
 [`CHANGELOG.md`](./CHANGELOG.md).
+
+<details>
+<summary><b>v7.5.0 (2026-09-08) — Safe folder moves · blocked data exposure · recovered vanished bookmarks</b></summary>
+
+**Security**
+- Typing a path such as `/data/config.json` straight into the address bar used to
+  return the settings file (including the weather API key), your bookmarks, and
+  every automatic backup. Those are now refused (403), including case-variant and
+  percent-encoded bypass attempts. Icons and background images the page actually
+  needs are still served
+- Dotfiles (`.server.pid`, `.gitignore`, and similar internal files) are no longer
+  reachable by URL either
+
+**Data preservation**
+- **Bookmark categories that no page listed were invisible on screen** even though
+  the data was perfectly intact — they are now recovered onto the first page, and
+  the dashboard tells you how many were restored. This removes the situation that
+  looks exactly like "everything is gone" when nothing was actually lost
+- Backup import limit raised to 100MB — a full backup with background photos
+  exceeds 10MB, which meant **the app could not read a backup it had made itself**
+- A damaged backup with a malformed section used to overwrite that part with an
+  empty value, destroying data. Imports are now **fully validated before anything
+  is written**, and rejected outright if any section is malformed
+- Import failures used to say only "import failed"; the actual reason (such as
+  exceeding the size limit) is now shown
+
+**Moving folders**
+- Export/import now **carry the port setting**, so anyone running on a non-default
+  port keeps the same address after moving to a new folder (applied on restart,
+  with a notice that the address will change)
+- New README section on [moving the folder or reinstalling](#moving-the-folder-or-reinstalling-somewhere-new-important),
+  explaining why copying the whole folder brings your data but a GitHub download
+  does not, and what to do about it
+
+**Docs**
+- `README.html` / `README.en.html` are now generated from the Markdown sources
+  (`npm run docs`, verified by `npm run docs:check`), so the two formats cannot
+  drift apart
+- Corrected an inaccurate privacy statement: the README claimed only two kinds of
+  outbound traffic, but bookmark favicons are fetched from three third-party
+  services, which sends each bookmark's domain to them. This is now documented in
+  full, along with how to avoid it
+
+</details>
 
 <details>
 <summary><b>v7.4.1 (2026-09-01) — Fixed internal-path disclosure in error responses</b></summary>
@@ -572,8 +688,11 @@ Expand any version below to see its details. The full history lives in
 | Auto-start stops working after a reboot | As of v7.4 the server tries to self-repair this automatically (see [Security & Data Flow](#security-data-flow) for how), but if it still happens, run `setup_windows.bat` again to re-register. If your antivirus keeps removing it, try adding this folder as an exception in your antivirus settings. |
 | "Port already in use" error | The server automatically tries 1112, 1113, and so on, so this usually resolves itself. Check the actual port number shown when setup finished, and update Chrome's start-page address to match. |
 | Bookmarks/settings suddenly disappeared | Don't panic — open Settings > Data > Backup list. The server keeps making periodic backups automatically, so picking a recent one and clicking "Restore" recovers most situations. |
+| I installed into a new folder and none of my bookmarks/settings came along | Nothing is broken. A folder downloaded from GitHub contains **program code only**, not your personal data. Your old folder still has everything, so follow the three steps (export → install → import) in [Moving the folder, or reinstalling somewhere new](#moving-the-folder-or-reinstalling-somewhere-new-important). |
+| Unzipping produced two nested folders with the same name | GitHub ZIP files contain one extra folder level. Using "Extract here" gives you `name\name\files`. Look for the **inner** folder that actually contains `setup_windows.bat` and run the installer from there. |
+| The screen shows no bookmarks at all, but they exist in my backup file | Since v7.5.0 these are recovered automatically with a "recovered N categories" notice. If they still don't appear, restore from Settings > Data > Backup list. |
 | Uploading a file gives a "Bad type" error | Background/icon images only accept `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif` (icons also accept `.svg`, `.ico`). Convert the file with an image editor and try again. |
-| "File too large" / a 413 error | Request bodies (including uploads) are capped at 10MB. Try a smaller file. |
+| "File too large" / a 413 error | Ordinary requests such as background/icon uploads are capped at 10MB; backup import is capped at 100MB. Exceeding a limit now shows the reason on screen — try a smaller file. |
 | The weather widget isn't showing | It's optional. Enter your own OpenWeatherMap API key under Settings > Weather (free to obtain) to enable it. It's expected behavior for the widget to stay hidden until a key is entered. |
 | The installer says "download failed" | Automatically downloading Node.js requires internet access. Check your connection and try again, or install Node.js manually from [nodejs.org](https://nodejs.org) and re-run the script. |
 | Can't reach it from another computer or phone | That's expected. The server is designed, for security, to only ever open on the exact computer it's running on (see [How It Works (Architecture)](#how-it-works-architecture)). |
@@ -584,17 +703,35 @@ Expand any version below to see its details. The full history lives in
 ## FAQ
 
 **Q. Is my bookmark or note data sent to the developer?**
-A. No. There is no code anywhere in this project that sends your actual data —
-bookmarks, notes, to-dos, and so on — anywhere else. The exceptions are the
-Google Fonts used for on-screen text, and the optional weather widget (which
-only sends a city name, and only if you've entered your own API key) — see
-"Outbound internet traffic" in [How It Works (Architecture)](#how-it-works-architecture)
-for details. All of your actual data is stored only inside your `data/` folder.
+A. **Nothing is ever sent to this project's developer.** There is no
+developer-operated server at all, and your data lives only in the `data/`
+folder on your own computer.
+
+There are, however, **three kinds of traffic to third parties**, stated
+precisely: ① Google Fonts for on-screen text, ② bookmark icons from Google,
+DuckDuckGo and icon.horse — **this sends each bookmark's domain name** to them
+(not the full URL, and not your notes), and ③ the weather widget, only if you
+entered your own API key (it sends a city name). Note, to-do, and calendar
+contents never leave your machine under any circumstance. See "Outbound internet
+traffic" in [How It Works (Architecture)](#how-it-works-architecture) for details
+and for how to avoid the favicon requests.
 
 **Q. I want to see the same bookmarks on another computer.**
 A. Export a backup under Settings > Data > Export, then Import it after
 installing on the other computer. There is no real-time automatic sync
 feature — that's a deliberate consequence of not using any cloud server.
+
+**Q. Can I rename the folder or move it to another drive?**
+A. Yes. The program is built to work regardless of folder name or location.
+After moving, though, the auto-start registration still points at the old path,
+so run `setup_windows.bat` once from the new location to re-register. For moving
+your data along with it, see
+[Moving the folder, or reinstalling somewhere new](#moving-the-folder-or-reinstalling-somewhere-new-important).
+
+**Q. I downloaded a fresh copy from GitHub and none of my settings are there. Was my data deleted?**
+A. No. The repository holds program code only; personal data is excluded from it
+by design. Everything is still in the `data` folder of your old installation —
+export from the old dashboard and import into the new one and it all comes back.
 
 **Q. Does this work in browsers other than Chrome (Edge, Whale, etc.)?**
 A. Yes. Any Chromium-based browser lets you set a new-tab address the same
@@ -644,11 +781,65 @@ exact rights and obligations):
 - ⚠️ The software is provided **"AS IS," with no warranty of any kind**. The
   copyright holder is not liable for any issues that arise from using it.
 
-**Privacy**: this program itself does not collect any personal data from
-you — everything is stored locally only. However, bookmark URLs or note
-content that you type in yourself may contain personal information, so
-please review the contents yourself before sharing an exported backup file
-with anyone else.
+### Conditions you must meet for commercial use
+
+The MIT License permitting commercial use **does not mean there are no
+conditions.** These are the minimum requirements when redistributing, selling,
+or deploying internally.
+
+| What you want to do | Allowed? | What you must also do |
+|---|---|---|
+| Install and use it for company work | Yes | Nothing — internal use is not distribution, so no notice obligation applies |
+| Modify the code and distribute it inside your company | Yes | Ship the `LICENSE` file (copyright notice + full license text) with the distribution |
+| Bundle it into a product you sell | Yes | Ship the `LICENSE` file. Keep the original copyright notice in your product docs or settings screen |
+| Rebrand it and redistribute as your own | **Conditionally** | The code itself may be rebranded, but **the copyright notice and license text cannot be removed.** Stripping them is a license violation |
+| Imply that "SoDam AI Studio endorses/sponsors this" | **No** | MIT grants no trademark, warranty, or endorsement rights. Do not use the copyright holder's name in promotion beyond the required notice |
+| Keep the software but drop the no-warranty clause | **No** | The warranty disclaimer (the all-caps paragraph) is part of the license text and must be kept intact |
+
+### What this license does **not** cover
+
+The MIT License applies **only to the code in this repository.** The following
+are separate.
+
+- **The data you create** (bookmarks, notes, to-dos, uploaded images): entirely
+  yours, and unrelated to this license. The copyright holder claims no rights
+  over it.
+- **Background images and icons you upload**: if you use someone else's work
+  (photos, logos), the copyright of that image is your responsibility —
+  especially if you distribute a backup file containing it.
+- **External services and fonts**: each is governed by its own terms, below.
+
+| Component | Provider | Terms that apply |
+|---|---|---|
+| IBM Plex Sans KR, JetBrains Mono fonts | Served via Google Fonts | Both are open fonts under SIL Open Font License–family terms. Commercial use is permitted, but check the font's own license before redistributing the font files themselves |
+| Bookmark icons (favicons) | Google, DuckDuckGo, icon.horse | Each provider's terms of service apply. High-volume automated calls or reuse inside a commercial service may breach those terms — verify each provider's terms before commercial distribution |
+| Weather data | OpenWeatherMap | Each user obtains and enters **their own API key**. Free/paid tiers, call limits, and redistribution rules follow OpenWeatherMap's terms |
+| Badge images (top of this document) | shields.io | Documentation display only; unrelated to program behavior |
+| Chrome, Google, Windows, macOS, etc. | Respective trademark owners | Product names used here are trademarks of their respective companies, mentioned only for compatibility and explanation. There is no affiliation, sponsorship, or endorsement of any kind |
+
+### Privacy and data handling
+
+- This program **collects no personal data.** There are no accounts, no logins,
+  and no transmission features; everything is stored in the `data/` folder on
+  the computer it runs on.
+- However, **an exported backup contains your bookmark URLs, notes, calendar
+  entries, and the weather API key you entered.** Check the contents before
+  sending that file to anyone or uploading it to a public repository or cloud
+  storage — and if a key was exposed, reissue it with the provider.
+- As documented under "Outbound internet traffic" above, **each bookmark's
+  domain name is sent to third-party icon providers.** If that is unacceptable
+  in your environment (corporate network, confidential URLs), upload your own
+  icons or block those domains.
+- If you plan to deploy this to many people in a company or institution, inform
+  your privacy officer about the third-party traffic described above and obtain
+  approval first.
+
+> **Disclaimer**: this section is general information to aid understanding and
+> **is not legal advice. No legal effect is guaranteed, and responsibility for
+> actual use rests with you.** For decisions with legal consequences, such as
+> commercial distribution, read the [full LICENSE text](./LICENSE) and each
+> external service's terms directly, and consult a qualified professional such
+> as a lawyer where appropriate.
 
 ---
 

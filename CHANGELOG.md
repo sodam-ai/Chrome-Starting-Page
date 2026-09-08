@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v7.5.0] - 2026-09-08
+
+### Security
+- **Raw data files were reachable over HTTP** — `safePath()` only prevented escaping the app folder, so everything *inside* it was served, including `data/config.json` (which holds the user's OpenWeatherMap API key), `data/bookmarks.json`, every file under `data/backups/`, and dotfiles such as `.server.pid` and `.gitignore`. Any local process or browser extension able to reach the port could read them. Static serving now rejects (403) any path under `data/` ending in `.json`, plus any path segment beginning with `.`; images under `data/icons/` and everything in `assets/` are unaffected because the page references them by URL. Verified with 13 negative cases (including case-variant and percent-encoded bypass attempts) and 9 positive regression cases
+
+### Fixed
+- **Bookmarks could silently vanish from the screen while remaining intact on disk** — categories present in `bookmarks.json` but listed on no page in `config.json` were never rendered and produced no warning, so a dashboard with 224 working bookmarks could display zero links. This happens whenever `config.json` and `bookmarks.json` come from different points in time (restoring an older backup, copying one file but not the other, switching to a stale profile). Orphaned categories are now appended to the first page and the user is told how many were recovered. Reproduced deliberately (0 links rendered against 59 server-side categories) and re-verified after the fix (224 links restored). Confirmed non-destructive: `deleteCat()` removes the category from `bookmarks.json` as well, so a deliberately deleted category cannot reappear
+- **The app could not read its own backups** — a full export embeds every custom image as Base64, so two 4 MB backgrounds already pushed the file past the 10 MB request cap and `/api/import` rejected it with 413. The import endpoint alone now accepts up to 100 MB; every other endpoint keeps the 10 MB cap. Verified: a real 10.9 MB export now round-trips, 101 MB is still rejected, and the five other POST endpoints still reject 11 MB
+- **A corrupted backup could wipe data section by section** — `/api/import` wrote each section as it went, and a malformed one (for example `"bookmarks": "text"`) was "sanitized" down to `{}`, erasing every bookmark, while a later bad section could leave the data half-replaced. Every present section is now validated against the same shape rules the live CRUD endpoints enforce *before* anything is written, and the whole import is rejected if any section fails. Verified: 4 malformed payloads rejected with all 9 data files byte-identical, while genuine full exports and safety-backup files still import
+- Import failures reported only "가져오기 실패"; the actual reason (such as exceeding the size cap) is now shown
+
+### Added
+- **Port setting travels with the backup** — export now includes the configured port and import restores it, so moving to a new folder or computer no longer silently drops a non-default port. The change takes effect on the next server restart, and the UI warns that the dashboard address will move. Invalid values (`0`, negative, `65536`, non-numeric, objects) are ignored
+- `tools/build-readme-html.mjs` — generates `README.html` / `README.en.html` from the Markdown sources so the two formats cannot drift apart. `npm run docs` writes them, `npm run docs:check` fails if they are stale. Zero dependencies, like the rest of the project
+
+### Docs
+- **Corrected an inaccurate privacy claim.** The README stated that the only outbound requests were Google Fonts and the optional weather widget. In fact bookmark favicons are fetched from three third-party services (`google.com/s2/favicons`, `icons.duckduckgo.com`, `icon.horse`), which sends each bookmark's domain name to them. Both READMEs now document this, explain exactly what is and is not transmitted, and describe how to avoid it
+- New section on moving the app to another folder or computer, explaining why a full folder copy carries the data but a GitHub ZIP/clone does not (personal data is excluded by `.gitignore` by design), with the export → install → import procedure
+- Licence section expanded with commercial-use conditions, what the MIT licence does *not* cover (user data, uploaded images), third-party service terms (fonts, favicon providers, OpenWeatherMap), and trademark notes
+
+---
+
 ## [v7.4.1] - 2026-09-01
 
 ### Security

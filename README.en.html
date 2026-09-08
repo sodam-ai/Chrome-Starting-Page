@@ -61,596 +61,395 @@ p[align="center"], p[align=center]{text-align:center}
 <body>
 <div class="wrap">
 
-<h1 id="chrome-starting-page-a-personal-chrome-new-tab-dashboard">Chrome
-Starting Page — A Personal Chrome New-Tab Dashboard</h1>
-<p><img src="https://img.shields.io/badge/version-7.4.1-blue"
-alt="Version" /> <img
-src="https://img.shields.io/badge/license-MIT-green" alt="License" />
-<img src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen"
-alt="Node.js" /> <img
-src="https://img.shields.io/badge/dependencies-0-orange"
-alt="Dependencies" /></p>
-<blockquote>
-<p>A <strong>personal start screen</strong> that appears the moment you
-open a new tab in Chrome. Bookmarks, to-dos, notes, D-Day countdowns, a
-calendar, and a Pomodoro timer — all in one screen, and every piece of
-data stays <strong>inside your own computer</strong>. No sign-up, no
-cloud upload, no ads.</p>
-</blockquote>
-<p>This document is written so that even someone using <strong>AI tools,
-messaging apps, computers, or mobile/electronic devices for the very
-first time</strong> can install and use this project just by following
-along. Any technical term is explained on the spot.</p>
+<h1 id="chrome-starting-page-a-personal-chrome-new-tab-dashboard">Chrome Starting Page — A Personal Chrome New-Tab Dashboard</h1>
+<p><img src="https://img.shields.io/badge/version-7.5.0-blue" alt="Version" /> <img src="https://img.shields.io/badge/license-MIT-green" alt="License" /> <img src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen" alt="Node.js" /> <img src="https://img.shields.io/badge/dependencies-0-orange" alt="Dependencies" /></p>
+<blockquote><p>A <strong>personal start screen</strong> that appears the moment you open a new tab in Chrome.
+Bookmarks, to-dos, notes, D-Day countdowns, a calendar, and a Pomodoro timer — all
+in one screen, and every piece of data stays <strong>inside your own computer</strong>. No sign-up,
+no cloud upload, no ads.</p></blockquote>
+<p>This document is written so that even someone using <strong>AI tools, messaging apps,
+computers, or mobile/electronic devices for the very first time</strong> can install and
+use this project just by following along. Any technical term is explained on the
+spot.</p>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
-<ol type="1">
+<ol>
 <li><a href="#what-is-this-program">What Is This Program?</a></li>
 <li><a href="#prerequisites">Prerequisites</a></li>
 <li><a href="#how-to-download">How to Download</a></li>
 <li><a href="#quick-start-3-steps">Quick Start (3 Steps)</a></li>
 <li><a href="#installation-detailed">Installation (Detailed)</a></li>
-<li><a href="#running-stopping-restarting">Running · Stopping ·
-Restarting</a></li>
+<li><a href="#running-stopping-restarting">Running · Stopping · Restarting</a></li>
 <li><a href="#how-to-use">How to Use</a></li>
-<li><a href="#commands-scripts-reference">Commands &amp; Scripts
-Reference</a></li>
-<li><a href="#how-it-works-architecture">How It Works
-(Architecture)</a></li>
+<li><a href="#commands-scripts-reference">Commands &amp; Scripts Reference</a></li>
+<li><a href="#how-it-works-architecture">How It Works (Architecture)</a></li>
 <li><a href="#security-data-flow">Security &amp; Data Flow</a></li>
-<li><a href="#file-document-locations">File &amp; Document
-Locations</a></li>
-<li><a href="#development-workflow-tests-code-structure">Development
-Workflow (Tests · Code Structure)</a></li>
-<li><a href="#whats-new-changelog-summary">What’s New — Changelog
-Summary</a></li>
+<li><a href="#file-document-locations">File &amp; Document Locations</a></li>
+<li><a href="#development-workflow-tests-code-structure">Development Workflow (Tests · Code Structure)</a></li>
+<li><a href="#whats-new-changelog-summary">What's New — Changelog Summary</a></li>
 <li><a href="#troubleshooting">Troubleshooting</a></li>
 <li><a href="#faq">FAQ</a></li>
-<li><a href="#legal-copyright-license-commercial-use">Legal · Copyright
-· License · Commercial Use</a></li>
-<li><a href="#original-project-acknowledgments">Original Project &amp;
-Acknowledgments</a></li>
+<li><a href="#legal-copyright-license-commercial-use">Legal · Copyright · License · Commercial Use</a></li>
+<li><a href="#original-project-acknowledgments">Original Project &amp; Acknowledgments</a></li>
 </ol>
 <hr />
 <h2 id="what-is-this-program">What Is This Program?</h2>
-<p>This program <strong>completely replaces the screen you see when you
-open a new tab in Chrome, with a page you control.</strong> Unlike a
-typical “new tab extension,” this project is a tiny server that runs
-directly on your own computer, and Chrome simply displays what that
-server shows. Because of that, your data never leaves your machine for
-some unfamiliar company’s cloud — everything is stored inside your own
-hard drive, in the <code>data</code> folder.</p>
+<p>This program <strong>completely replaces the screen you see when you open a new tab in
+Chrome, with a page you control.</strong> Unlike a typical "new tab extension," this
+project is a tiny server that runs directly on your own computer, and Chrome
+simply displays what that server shows. Because of that, your data never leaves
+your machine for some unfamiliar company's cloud — everything is stored inside
+your own hard drive, in the <code>data</code> folder.</p>
 <p>One screen holds all of the following:</p>
 <ul>
-<li>Category-based <strong>bookmark cards</strong> (drag to reorder,
-split across multiple pages)</li>
-<li>A <strong>to-do list</strong> — priority, due dates, recurring
-schedules, subtasks, and a list view ↔︎ <strong>Kanban board</strong>
-toggle</li>
-<li>A <strong>calendar</strong> and <strong>D-Day
-countdowns</strong></li>
+<li>Category-based <strong>bookmark cards</strong> (drag to reorder, split across multiple pages)</li>
+<li>A <strong>to-do list</strong> — priority, due dates, recurring schedules, subtasks, and a
+list view ↔ <strong>Kanban board</strong> toggle</li>
+<li>A <strong>calendar</strong> and <strong>D-Day countdowns</strong></li>
 <li>A <strong>notes/memo</strong> widget (with Markdown preview)</li>
-<li>A <strong>Pomodoro timer</strong> and a <strong>habit
-tracker</strong></li>
-<li>A <strong>weekly report</strong> — a popup summarizing the past
-week’s activity, shown automatically the first time you open the
-dashboard each day</li>
-<li><strong>World clocks</strong>, an optional <strong>weather
-widget</strong>, and <strong>unified search</strong> (Spotlight, with
-Korean initial-consonant fuzzy matching)</li>
-<li>Dark/light themes, glass-morphism effects, custom backgrounds and
-slideshows</li>
+<li>A <strong>Pomodoro timer</strong> and a <strong>habit tracker</strong></li>
+<li>A <strong>weekly report</strong> — a popup summarizing the past week's activity, shown
+automatically the first time you open the dashboard each day</li>
+<li><strong>World clocks</strong>, an optional <strong>weather widget</strong>, and <strong>unified search</strong>
+(Spotlight, with Korean initial-consonant fuzzy matching)</li>
+<li>Dark/light themes, glass-morphism effects, custom backgrounds and slideshows</li>
 </ul>
-<p><strong>You don’t need to know how to code.</strong> Just follow the
-steps below and click along.</p>
+<p><strong>You don't need to know how to code.</strong> Just follow the steps below and click along.</p>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <div class="table-wrap">
 <table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr>
-<th>Item</th>
-<th>Required?</th>
-<th>Notes</th>
-</tr>
-</thead>
+<thead><tr><th>Item</th><th>Required?</th><th>Notes</th></tr></thead>
 <tbody>
-<tr>
-<td>Windows 10/11 or macOS</td>
-<td>Required</td>
-<td>The operating system this runs on. (Linux can run the server itself,
-but there is no auto-start script for it.)</td>
-</tr>
-<tr>
-<td>Chrome (or another Chromium-based browser like Edge)</td>
-<td>Required</td>
-<td>The window this project uses as your new-tab page.</td>
-</tr>
-<tr>
-<td>Node.js (v18 or newer)</td>
-<td><strong>May not be needed</strong></td>
-<td>If you already have it, the setup script uses it. If not, the
-Windows installer <strong>downloads it automatically</strong> for you
-(see below).</td>
-</tr>
-<tr>
-<td>Internet connection</td>
-<td>Required once during setup; optional after</td>
-<td>Needed to auto-download Node.js. Once set up, core features work
-fully offline — the on-screen fonts are loaded from Google Fonts, so
-offline they simply fall back to your system’s default font (no loss of
-function). The optional weather widget also needs internet.</td>
-</tr>
-<tr>
-<td>Account sign-up / payment info</td>
-<td>Not required</td>
-<td>This program never asks you to create an account.</td>
-</tr>
+<tr><td>Windows 10/11 or macOS</td><td>Required</td><td>The operating system this runs on. (Linux can run the server itself, but there is no auto-start script for it.)</td></tr>
+<tr><td>Chrome (or another Chromium-based browser like Edge)</td><td>Required</td><td>The window this project uses as your new-tab page.</td></tr>
+<tr><td>Node.js (v18 or newer)</td><td><strong>May not be needed</strong></td><td>If you already have it, the setup script uses it. If not, the Windows installer <strong>downloads it automatically</strong> for you (see below).</td></tr>
+<tr><td>Internet connection</td><td>Required once during setup; optional after</td><td>Needed to auto-download Node.js. Once set up, core features work fully offline — the on-screen fonts are loaded from Google Fonts, so offline they simply fall back to your system's default font (no loss of function). The optional weather widget also needs internet.</td></tr>
+<tr><td>Account sign-up / payment info</td><td>Not required</td><td>This program never asks you to create an account.</td></tr>
 </tbody>
 </table>
 </div>
-<blockquote>
-<p><strong>What is “Node.js”?</strong> It’s a runtime that lets a
-programming language called JavaScript run directly on your computer,
-outside a browser. This entire project is a single server built on
-Node.js. You don’t need to understand it to install or use this
-project.</p>
-</blockquote>
+<blockquote><p><strong>What is "Node.js"?</strong> It's a runtime that lets a programming language called
+JavaScript run directly on your computer, outside a browser. This entire
+project is a single server built on Node.js. You don't need to understand it
+to install or use this project.</p></blockquote>
 <hr />
 <h2 id="how-to-download">How to Download</h2>
-<ol type="1">
-<li>Go to the GitHub repository page:
-<strong>https://github.com/sodam-ai/Chrome-Starting-Page</strong></li>
+<ol>
+<li>Go to the GitHub repository page: <strong>https://github.com/sodam-ai/Chrome-Starting-Page</strong></li>
 <li>Click the green <strong><code>Code</code></strong> button.</li>
-<li>Click <strong><code>Download ZIP</code></strong>. (If you’re
-comfortable with Git, <code>git clone</code> works too.)</li>
-<li>Extract the downloaded zip file wherever you like,
-e.g. <code>C:\Dashboard</code>.
+<li>Click <strong><code>Download ZIP</code></strong>. (If you're comfortable with Git, <code>git clone</code> works too.)</li>
+<li>Extract the downloaded zip file wherever you like, e.g. <code>C:\Dashboard</code>.
 <ul>
-<li><strong>Note</strong>: a folder path containing spaces or
-non-English characters can cause problems in some environments. A short,
-English-letters-and-numbers-only path is recommended.</li>
+<li><strong>Note</strong>: a folder path containing spaces or non-English characters can
+cause problems in some environments. A short, English-letters-and-numbers-only
+path is recommended.</li>
 </ul></li>
 </ol>
 <hr />
 <h2 id="quick-start-3-steps">Quick Start (3 Steps)</h2>
 <p><strong>On Windows</strong></p>
-<ol type="1">
-<li>In the extracted folder, <strong>double-click
-<code>setup_windows.bat</code></strong>.</li>
-<li>A black console window opens and installs everything automatically.
-Wait for it to finish (usually a few seconds to a minute; up to 1–2
-minutes if Node.js needs to be downloaded).</li>
-<li>Open Chrome, go to <code>chrome://settings/onStartup</code>, choose
-“Open a specific page or set of pages,” and add the address shown at the
-end of setup (default: <code>http://localhost:1111</code>).</li>
+<ol>
+<li>In the extracted folder, <strong>double-click <code>setup_windows.bat</code></strong>.</li>
+<li>A black console window opens and installs everything automatically. Wait for
+it to finish (usually a few seconds to a minute; up to 1–2 minutes if Node.js
+needs to be downloaded).</li>
+<li>Open Chrome, go to <code>chrome://settings/onStartup</code>, choose "Open a specific
+page or set of pages," and add the address shown at the end of setup
+(default: <code>http://localhost:1111</code>).</li>
 </ol>
 <p><strong>On macOS</strong></p>
-<ol type="1">
-<li><p>Open the Terminal app.</p></li>
-<li><p>Navigate to the extracted folder and run, in order:</p>
-<pre class="bash"><code>chmod +x setup_mac.sh
-./setup_mac.sh</code></pre></li>
-<li><p>In Chrome’s settings, set your start page to
-<code>http://localhost:1111</code>.</p></li>
+<ol>
+<li>Open the Terminal app.</li>
+<li>Navigate to the extracted folder and run, in order:
+``<code>bash
+chmod +x setup_mac.sh
+./setup_mac.sh
+</code>``</li>
+<li>In Chrome's settings, set your start page to <code>http://localhost:1111</code>.</li>
 </ol>
-<p>From now on, this dashboard appears every time you open a new tab or
-launch Chrome.</p>
+<p>From now on, this dashboard appears every time you open a new tab or launch Chrome.</p>
 <hr />
 <h2 id="installation-detailed">Installation (Detailed)</h2>
-<h3 id="windows-what-setup_windows.bat-actually-does">Windows — What
-<code>setup_windows.bat</code> actually does</h3>
+<h3 id="windows-what-setupwindowsbat-actually-does">Windows — What <code>setup_windows.bat</code> actually does</h3>
 <p>A single double-click runs these 5 steps in order:</p>
-<ol type="1">
-<li><strong>Protects your existing data</strong>: if
-<code>data\bookmarks.json</code> already exists (a reinstall), it is
-left untouched, and an extra safety backup
-(<code>data\backups\safety-before-setup.json</code>) is created. On a
-fresh install, the required empty folders (<code>data</code>,
-<code>data\backups</code>, <code>data\icons</code>,
-<code>data\profiles</code>, <code>assets</code>) are created.
-<strong>Re-running setup never deletes existing bookmarks or
+<ol>
+<li><strong>Protects your existing data</strong>: if <code>data\bookmarks.json</code> already exists (a
+reinstall), it is left untouched, and an extra safety backup
+(<code>data\backups\safety-before-setup.json</code>) is created. On a fresh install, the
+required empty folders (<code>data</code>, <code>data\backups</code>, <code>data\icons</code>, <code>data\profiles</code>,
+<code>assets</code>) are created. <strong>Re-running setup never deletes existing bookmarks or
 settings.</strong></li>
-<li><strong>Checks for Node.js</strong>: it looks for ① a portable
-Node.js already downloaded into this folder, then ② a system-wide
-Node.js install. If neither is found, it automatically downloads a
-portable version (~30MB) from the official nodejs.org distribution into
-this folder’s own <code>node\</code> subfolder — this does not touch
-anything system-wide.</li>
-<li><strong>Stops any existing server</strong>: if a previous instance
-is running (reinstall or update scenario), it is shut down safely
-first.</li>
-<li><strong>Registers auto-start</strong>: so the dashboard launches
-automatically when you log in, <strong>two</strong> methods are
-registered at the same time — ① a Windows Registry login-startup entry,
-and ② a shortcut (<code>.lnk</code>) file in the Startup folder. Why
-both at once is explained in <a href="#security-data-flow">Security
-&amp; Data Flow</a>.</li>
-<li><strong>Starts the server</strong>: launched in the background, with
-no visible window.</li>
+<li><strong>Checks for Node.js</strong>: it looks for ① a portable Node.js already downloaded
+into this folder, then ② a system-wide Node.js install. If neither is found,
+it automatically downloads a portable version (~30MB) from the official
+nodejs.org distribution into this folder's own <code>node\</code> subfolder — this does
+not touch anything system-wide.</li>
+<li><strong>Stops any existing server</strong>: if a previous instance is running (reinstall
+or update scenario), it is shut down safely first.</li>
+<li><strong>Registers auto-start</strong>: so the dashboard launches automatically when you
+log in, <strong>two</strong> methods are registered at the same time — ① a Windows
+Registry login-startup entry, and ② a shortcut (<code>.lnk</code>) file in the Startup
+folder. Why both at once is explained in <a href="#security-data-flow">Security &amp; Data Flow</a>.</li>
+<li><strong>Starts the server</strong>: launched in the background, with no visible window.</li>
 </ol>
-<p>When setup finishes, it prints the address to use, which kind of
-Node.js was used (system or portable), and confirms your data was
-preserved.</p>
-<h3 id="macos-what-setup_mac.sh-actually-does">macOS — What
-<code>setup_mac.sh</code> actually does</h3>
-<ol type="1">
-<li>Locates the system’s installed Node.js (if none is found, it prints
-a message and exits — macOS has no auto-download step, so you’ll need to
-install Node.js from <a href="https://nodejs.org">nodejs.org</a>
-first).</li>
-<li>Generates a <code>com.dashboard.startpage.plist</code> file with
-paths matching your current folder, and copies it into
-<code>~/Library/LaunchAgents/</code>. This is macOS’s way of registering
-“run automatically at login” (a LaunchAgent).</li>
-<li>Runs <code>launchctl load</code> to start the server
-immediately.</li>
+<p>When setup finishes, it prints the address to use, which kind of Node.js was
+used (system or portable), and confirms your data was preserved.</p>
+<h3 id="macos-what-setupmacsh-actually-does">macOS — What <code>setup_mac.sh</code> actually does</h3>
+<ol>
+<li>Locates the system's installed Node.js (if none is found, it prints a
+message and exits — macOS has no auto-download step, so you'll need to
+install Node.js from <a href="https://nodejs.org">nodejs.org</a> first).</li>
+<li>Generates a <code>com.dashboard.startpage.plist</code> file with paths matching your
+current folder, and copies it into <code>~/Library/LaunchAgents/</code>. This is
+macOS's way of registering "run automatically at login" (a LaunchAgent).</li>
+<li>Runs <code>launchctl load</code> to start the server immediately.</li>
 </ol>
-<h3 id="do-i-need-administrator-privileges">Do I need administrator
-privileges?</h3>
-<p><strong>No.</strong> Both scripts only touch per-user areas (the
-Registry key is under <code>HKCU</code>, meaning “current user only”; on
-macOS, <code>~/Library/LaunchAgents</code> is a personal folder), so
-they run fine under a normal user account.</p>
+<h3 id="do-i-need-administrator-privileges">Do I need administrator privileges?</h3>
+<p><strong>No.</strong> Both scripts only touch per-user areas (the Registry key is under
+<code>HKCU</code>, meaning "current user only"; on macOS, <code>~/Library/LaunchAgents</code> is a
+personal folder), so they run fine under a normal user account.</p>
 <hr />
-<h2 id="running-stopping-restarting">Running · Stopping ·
-Restarting</h2>
-<p>Once installed, the server starts automatically every time you turn
-your computer on, so you normally never need any of this. It’s here for
-when you want to control things manually.</p>
+<h2 id="running-stopping-restarting">Running · Stopping · Restarting</h2>
+<p>Once installed, the server starts automatically every time you turn your
+computer on, so you normally never need any of this. It's here for when you
+want to control things manually.</p>
 <div class="table-wrap">
 <table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr>
-<th>I want to…</th>
-<th>Windows</th>
-<th>macOS</th>
-</tr>
-</thead>
+<thead><tr><th>I want to...</th><th>Windows</th><th>macOS</th></tr></thead>
 <tbody>
-<tr>
-<td>Restart right now</td>
-<td>Double-click <code>restart.bat</code></td>
-<td><code>launchctl kickstart -k gui/$(id -u)/com.dashboard.startpage</code></td>
-</tr>
-<tr>
-<td>Turn it off completely</td>
-<td>Dashboard Settings (⚙️) &gt; Server &gt; Shutdown, or run
-<code>uninstall.bat</code></td>
-<td><code>launchctl unload ~/Library/LaunchAgents/com.dashboard.startpage.plist</code></td>
-</tr>
-<tr>
-<td>Start quietly with no window</td>
-<td>Double-click <code>run_server_background.bat</code></td>
-<td>Already runs in the background by default</td>
-</tr>
-<tr>
-<td>Change the port (address)</td>
-<td>Double-click <code>set-port.bat</code> and enter a new port
-number</td>
-<td>Edit the <code>port.conf</code> file with a text editor and change
-the number</td>
-</tr>
-<tr>
-<td>Remove it completely</td>
-<td>Double-click <code>uninstall.bat</code></td>
-<td>Run <code>uninstall_mac.sh</code></td>
-</tr>
+<tr><td>Restart right now</td><td>Double-click <code>restart.bat</code></td><td><code>launchctl kickstart -k gui/$(id -u)/com.dashboard.startpage</code></td></tr>
+<tr><td>Turn it off completely</td><td>Dashboard Settings (⚙️) &gt; Server &gt; Shutdown, or run <code>uninstall.bat</code></td><td><code>launchctl unload ~/Library/LaunchAgents/com.dashboard.startpage.plist</code></td></tr>
+<tr><td>Start quietly with no window</td><td>Double-click <code>run_server_background.bat</code></td><td>Already runs in the background by default</td></tr>
+<tr><td>Change the port (address)</td><td>Double-click <code>set-port.bat</code> and enter a new port number</td><td>Edit the <code>port.conf</code> file with a text editor and change the number</td></tr>
+<tr><td>Remove it completely</td><td>Double-click <code>uninstall.bat</code></td><td>Run <code>uninstall_mac.sh</code></td></tr>
 </tbody>
 </table>
 </div>
-<p>After changing the port you must restart the server for it to take
-effect — and remember to also update Chrome’s start-page address to the
-new port.</p>
+<p>After changing the port you must restart the server for it to take effect —
+and remember to also update Chrome's start-page address to the new port.</p>
 <hr />
 <h2 id="how-to-use">How to Use</h2>
 <h3 id="first-screen">First screen</h3>
-<p>After installing, your first visit shows a short onboarding tutorial.
-You can skip it — every feature can always be found later through
-Settings (the gear icon ⚙️ in the top right).</p>
+<p>After installing, your first visit shows a short onboarding tutorial. You can
+skip it — every feature can always be found later through Settings (the gear
+icon ⚙️ in the top right).</p>
 <h3 id="adding-bookmarks">Adding bookmarks</h3>
 <ul>
-<li>Paste a URL into the empty input at the bottom of any card and press
-Enter — the fastest way.</li>
-<li>Drag the site icon/lock icon from your browser’s address bar and
-drop it onto a card.</li>
-<li>Press <code>Ctrl+V</code> anywhere on the page — it recognizes a URL
-on your clipboard and asks which category to file it under.</li>
-<li>Right-click a bookmark for edit, change-icon, move-to-another-page,
-and delete options.</li>
-<li>Hold <code>Ctrl</code> and click multiple bookmarks to move or
-delete several at once.</li>
+<li>Paste a URL into the empty input at the bottom of any card and press Enter —
+the fastest way.</li>
+<li>Drag the site icon/lock icon from your browser's address bar and drop it
+onto a card.</li>
+<li>Press <code>Ctrl+V</code> anywhere on the page — it recognizes a URL on your clipboard
+and asks which category to file it under.</li>
+<li>Right-click a bookmark for edit, change-icon, move-to-another-page, and
+delete options.</li>
+<li>Hold <code>Ctrl</code> and click multiple bookmarks to move or delete several at once.</li>
 </ul>
 <h3 id="unified-search-spotlight">Unified search (Spotlight)</h3>
-<p>Press <strong><code>F</code></strong> on your keyboard to open the
-search box. It searches bookmarks, to-dos, notes, and events all at
-once, and understands Korean initial-consonant input (e.g. typing
-“ㄴㅇㅂ” finds “네이버”). Typing a <code>&gt;</code>-prefixed command
-like <code>&gt;settings</code>, <code>&gt;theme</code>, or
-<code>&gt;timer</code> jumps straight to that feature.</p>
-<h3 id="to-dos-calendar-d-day-notes-pomodoro">To-dos / Calendar / D-Day
-/ Notes / Pomodoro</h3>
-<p>Use the <code>+</code> button in the top-right corner of each widget
-card to add a new item. To-dos support priority, due dates, tags,
-recurrence (daily/weekly/ biweekly/monthly), and subtasks. The Pomodoro
-timer automatically cycles 25 minutes of focus and 5 minutes of break,
-and every session is logged to your stats.</p>
-<p>Once your to-do list passes 10 items, a <strong>“Kanban
-view”</strong> button appears below the card. Click it to switch to a
-<strong>Kanban board</strong> grouped by status (e.g. To Do / In
-Progress / Done) — drag a card into another column to change its status.
-Click “List view” at the top of the board to switch back.</p>
-<p>The first time you open the dashboard each day, a <strong>weekly
-report</strong> popup appears automatically, summarizing the past week’s
-activity (such as how many to-dos you completed). Once dismissed, it
-won’t reappear until the next day.</p>
-<h3 id="customizing-the-look-settings-theme">Customizing the look
-(Settings &gt; Theme)</h3>
-<p>Choose dark, light, or automatic (follows your OS setting); 6 accent
-colors; 3 levels of glass effect (clear / normal / frosted) plus a
-blur-intensity slider; 4 layout presets (Default / Compact / Wide /
-Magazine); and even inject your own custom CSS. Backgrounds can be a
-single uploaded image (Settings &gt; Background) or a slideshow of
-multiple images, with a configurable rotation interval from 1 minute to
-24 hours.</p>
-<h3 id="exporting-importing-and-restoring-backups">Exporting, importing,
-and restoring backups</h3>
+<p>Press <strong><code>F</code></strong> on your keyboard to open the search box. It searches bookmarks,
+to-dos, notes, and events all at once, and understands Korean initial-consonant
+input (e.g. typing "ㄴㅇㅂ" finds "네이버"). Typing a <code>&gt;</code>-prefixed command like
+<code>&gt;settings</code>, <code>&gt;theme</code>, or <code>&gt;timer</code> jumps straight to that feature.</p>
+<h3 id="to-dos-calendar-d-day-notes-pomodoro">To-dos / Calendar / D-Day / Notes / Pomodoro</h3>
+<p>Use the <code>+</code> button in the top-right corner of each widget card to add a new
+item. To-dos support priority, due dates, tags, recurrence (daily/weekly/
+biweekly/monthly), and subtasks. The Pomodoro timer automatically cycles
+25 minutes of focus and 5 minutes of break, and every session is logged to
+your stats.</p>
+<p>Once your to-do list passes 10 items, a <strong>"Kanban view"</strong> button appears below
+the card. Click it to switch to a <strong>Kanban board</strong> grouped by status (e.g.
+To Do / In Progress / Done) — drag a card into another column to change its
+status. Click "List view" at the top of the board to switch back.</p>
+<p>The first time you open the dashboard each day, a <strong>weekly report</strong> popup
+appears automatically, summarizing the past week's activity (such as how many
+to-dos you completed). Once dismissed, it won't reappear until the next day.</p>
+<h3 id="customizing-the-look-settings-theme">Customizing the look (Settings &gt; Theme)</h3>
+<p>Choose dark, light, or automatic (follows your OS setting); 6 accent colors;
+3 levels of glass effect (clear / normal / frosted) plus a blur-intensity
+slider; 4 layout presets (Default / Compact / Wide / Magazine); and even
+inject your own custom CSS. Backgrounds can be a single uploaded image
+(Settings &gt; Background) or a slideshow of multiple images, with a
+configurable rotation interval from 1 minute to 24 hours.</p>
+<h3 id="exporting-importing-and-restoring-backups">Exporting, importing, and restoring backups</h3>
 <p>Under Settings &gt; Data:</p>
 <ul>
-<li><strong>Export</strong>: downloads all your data as a JSON file. You
-can choose whether to include background/icon images.</li>
-<li><strong>Import</strong>: restores from a previously exported JSON
-file. Before applying, it shows a summary like “42 bookmarks, 15 to-dos,
-3 notes.”</li>
-<li><strong>Automatic backups</strong>: the server backs up all your
-data by itself on a configurable interval (default 24 hours, adjustable
-1–168 hours). Pick any point in the backup list to restore everything to
-that moment in one click.</li>
-<li><strong>Profiles</strong>: save your entire
-bookmark/notes/to-do/D-Day/settings setup under a name, and switch
-between different profiles (e.g. “Work” vs. “Personal”).</li>
+<li><strong>Export</strong>: downloads all your data as a JSON file. You can choose whether
+to include background/icon images. If you run on a port other than the
+default 1111, <strong>that port setting is included too</strong> (since v7.5.0).</li>
+<li><strong>Import</strong>: restores from a previously exported JSON file. Before applying,
+it shows a summary like "42 bookmarks, 15 to-dos, 3 notes." A port setting
+in the backup is restored as well; if it differs from the port you are on,
+a notice explains that the address will change after a restart. Backup files
+are accepted up to 100MB (background photos make full backups large).</li>
+<li><strong>Automatic backups</strong>: the server backs up all your data by itself on a
+configurable interval (default 24 hours, adjustable 1–168 hours). Pick any
+point in the backup list to restore everything to that moment in one click.</li>
+<li><strong>Profiles</strong>: save your entire bookmark/notes/to-do/D-Day/settings setup
+under a name, and switch between different profiles (e.g. "Work" vs.
+"Personal").</li>
 </ul>
-<hr />
-<h2 id="commands-scripts-reference">Commands &amp; Scripts
-Reference</h2>
+<h3 id="moving-the-folder-or-reinstalling-somewhere-new-important">Moving the folder, or reinstalling somewhere new (important)</h3>
+<p><strong>This program works regardless of the folder's name or location.</strong> Every path
+inside it is resolved relative to the folder the files sit in, so you can move
+it to <code>D:\MyDashboard</code>, rename it, or put it on a USB stick and it still runs.</p>
+<p>**What differs is *what you copied*.** This is where nearly all confusion comes
+from, so please read the distinction carefully.</p>
 <div class="table-wrap">
 <table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr>
-<th>File</th>
-<th>Platform</th>
-<th>What it does</th>
-</tr>
-</thead>
+<thead><tr><th>How you moved it</th><th>Do bookmarks/settings come along?</th><th>Why</th></tr></thead>
 <tbody>
-<tr>
-<td><code>setup_windows.bat</code></td>
-<td>Windows</td>
-<td>Installs, registers auto-start, and launches the server (first run,
-or reinstall)</td>
-</tr>
-<tr>
-<td><code>uninstall.bat</code></td>
-<td>Windows</td>
-<td>Stops the server, removes auto-start, optionally deletes data</td>
-</tr>
-<tr>
-<td><code>restart.bat</code></td>
-<td>Windows</td>
-<td>Restarts the server (prints status to a console window)</td>
-</tr>
-<tr>
-<td><code>run_server_background.bat</code></td>
-<td>Windows</td>
-<td>Starts the server quietly, with no window</td>
-</tr>
-<tr>
-<td><code>set-port.bat</code></td>
-<td>Windows</td>
-<td>Changes the port (saved to <code>port.conf</code>)</td>
-</tr>
-<tr>
-<td><code>start_hidden.vbs</code></td>
-<td>Windows</td>
-<td>Used internally by auto-start — you never need to run this
-yourself</td>
-</tr>
-<tr>
-<td><code>setup_mac.sh</code></td>
-<td>macOS</td>
-<td>Installs, registers a LaunchAgent for auto-start, and launches the
-server</td>
-</tr>
-<tr>
-<td><code>uninstall_mac.sh</code></td>
-<td>macOS</td>
-<td>Stops the server, removes the LaunchAgent, optionally deletes
-data</td>
-</tr>
+<tr><td>Copying the whole folder (File Explorer, USB, backup tool)</td><td><strong>Yes</strong></td><td>The <code>data</code> folder is copied along with everything else. This is the most reliable method.</td></tr>
+<tr><td><code>Download ZIP</code> or <code>git clone</code> from GitHub</td><td><strong>No</strong></td><td>The repository contains <strong>program code only</strong>. Your bookmarks and settings are personal data and are deliberately excluded from it (<code>.gitignore</code>), so a freshly downloaded folder starts as a brand-new installation.</td></tr>
 </tbody>
 </table>
 </div>
-<p><strong>For developers</strong>, from a terminal/PowerShell in the
-project folder:</p>
-<pre class="bash"><code>node server.js          # Run the server directly (default port 1111)
+<p><strong>So the safe way to move is:</strong></p>
+<ol>
+<li><strong>Before moving</strong>, open the dashboard in the *old* folder and click
+Settings &gt; Data &gt; <strong>Export</strong>. Save the backup file
+(<code>dashboard-backup-&lt;date&gt;.json</code>).</li>
+<li>Install and run the program in the new folder (it is normal for it to look
+empty at first).</li>
+<li>In the new dashboard, click Settings &gt; Data &gt; <strong>Import</strong> and upload the file
+from step 1. Bookmarks, notes, to-dos, settings, icons, background photos and
+the port setting all come back.</li>
+</ol>
+<blockquote><p><strong>Why does the new folder look empty at first?</strong> Nothing is broken — you are
+in the second row of the table above (code only was copied). The <code>data</code> folder
+in your old location is still there, so nothing has been lost; just follow the
+three steps.</p></blockquote>
+<hr />
+<h2 id="commands-scripts-reference">Commands &amp; Scripts Reference</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>File</th><th>Platform</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>setup_windows.bat</code></td><td>Windows</td><td>Installs, registers auto-start, and launches the server (first run, or reinstall)</td></tr>
+<tr><td><code>uninstall.bat</code></td><td>Windows</td><td>Stops the server, removes auto-start, optionally deletes data</td></tr>
+<tr><td><code>restart.bat</code></td><td>Windows</td><td>Restarts the server (prints status to a console window)</td></tr>
+<tr><td><code>run_server_background.bat</code></td><td>Windows</td><td>Starts the server quietly, with no window</td></tr>
+<tr><td><code>set-port.bat</code></td><td>Windows</td><td>Changes the port (saved to <code>port.conf</code>)</td></tr>
+<tr><td><code>start_hidden.vbs</code></td><td>Windows</td><td>Used internally by auto-start — you never need to run this yourself</td></tr>
+<tr><td><code>setup_mac.sh</code></td><td>macOS</td><td>Installs, registers a LaunchAgent for auto-start, and launches the server</td></tr>
+<tr><td><code>uninstall_mac.sh</code></td><td>macOS</td><td>Stops the server, removes the LaunchAgent, optionally deletes data</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>For developers</strong>, from a terminal/PowerShell in the project folder:</p>
+<pre><code class="language-bash">node server.js          # Run the server directly (default port 1111)
 node server.js 8080     # Run on port 8080 instead
-npm start                 # Same as above (package.json&#39;s start script)
-npm test                  # Run the 17 automated tests (Node&#39;s built-in test runner)
-npm run check:xss         # Run the advisory scanner for missing output-escaping</code></pre>
+npm start                 # Same as above (package.json's start script)
+npm test                  # Run the 17 automated tests (Node's built-in test runner)
+npm run check:xss         # Run the advisory scanner for missing output-escaping
+npm run docs              # Regenerate the HTML READMEs from the Markdown sources
+npm run docs:check        # Only verify the HTML matches the Markdown (fails if stale)</code></pre>
 <hr />
 <h2 id="how-it-works-architecture">How It Works (Architecture)</h2>
 <pre><code>[Chrome, a new tab]
         │  http://127.0.0.1:1111
         ▼
-[server.js] ── uses only Node.js&#39;s built-in http module (0 npm dependencies)
+[server.js] ── uses only Node.js's built-in http module (0 npm dependencies)
         │
         ├─ Serves static files: index.html, style.css, script.js
         │   (in-memory cache + gzip compression + ETag to minimize re-fetches)
         │
         ├─ Serves a JSON REST API: /api/bookmarks, /api/todos, /api/config, etc.
         │   GET  = read data
-        │   POST = write data (only after verifying the request&#39;s origin)
+        │   POST = write data (only after verifying the request's origin)
         │
         └─ Reads and writes data/*.json files directly (no database server)</code></pre>
 <ul>
-<li><strong>Server</strong>: a single file, <code>server.js</code>. It
-uses only modules built into Node.js itself — <code>http</code>,
-<code>fs</code>, <code>path</code>, <code>zlib</code>,
-<code>crypto</code>, <code>net</code>, <code>child_process</code>.
-<strong>Not one external library needs to be
-<code>npm install</code>ed.</strong></li>
-<li><strong>Client (what you see)</strong>: just three files —
-<code>index.html</code>, <code>style.css</code>, and
-<code>script.js</code> (roughly 240,000 characters). There’s no
-framework like React or Vue and no build step; the browser reads and
-runs these files as-is.</li>
-<li><strong>Storage</strong>: instead of a database server (MySQL,
-MongoDB, etc.), data is read from and written directly to plain JSON
-text files inside the <code>data/</code> folder — one file per feature
-(bookmarks, to-dos, settings, and so on).</li>
-<li><strong>Reachability</strong>: the server only accepts connections
-on <code>127.0.0.1</code> (aka “localhost,” the special address meaning
-“this computer, talking to itself”). No other computer or phone on the
-same Wi-Fi network can reach this address — it only ever opens on this
-one machine.</li>
-<li><strong>Port</strong>: 1111 by default. If something else is already
-using port 1111, it automatically tries 1112, 1113, and so on, up to 10
-ports, until it finds a free one.</li>
-<li><strong>Offline support</strong>: a service worker
-(<code>sw.js</code>) pre-caches the screen’s own files, so the
-dashboard’s interface keeps opening even without internet (saving data
-still requires the server to be running — but since the server runs on
-this computer, that has nothing to do with your internet
-connection).</li>
-<li><strong>Outbound internet traffic</strong>: this app makes exactly
-two kinds of requests to the outside world. ① <strong>Fonts</strong>:
-the IBM Plex Sans KR and JetBrains Mono fonts used in the design are
-loaded from Google Fonts (<code>fonts.googleapis.com</code>,
-<code>fonts.gstatic.com</code>) — offline, the browser simply falls back
-to your system’s default font, with no loss of function. ②
-<strong>Weather widget</strong> (optional): only if you’ve entered your
-own API key in Settings, it sends a city name to OpenWeatherMap to fetch
-weather data. Outside of these two, nothing — no ads, tracking scripts,
-or analytics of any kind — is ever sent to an external server.</li>
+<li><strong>Server</strong>: a single file, <code>server.js</code>. It uses only modules built into
+Node.js itself — <code>http</code>, <code>fs</code>, <code>path</code>, <code>zlib</code>, <code>crypto</code>, <code>net</code>,
+<code>child_process</code>. <strong>Not one external library needs to be <code>npm install</code>ed.</strong></li>
+<li><strong>Client (what you see)</strong>: just three files — <code>index.html</code>, <code>style.css</code>, and
+<code>script.js</code> (roughly 240,000 characters). There's no framework like React or
+Vue and no build step; the browser reads and runs these files as-is.</li>
+<li><strong>Storage</strong>: instead of a database server (MySQL, MongoDB, etc.), data is
+read from and written directly to plain JSON text files inside the <code>data/</code>
+folder — one file per feature (bookmarks, to-dos, settings, and so on).</li>
+<li><strong>Reachability</strong>: the server only accepts connections on <code>127.0.0.1</code> (aka
+"localhost," the special address meaning "this computer, talking to
+itself"). No other computer or phone on the same Wi-Fi network can reach
+this address — it only ever opens on this one machine.</li>
+<li><strong>Port</strong>: 1111 by default. If something else is already using port 1111, it
+automatically tries 1112, 1113, and so on, up to 10 ports, until it finds a
+free one.</li>
+<li><strong>Offline support</strong>: a service worker (<code>sw.js</code>) pre-caches the screen's own
+files, so the dashboard's interface keeps opening even without internet
+(saving data still requires the server to be running — but since the server
+runs on this computer, that has nothing to do with your internet connection).</li>
+<li><strong>Outbound internet traffic</strong>: the app makes three kinds of requests to the
+outside world, and nothing else — no ads, tracking scripts, or analytics of
+any kind. All three are sent <strong>by your browser</strong>; this project's own server
+never sends anything out.</li>
 </ul>
+<p>  ① <strong>Fonts</strong>: the IBM Plex Sans KR and JetBrains Mono fonts used in the design
+  are loaded from Google Fonts (<code>fonts.googleapis.com</code>, <code>fonts.gstatic.com</code>) —
+  offline, the browser simply falls back to your system's default font, with no
+  loss of function.</p>
+<p>  ② <strong>Bookmark icons (favicons)</strong>: to show a site's icon on its bookmark card,
+  the page requests it from these three services in order (falling through to
+  the next one if a request fails):</p>
+<ul>
+<li><code>https://www.google.com/s2/favicons?sz=64&amp;domain=&lt;domain&gt;</code> (Google)</li>
+<li><code>https://icons.duckduckgo.com/ip3/&lt;domain&gt;.ico</code> (DuckDuckGo)</li>
+<li><code>https://icon.horse/icon/&lt;domain&gt;</code> (icon.horse)</li>
+</ul>
+<p>  <strong>This means the domain name of each bookmark (e.g. <code>mail.naver.com</code>) is sent
+  to those providers.</strong> The full URL (path, query string), the bookmark's title,
+  and your note contents are not — only the domain. If you would rather avoid
+  this, upload your own icons instead (<code>data/icons/</code>), or block those domains
+  with an extension or firewall: only the icons change to a default shape, and
+  everything else keeps working.</p>
+<p>  ③ <strong>Weather widget</strong> (optional): only if you have entered your own API key in
+  Settings, it sends a city name and that key to OpenWeatherMap
+  (<code>api.openweathermap.org</code>). Without a key the widget is hidden and no request
+  is made at all.</p>
 <hr />
 <h2 id="security-data-flow">Security &amp; Data Flow</h2>
-<p>Because this program is “a server on your own computer that’s always
-running in the background,” it needed a different security posture than
-a typical new-tab extension. Everything below is a protection that is
-<strong>actually implemented in the code — and has been reproduced and
-verified directly</strong>, as of v7.4.</p>
+<p>Because this program is "a server on your own computer that's always running
+in the background," it needed a different security posture than a typical
+new-tab extension. Everything below is a protection that is <strong>actually
+implemented in the code — and has been reproduced and verified directly</strong>, as
+of v7.4.</p>
 <div class="table-wrap">
 <table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Threat</th>
-<th>Mitigation</th>
-</tr>
-</thead>
+<thead><tr><th>Threat</th><th>Mitigation</th></tr></thead>
 <tbody>
-<tr>
-<td>Someone on another computer viewing or tampering with your dashboard
-data</td>
-<td>The server only accepts connections on <code>127.0.0.1</code>
-(localhost), so access from outside this machine is impossible by
-design.</td>
-</tr>
-<tr>
-<td>A malicious website silently overwriting your bookmarks/to-dos
-through your own browser (CSRF)</td>
-<td>Every request that changes state (POST) is checked against the
-<code>Origin</code> header your browser sends along with it (the address
-of the site that made the request). If it’s present and doesn’t match
-the server’s own address, the request is rejected immediately
-(403).</td>
-</tr>
-<tr>
-<td>A bookmark storing a dangerous address like <code>javascript:</code>
-that runs code when clicked</td>
-<td>Bookmark URLs are checked against an allowlist of five schemes only
-— <code>http</code>, <code>https</code>, <code>ftp</code>,
-<code>ftps</code>, <code>mailto</code> — validated independently on both
-the client and the server.</td>
-</tr>
-<tr>
-<td>Manipulated text (titles, notes, dates, etc.) executing as a script
-when rendered (XSS)</td>
-<td>Every value rendered to the screen passes through an
-<code>esc()</code> function that replaces the five HTML-significant
-characters <code>&amp; &lt; &gt; " '</code> with safe equivalents. This
-function lives in exactly one place, <code>lib/esc.js</code>, and is
-covered by automated regression tests.</td>
-</tr>
-<tr>
-<td>A file upload planting a file outside the intended folder (path
-traversal)</td>
-<td>Both upload and restore paths reject <code>..</code> and
-<code>~</code> patterns, re-verify that the final resolved path is
-strictly inside an allowed folder, and only accept image file
-extensions.</td>
-</tr>
-<tr>
-<td>An oversized request hanging or crashing the server</td>
-<td>Every request body is capped at 10MB, and exceeding it returns a
-proper error response (413) instead of hanging.</td>
-</tr>
-<tr>
-<td>Data files getting corrupted from simultaneous writes across
-multiple windows</td>
-<td>Per-file write locks plus atomic writes (write to a temp file, then
-rename) mean a mid-write crash can never leave a half-written, corrupted
-file.</td>
-</tr>
-<tr>
-<td>A data file becoming corrupted for any reason</td>
-<td>On every server start, all 9 data files are validated, and any
-corrupted file is automatically restored from the most recent valid
-backup (or a safe empty default if no backup exists).</td>
-</tr>
+<tr><td>Someone on another computer viewing or tampering with your dashboard data</td><td>The server only accepts connections on <code>127.0.0.1</code> (localhost), so access from outside this machine is impossible by design.</td></tr>
+<tr><td>A malicious website silently overwriting your bookmarks/to-dos through your own browser (CSRF)</td><td>Every request that changes state (POST) is checked against the <code>Origin</code> header your browser sends along with it (the address of the site that made the request). If it's present and doesn't match the server's own address, the request is rejected immediately (403).</td></tr>
+<tr><td>A bookmark storing a dangerous address like <code>javascript:</code> that runs code when clicked</td><td>Bookmark URLs are checked against an allowlist of five schemes only — <code>http</code>, <code>https</code>, <code>ftp</code>, <code>ftps</code>, <code>mailto</code> — validated independently on both the client and the server.</td></tr>
+<tr><td>Manipulated text (titles, notes, dates, etc.) executing as a script when rendered (XSS)</td><td>Every value rendered to the screen passes through an <code>esc()</code> function that replaces the five HTML-significant characters <code>&amp; &lt; &gt; " '</code> with safe equivalents. This function lives in exactly one place, <code>lib/esc.js</code>, and is covered by automated regression tests.</td></tr>
+<tr><td>A file upload planting a file outside the intended folder (path traversal)</td><td>Both upload and restore paths reject <code>..</code> and <code>~</code> patterns, re-verify that the final resolved path is strictly inside an allowed folder, and only accept image file extensions.</td></tr>
+<tr><td>An oversized request hanging or crashing the server</td><td>Request bodies are capped at 10MB, and exceeding it returns a proper error response (413) instead of hanging. Backup import (<code>/api/import</code>) is the single exception at 100MB — a full backup containing background photos easily exceeds 10MB, which previously meant <strong>the app could not read a backup it had produced itself</strong> (fixed in v7.5.0).</td></tr>
+<tr><td>Reading your data by typing a file path into the browser's address bar</td><td>Files under <code>data/</code> ending in <code>.json</code> (bookmarks, settings, backups) and any file beginning with a dot are refused (403). Only the icons and background images the page genuinely needs are served. Before v7.5.0, a URL such as <code>http://localhost:1111/data/config.json</code> returned the entire settings file, including the weather API key.</td></tr>
+<tr><td>Settings and bookmarks drifting apart, leaving the screen looking empty</td><td>Categories that no page lists are recovered onto the first page, and the dashboard reports how many were restored (v7.5.0). This prevents the situation where the data is perfectly intact but nothing renders, which looks exactly like total data loss.</td></tr>
+<tr><td>Data files getting corrupted from simultaneous writes across multiple windows</td><td>Per-file write locks plus atomic writes (write to a temp file, then rename) mean a mid-write crash can never leave a half-written, corrupted file.</td></tr>
+<tr><td>A data file becoming corrupted for any reason</td><td>On every server start, all 9 data files are validated, and any corrupted file is automatically restored from the most recent valid backup (or a safe empty default if no backup exists).</td></tr>
 </tbody>
 </table>
 </div>
-<p><strong>Why register auto-start two different ways?</strong> Some
-antivirus software flags “a script silently launched at every login” as
-resembling a common malware persistence technique, and removes the
-registration. To guard against that, both the Registry entry and the
-Startup-folder shortcut are registered at the same time, and every time
-the server starts, it checks whether either one has gone missing and
-quietly re-registers it (<code>ensureAutoStart()</code> in
-<code>server.js</code>). This self-healing only activates in a folder
-that carries the marker file (<code>.autostart-installed</code>) left
-behind by a real install, so a development copy of this project can
-never accidentally hijack the real auto-start registration.</p>
-<p><strong>One low-severity gap, now fixed</strong>: six places in
-<code>server.js</code> (profile save/load/delete, backup restore,
-import, and the port-change endpoint) used to return a raw filesystem
-error message in their response if something went wrong internally,
-which could include a fragment of an internal file path. All six now
-return a generic, safe message to the client, and the real error detail
-is only ever logged to the server’s own console.</p>
-<p><strong>Where your data actually lives</strong>: see the <a
-href="#file-document-locations">File &amp; Document Locations</a> table
-below. It’s all on your own hard drive — nobody, including this
-project’s developers, can reach it over the internet.</p>
+<p><strong>Why register auto-start two different ways?</strong> Some antivirus software
+flags "a script silently launched at every login" as resembling a common
+malware persistence technique, and removes the registration. To guard
+against that, both the Registry entry and the Startup-folder shortcut are
+registered at the same time, and every time the server starts, it checks
+whether either one has gone missing and quietly re-registers it
+(<code>ensureAutoStart()</code> in <code>server.js</code>). This self-healing only activates in a
+folder that carries the marker file (<code>.autostart-installed</code>) left behind by
+a real install, so a development copy of this project can never
+accidentally hijack the real auto-start registration.</p>
+<p><strong>One low-severity gap, now fixed</strong>: six places in <code>server.js</code> (profile
+save/load/delete, backup restore, import, and the port-change endpoint) used
+to return a raw filesystem error message in their response if something went
+wrong internally, which could include a fragment of an internal file path.
+All six now return a generic, safe message to the client, and the real error
+detail is only ever logged to the server's own console.</p>
+<p><strong>Where your data actually lives</strong>: see the <a href="#file-document-locations">File &amp; Document Locations</a>
+table below. It's all on your own hard drive — nobody, including this
+project's developers, can reach it over the internet.</p>
 <hr />
 <h2 id="file-document-locations">File &amp; Document Locations</h2>
 <pre><code>Chrome-Starting-Page/
@@ -658,7 +457,7 @@ project’s developers, can reach it over the internet.</p>
 ├── style.css                 Visual design (CSS)
 ├── script.js                 All client-side behavior (JavaScript)
 ├── server.js                 The server itself (Node.js)
-├── manifest.webmanifest      PWA (&quot;install as an app&quot;) configuration
+├── manifest.webmanifest      PWA ("install as an app") configuration
 ├── sw.js                     Service worker for offline support
 ├── lib/
 │   ├── esc.js                 XSS-prevention escape function (shared by server + client)
@@ -667,7 +466,8 @@ project’s developers, can reach it over the internet.</p>
 │   ├── esc.test.js             Regression tests for esc()
 │   └── validators.test.js      Regression tests for validation logic
 ├── tools/
-│   └── check-unescaped-html.js   Advisory scanner for missing output-escaping
+│   ├── check-unescaped-html.js   Advisory scanner for missing output-escaping
+│   └── build-readme-html.mjs     README.md → README.html generator (keeps both in sync)
 ├── data/                     ← Where your actual data is stored
 │   ├── bookmarks.json          Bookmarks
 │   ├── notes.json              Notes
@@ -689,362 +489,374 @@ project’s developers, can reach it over the internet.</p>
 ├── LICENSE                      License text (MIT)
 ├── README.md                    Korean version of this document
 └── README.en.md                 This document (English)</code></pre>
-<p>Files like <code>.autostart-installed</code>,
-<code>.server.pid</code>, <code>port.conf</code>, and
-<code>server.log</code> are internal state the running server manages on
-its own — you never need to edit them by hand.</p>
+<p>Files like <code>.autostart-installed</code>, <code>.server.pid</code>, <code>port.conf</code>, and
+<code>server.log</code> are internal state the running server manages on its own — you
+never need to edit them by hand.</p>
+<p><strong>Do not hand-edit the HTML documents.</strong> <code>README.html</code> and <code>README.en.html</code> are
+generated from <code>README.md</code> / <code>README.en.md</code> (<code>npm run docs</code>). Edit the Markdown
+and regenerate, and the two formats stay identical by construction.</p>
+<p><strong>To inspect files in the <code>data</code> folder</strong>, open them in your file manager rather
+than the browser address bar — for security they are not served over HTTP (see
+<a href="#security-data-flow">Security &amp; Data Flow</a>).</p>
 <hr />
-<h2 id="development-workflow-tests-code-structure">Development Workflow
-(Tests · Code Structure)</h2>
-<p>This section is for anyone who wants to read or modify the code. If
-you’re just using the app, feel free to skip it.</p>
+<h2 id="development-workflow-tests-code-structure">Development Workflow (Tests · Code Structure)</h2>
+<p>This section is for anyone who wants to read or modify the code. If you're
+just using the app, feel free to skip it.</p>
 <ul>
-<li><strong>There’s no build step.</strong> No transpiler (Babel, etc.)
-and no bundler (Webpack, etc.) — edit a file, save it, and the change is
-live. Just refresh the browser (or restart the server).</li>
-<li><strong>Tests</strong>: <code>npm test</code> runs Node’s built-in
-test runner (<code>node --test</code>). There are currently 17 tests
-(<code>test/esc.test.js</code> has 6,
-<code>test/validators.test.js</code> has 11) locking down the key
-scenarios — normal values, edge cases, and malicious input — for the
-XSS-escaping function and the URL/backup-interval validation logic. No
-separate framework like Jest or Mocha needs to be installed.</li>
-<li><strong>Advisory tool</strong>: <code>npm run check:xss</code> scans
-<code>script.js</code> for places that render a value to the screen
-without going through <code>esc()</code>, and lists them as candidates.
-It’s a heuristic, not a perfect automatic verdict — treat its output as
-“a list a human should double-check,” not a pass/fail gate.</li>
-<li><strong>Found a bug?</strong> Please open it on the GitHub
-repository’s Issues tab, with steps to reproduce it.</li>
+<li><strong>There's no build step.</strong> No transpiler (Babel, etc.) and no bundler
+(Webpack, etc.) — edit a file, save it, and the change is live. Just
+refresh the browser (or restart the server).</li>
+<li><strong>Tests</strong>: <code>npm test</code> runs Node's built-in test runner (<code>node --test</code>).
+There are currently 17 tests (<code>test/esc.test.js</code> has 6, <code>test/validators.test.js</code>
+has 11) locking down the key scenarios — normal values, edge cases, and
+malicious input — for the XSS-escaping function and the URL/backup-interval
+validation logic. No separate framework like Jest or Mocha needs to be
+installed.</li>
+<li><strong>Documentation build</strong>: <code>npm run docs</code> regenerates the HTML READMEs from
+<code>README.md</code> / <code>README.en.md</code>, and <code>npm run docs:check</code> fails if the committed
+HTML no longer matches — which catches the easy mistake of editing the
+Markdown and forgetting the HTML. The generator
+(<code>tools/build-readme-html.mjs</code>) has no external dependencies either.</li>
+<li><strong>Advisory tool</strong>: <code>npm run check:xss</code> scans <code>script.js</code> for places that
+render a value to the screen without going through <code>esc()</code>, and lists them
+as candidates. It's a heuristic, not a perfect automatic verdict — treat
+its output as "a list a human should double-check," not a pass/fail gate.</li>
+<li><strong>Found a bug?</strong> Please open it on the GitHub repository's Issues tab, with
+steps to reproduce it.</li>
 </ul>
 <hr />
-<h2 id="whats-new-changelog-summary">What’s New — Changelog Summary</h2>
-<p>Expand any version below to see its details. The full history lives
-in <a href="./CHANGELOG.md"><code>CHANGELOG.md</code></a>.</p>
+<h2 id="whats-new-changelog-summary">What's New — Changelog Summary</h2>
+<p>Expand any version below to see its details. The full history lives in
+<a href="./CHANGELOG.md">undefined</a>.</p>
 <details>
-<summary>
-<b>v7.4.1 (2026-09-01) — Fixed internal-path disclosure in error
-responses</b>
-</summary>
+<summary><b>v7.5.0 (2026-09-08) — Safe folder moves · blocked data exposure · recovered vanished bookmarks</b></summary>
+<p><strong>Security</strong></p>
 <ul>
-<li>Removed a low-severity gap in 6 endpoints (profile save/load/delete,
-backup restore, import, port change) where an internal server path could
-leak into an error response — clients now always get a safe, generic
-message, and the real error is logged only to the server’s own
-console</li>
+<li>Typing a path such as <code>/data/config.json</code> straight into the address bar used to
+return the settings file (including the weather API key), your bookmarks, and
+every automatic backup. Those are now refused (403), including case-variant and
+percent-encoded bypass attempts. Icons and background images the page actually
+needs are still served</li>
+<li>Dotfiles (<code>.server.pid</code>, <code>.gitignore</code>, and similar internal files) are no longer
+reachable by URL either</li>
+</ul>
+<p><strong>Data preservation</strong></p>
+<ul>
+<li><strong>Bookmark categories that no page listed were invisible on screen</strong> even though
+the data was perfectly intact — they are now recovered onto the first page, and
+the dashboard tells you how many were restored. This removes the situation that
+looks exactly like "everything is gone" when nothing was actually lost</li>
+<li>Backup import limit raised to 100MB — a full backup with background photos
+exceeds 10MB, which meant <strong>the app could not read a backup it had made itself</strong></li>
+<li>A damaged backup with a malformed section used to overwrite that part with an
+empty value, destroying data. Imports are now <strong>fully validated before anything
+is written</strong>, and rejected outright if any section is malformed</li>
+<li>Import failures used to say only "import failed"; the actual reason (such as
+exceeding the size limit) is now shown</li>
+</ul>
+<p><strong>Moving folders</strong></p>
+<ul>
+<li>Export/import now <strong>carry the port setting</strong>, so anyone running on a non-default
+port keeps the same address after moving to a new folder (applied on restart,
+with a notice that the address will change)</li>
+<li>New README section on <a href="#moving-the-folder-or-reinstalling-somewhere-new-important">moving the folder or reinstalling</a>,
+explaining why copying the whole folder brings your data but a GitHub download
+does not, and what to do about it</li>
+</ul>
+<p><strong>Docs</strong></p>
+<ul>
+<li><code>README.html</code> / <code>README.en.html</code> are now generated from the Markdown sources
+(<code>npm run docs</code>, verified by <code>npm run docs:check</code>), so the two formats cannot
+drift apart</li>
+<li>Corrected an inaccurate privacy statement: the README claimed only two kinds of
+outbound traffic, but bookmark favicons are fetched from three third-party
+services, which sends each bookmark's domain to them. This is now documented in
+full, along with how to avoid it</li>
 </ul>
 </details>
 <details>
-<summary>
-<b>v7.4 (2026-09-01) — Security hardening · auto-start reliability</b>
-</summary>
-<p><strong>Security</strong> - Reproduced and fixed, at the root cause,
-a CSRF vulnerability that let a malicious website silently overwrite
-your data through your own browser (added Origin-header validation) -
-Distinguished between malformed JSON and validly-formed-but-invalid data
-in error responses - Fixed a bug where oversized requests never got a
-proper error response at all (413 handling now works correctly) - Found
-and fixed 4 places where a value was rendered to the screen without
-escaping (to-do due dates, D-Day dates) - Extracted the
-escaping/validation logic into <code>lib/</code>, locked it down with
-automated tests, and added a scanner for future gaps</p>
-<p><strong>Reliability</strong> - Windows auto-start is now registered
-two ways at once (Registry + Startup folder shortcut) - The server now
-checks, on every startup, whether its own auto-start registration is
-still intact, and repairs it if not - Fixed a conditional-logic bug in
-the installer that silenced its own success/failure message entirely</p>
+<summary><b>v7.4.1 (2026-09-01) — Fixed internal-path disclosure in error responses</b></summary>
+<ul>
+<li>Removed a low-severity gap in 6 endpoints (profile save/load/delete, backup
+restore, import, port change) where an internal server path could leak into
+an error response — clients now always get a safe, generic message, and the
+real error is logged only to the server's own console</li>
+</ul>
 </details>
 <details>
-<summary>
-<b>v7.3 (2025-03-19) — Unified background system · data safety</b>
-</summary>
+<summary><b>v7.4 (2026-09-01) — Security hardening · auto-start reliability</b></summary>
+<p><strong>Security</strong></p>
+<ul>
+<li>Reproduced and fixed, at the root cause, a CSRF vulnerability that let a
+malicious website silently overwrite your data through your own browser
+(added Origin-header validation)</li>
+<li>Distinguished between malformed JSON and validly-formed-but-invalid data in
+error responses</li>
+<li>Fixed a bug where oversized requests never got a proper error response at
+all (413 handling now works correctly)</li>
+<li>Found and fixed 4 places where a value was rendered to the screen without
+escaping (to-do due dates, D-Day dates)</li>
+<li>Extracted the escaping/validation logic into <code>lib/</code>, locked it down with
+automated tests, and added a scanner for future gaps</li>
+</ul>
+<p><strong>Reliability</strong></p>
+<ul>
+<li>Windows auto-start is now registered two ways at once (Registry + Startup
+folder shortcut)</li>
+<li>The server now checks, on every startup, whether its own auto-start
+registration is still intact, and repairs it if not</li>
+<li>Fixed a conditional-logic bug in the installer that silenced its own
+success/failure message entirely</li>
+</ul>
+</details>
+<details>
+<summary><b>v7.3 (2025-03-19) — Unified background system · data safety</b></summary>
 <ul>
 <li>Unified background/slideshow system with automatic migration</li>
-<li>Pin bookmarks to the top, drag them onto page tabs, drag-to-sort
-to-dos</li>
-<li>Server-side data integrity check (auto-recovers corrupted files from
-backup), backup list + restore UI</li>
+<li>Pin bookmarks to the top, drag them onto page tabs, drag-to-sort to-dos</li>
+<li>Server-side data integrity check (auto-recovers corrupted files from backup), backup list + restore UI</li>
 <li>Import preview, export-complete notifications, 10-level undo</li>
-<li>Automatic port fallback, auto-stopping a previous server instance,
-stale PID-file cleanup</li>
-<li>Auto-reconnect (15s → 5s), an offline banner, real-time sync across
-open tabs</li>
-<li>Keyboard focus visibility, ARIA labels, a print stylesheet, mobile
-responsiveness (768px)</li>
-<li>Complete README rewrite, added <code>.gitattributes</code>
-(consistent line endings)</li>
+<li>Automatic port fallback, auto-stopping a previous server instance, stale PID-file cleanup</li>
+<li>Auto-reconnect (15s → 5s), an offline banner, real-time sync across open tabs</li>
+<li>Keyboard focus visibility, ARIA labels, a print stylesheet, mobile responsiveness (768px)</li>
+<li>Complete README rewrite, added <code>.gitattributes</code> (consistent line endings)</li>
 </ul>
 </details>
 <details>
-<summary>
-<b>v7.2 (2025-03) — Multiple to-do cards</b>
-</summary>
+<summary><b>v7.2 (2025-03) — Multiple to-do cards</b></summary>
 <ul>
 <li>Create multiple independent to-do cards</li>
 <li>Rename/delete cards individually, drag to-dos between cards</li>
 </ul>
 </details>
 <details>
-<summary>
-<b>v7.1 (2025-03) — Card-based notes system</b>
-</summary>
+<summary><b>v7.1 (2025-03) — Card-based notes system</b></summary>
 <ul>
-<li>Notes are now managed as cards, each with its own title, line count,
-and order</li>
+<li>Notes are now managed as cards, each with its own title, line count, and order</li>
 <li>Markdown preview inside notes (bold, code, links)</li>
 </ul>
 </details>
 <details>
-<summary>
-<b>v7.0 (2025-02) — Habit tracker · layout presets</b>
-</summary>
+<summary><b>v7.0 (2025-02) — Habit tracker · layout presets</b></summary>
 <ul>
 <li>A habit checklist that resets every midnight</li>
 <li>4 layout presets, automatic Pomodoro work/break cycling</li>
-<li>Search keyword shortcuts (<code>yt cats</code>,
-<code>nv weather</code>, etc.), 10-minute-before event
-notifications</li>
-<li>Per-category card colors, 3 glass-effect presets plus a blur
-slider</li>
+<li>Search keyword shortcuts (<code>yt cats</code>, <code>nv weather</code>, etc.), 10-minute-before event notifications</li>
+<li>Per-category card colors, 3 glass-effect presets plus a blur slider</li>
 </ul>
 </details>
 <details>
-<summary>
-<b>v6.0 (2025-02) — Calendar · Pomodoro · profiles</b>
-</summary>
+<summary><b>v6.0 (2025-02) — Calendar · Pomodoro · profiles</b></summary>
 <ul>
 <li>Monthly/weekly calendar, 25-minute Pomodoro timer</li>
 <li>Save and switch between multiple dashboard setups as profiles</li>
 <li>Multi-select for bulk move/delete, double-click inline rename</li>
-<li>Unified search (Spotlight, <code>F</code> key), Korean
-initial-consonant search, command mode (<code>&gt;settings</code>,
-etc.)</li>
+<li>Unified search (Spotlight, <code>F</code> key), Korean initial-consonant search, command mode (<code>&gt;settings</code>, etc.)</li>
 <li>Category emoji, list view mode, an onboarding tutorial</li>
 </ul>
 </details>
 <details>
-<summary>
-<b>v5.0 (2025-02) — Multiple pages · weather · server stability</b>
-</summary>
+<summary><b>v5.0 (2025-02) — Multiple pages · weather · server stability</b></summary>
 <ul>
-<li>Split bookmarks across multiple tabbed pages, D-Day countdowns,
-world clocks</li>
-<li>Weather widget (OpenWeatherMap, optional), automatic dark/light
-theme</li>
-<li>Atomic file writes, a smart backup-retention policy, server
-restart/port-change APIs</li>
+<li>Split bookmarks across multiple tabbed pages, D-Day countdowns, world clocks</li>
+<li>Weather widget (OpenWeatherMap, optional), automatic dark/light theme</li>
+<li>Atomic file writes, a smart backup-retention policy, server restart/port-change APIs</li>
 </ul>
 </details>
 <details>
-<summary>
-<b>v4.0 (2025-02) — Advanced card management</b>
-</summary>
+<summary><b>v4.0 (2025-02) — Advanced card management</b></summary>
 <ul>
-<li>Drag-to-reorder and collapsible categories, resizable cards, a
-right-click context menu</li>
-<li>A 30-day-recoverable trash bin, a “NEW” badge on recently added
-items</li>
-<li>Custom background/icon uploads, a write lock preventing
-concurrent-save corruption</li>
+<li>Drag-to-reorder and collapsible categories, resizable cards, a right-click context menu</li>
+<li>A 30-day-recoverable trash bin, a "NEW" badge on recently added items</li>
+<li>Custom background/icon uploads, a write lock preventing concurrent-save corruption</li>
 </ul>
 </details>
 <details>
-<summary>
-<b>v3.0 and earlier (2025-02, initial versions)</b>
-</summary>
+<summary><b>v3.0 and earlier (2025-02, initial versions)</b></summary>
 <ul>
-<li>v3.0: to-do list (priority, recurrence, subtasks), card-based
-notes</li>
-<li>v2.0: dark/light theme, glass effects, gzip compression, ETag
-caching</li>
-<li>v1.0: initial release — a server built from nothing but Node’s
-built-in modules, category-based bookmark cards, Windows/Mac auto-start,
-JSON-file storage</li>
+<li>v3.0: to-do list (priority, recurrence, subtasks), card-based notes</li>
+<li>v2.0: dark/light theme, glass effects, gzip compression, ETag caching</li>
+<li>v1.0: initial release — a server built from nothing but Node's built-in
+modules, category-based bookmark cards, Windows/Mac auto-start, JSON-file
+storage</li>
 </ul>
 </details>
 <hr />
 <h2 id="troubleshooting">Troubleshooting</h2>
 <div class="table-wrap">
 <table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Symptom</th>
-<th>Cause &amp; fix</th>
-</tr>
-</thead>
+<thead><tr><th>Symptom</th><th>Cause &amp; fix</th></tr></thead>
 <tbody>
-<tr>
-<td>A new tab doesn’t show the dashboard at all</td>
-<td>The server may be off. Restart it with <code>restart.bat</code>
-(Windows) or
-<code>launchctl load ~/Library/LaunchAgents/com.dashboard.startpage.plist</code>
-(Mac). Also try typing <code>http://localhost:1111</code> directly into
-the address bar.</td>
-</tr>
-<tr>
-<td>Auto-start stops working after a reboot</td>
-<td>As of v7.4 the server tries to self-repair this automatically (see
-<a href="#security-data-flow">Security &amp; Data Flow</a> for how), but
-if it still happens, run <code>setup_windows.bat</code> again to
-re-register. If your antivirus keeps removing it, try adding this folder
-as an exception in your antivirus settings.</td>
-</tr>
-<tr>
-<td>“Port already in use” error</td>
-<td>The server automatically tries 1112, 1113, and so on, so this
-usually resolves itself. Check the actual port number shown when setup
-finished, and update Chrome’s start-page address to match.</td>
-</tr>
-<tr>
-<td>Bookmarks/settings suddenly disappeared</td>
-<td>Don’t panic — open Settings &gt; Data &gt; Backup list. The server
-keeps making periodic backups automatically, so picking a recent one and
-clicking “Restore” recovers most situations.</td>
-</tr>
-<tr>
-<td>Uploading a file gives a “Bad type” error</td>
-<td>Background/icon images only accept <code>.png</code>,
-<code>.jpg</code>, <code>.jpeg</code>, <code>.webp</code>,
-<code>.gif</code> (icons also accept <code>.svg</code>,
-<code>.ico</code>). Convert the file with an image editor and try
-again.</td>
-</tr>
-<tr>
-<td>“File too large” / a 413 error</td>
-<td>Request bodies (including uploads) are capped at 10MB. Try a smaller
-file.</td>
-</tr>
-<tr>
-<td>The weather widget isn’t showing</td>
-<td>It’s optional. Enter your own OpenWeatherMap API key under Settings
-&gt; Weather (free to obtain) to enable it. It’s expected behavior for
-the widget to stay hidden until a key is entered.</td>
-</tr>
-<tr>
-<td>The installer says “download failed”</td>
-<td>Automatically downloading Node.js requires internet access. Check
-your connection and try again, or install Node.js manually from <a
-href="https://nodejs.org">nodejs.org</a> and re-run the script.</td>
-</tr>
-<tr>
-<td>Can’t reach it from another computer or phone</td>
-<td>That’s expected. The server is designed, for security, to only ever
-open on the exact computer it’s running on (see <a
-href="#how-it-works-architecture">How It Works (Architecture)</a>).</td>
-</tr>
-<tr>
-<td>The problem persists</td>
-<td>Open <code>server.error.log</code> in the project folder — it
-records what actually went wrong. Paste that content into a new GitHub
-Issue and we can help from there.</td>
-</tr>
+<tr><td>A new tab doesn't show the dashboard at all</td><td>The server may be off. Restart it with <code>restart.bat</code> (Windows) or <code>launchctl load ~/Library/LaunchAgents/com.dashboard.startpage.plist</code> (Mac). Also try typing <code>http://localhost:1111</code> directly into the address bar.</td></tr>
+<tr><td>Auto-start stops working after a reboot</td><td>As of v7.4 the server tries to self-repair this automatically (see <a href="#security-data-flow">Security &amp; Data Flow</a> for how), but if it still happens, run <code>setup_windows.bat</code> again to re-register. If your antivirus keeps removing it, try adding this folder as an exception in your antivirus settings.</td></tr>
+<tr><td>"Port already in use" error</td><td>The server automatically tries 1112, 1113, and so on, so this usually resolves itself. Check the actual port number shown when setup finished, and update Chrome's start-page address to match.</td></tr>
+<tr><td>Bookmarks/settings suddenly disappeared</td><td>Don't panic — open Settings &gt; Data &gt; Backup list. The server keeps making periodic backups automatically, so picking a recent one and clicking "Restore" recovers most situations.</td></tr>
+<tr><td>I installed into a new folder and none of my bookmarks/settings came along</td><td>Nothing is broken. A folder downloaded from GitHub contains <strong>program code only</strong>, not your personal data. Your old folder still has everything, so follow the three steps (export → install → import) in <a href="#moving-the-folder-or-reinstalling-somewhere-new-important">Moving the folder, or reinstalling somewhere new</a>.</td></tr>
+<tr><td>Unzipping produced two nested folders with the same name</td><td>GitHub ZIP files contain one extra folder level. Using "Extract here" gives you <code>name\name\files</code>. Look for the <strong>inner</strong> folder that actually contains <code>setup_windows.bat</code> and run the installer from there.</td></tr>
+<tr><td>The screen shows no bookmarks at all, but they exist in my backup file</td><td>Since v7.5.0 these are recovered automatically with a "recovered N categories" notice. If they still don't appear, restore from Settings &gt; Data &gt; Backup list.</td></tr>
+<tr><td>Uploading a file gives a "Bad type" error</td><td>Background/icon images only accept <code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.webp</code>, <code>.gif</code> (icons also accept <code>.svg</code>, <code>.ico</code>). Convert the file with an image editor and try again.</td></tr>
+<tr><td>"File too large" / a 413 error</td><td>Ordinary requests such as background/icon uploads are capped at 10MB; backup import is capped at 100MB. Exceeding a limit now shows the reason on screen — try a smaller file.</td></tr>
+<tr><td>The weather widget isn't showing</td><td>It's optional. Enter your own OpenWeatherMap API key under Settings &gt; Weather (free to obtain) to enable it. It's expected behavior for the widget to stay hidden until a key is entered.</td></tr>
+<tr><td>The installer says "download failed"</td><td>Automatically downloading Node.js requires internet access. Check your connection and try again, or install Node.js manually from <a href="https://nodejs.org">nodejs.org</a> and re-run the script.</td></tr>
+<tr><td>Can't reach it from another computer or phone</td><td>That's expected. The server is designed, for security, to only ever open on the exact computer it's running on (see <a href="#how-it-works-architecture">How It Works (Architecture)</a>).</td></tr>
+<tr><td>The problem persists</td><td>Open <code>server.error.log</code> in the project folder — it records what actually went wrong. Paste that content into a new GitHub Issue and we can help from there.</td></tr>
 </tbody>
 </table>
 </div>
 <hr />
 <h2 id="faq">FAQ</h2>
-<p><strong>Q. Is my bookmark or note data sent to the
-developer?</strong> A. No. There is no code anywhere in this project
-that sends your actual data — bookmarks, notes, to-dos, and so on —
-anywhere else. The exceptions are the Google Fonts used for on-screen
-text, and the optional weather widget (which only sends a city name, and
-only if you’ve entered your own API key) — see “Outbound internet
-traffic” in <a href="#how-it-works-architecture">How It Works
-(Architecture)</a> for details. All of your actual data is stored only
-inside your <code>data/</code> folder.</p>
-<p><strong>Q. I want to see the same bookmarks on another
-computer.</strong> A. Export a backup under Settings &gt; Data &gt;
-Export, then Import it after installing on the other computer. There is
-no real-time automatic sync feature — that’s a deliberate consequence of
-not using any cloud server.</p>
-<p><strong>Q. Does this work in browsers other than Chrome (Edge, Whale,
-etc.)?</strong> A. Yes. Any Chromium-based browser lets you set a
-new-tab address the same way, so it should work without issues. Firefox
-and Safari set their new-tab page differently and haven’t been
-officially tested.</p>
-<p><strong>Q. If I uninstall, is my data deleted too?</strong> A.
-Running <code>uninstall.bat</code> / <code>uninstall_mac.sh</code>
-explicitly asks whether to keep or delete your data. If you simply
-delete the whole folder yourself, the files inside <code>data/</code> go
-with it — so it’s a good idea to export a backup first.</p>
-<p><strong>Q. Will this slow down my computer?</strong> A. The server is
-a tiny Node.js program with zero npm dependencies, so its memory
-footprint is small (typically tens of megabytes). The screen’s static
+<p><strong>Q. Is my bookmark or note data sent to the developer?</strong>
+A. <strong>Nothing is ever sent to this project's developer.</strong> There is no
+developer-operated server at all, and your data lives only in the <code>data/</code>
+folder on your own computer.</p>
+<p>There are, however, <strong>three kinds of traffic to third parties</strong>, stated
+precisely: ① Google Fonts for on-screen text, ② bookmark icons from Google,
+DuckDuckGo and icon.horse — <strong>this sends each bookmark's domain name</strong> to them
+(not the full URL, and not your notes), and ③ the weather widget, only if you
+entered your own API key (it sends a city name). Note, to-do, and calendar
+contents never leave your machine under any circumstance. See "Outbound internet
+traffic" in <a href="#how-it-works-architecture">How It Works (Architecture)</a> for details
+and for how to avoid the favicon requests.</p>
+<p><strong>Q. I want to see the same bookmarks on another computer.</strong>
+A. Export a backup under Settings &gt; Data &gt; Export, then Import it after
+installing on the other computer. There is no real-time automatic sync
+feature — that's a deliberate consequence of not using any cloud server.</p>
+<p><strong>Q. Can I rename the folder or move it to another drive?</strong>
+A. Yes. The program is built to work regardless of folder name or location.
+After moving, though, the auto-start registration still points at the old path,
+so run <code>setup_windows.bat</code> once from the new location to re-register. For moving
+your data along with it, see
+<a href="#moving-the-folder-or-reinstalling-somewhere-new-important">Moving the folder, or reinstalling somewhere new</a>.</p>
+<p><strong>Q. I downloaded a fresh copy from GitHub and none of my settings are there. Was my data deleted?</strong>
+A. No. The repository holds program code only; personal data is excluded from it
+by design. Everything is still in the <code>data</code> folder of your old installation —
+export from the old dashboard and import into the new one and it all comes back.</p>
+<p><strong>Q. Does this work in browsers other than Chrome (Edge, Whale, etc.)?</strong>
+A. Yes. Any Chromium-based browser lets you set a new-tab address the same
+way, so it should work without issues. Firefox and Safari set their new-tab
+page differently and haven't been officially tested.</p>
+<p><strong>Q. If I uninstall, is my data deleted too?</strong>
+A. Running <code>uninstall.bat</code> / <code>uninstall_mac.sh</code> explicitly asks whether to
+keep or delete your data. If you simply delete the whole folder yourself,
+the files inside <code>data/</code> go with it — so it's a good idea to export a backup
+first.</p>
+<p><strong>Q. Will this slow down my computer?</strong>
+A. The server is a tiny Node.js program with zero npm dependencies, so its
+memory footprint is small (typically tens of megabytes). The screen's static
 files are served from an in-memory cache with gzip compression for fast
 responses.</p>
-<p><strong>Q. Can I use this commercially? Can I build and sell a
-product based on this code?</strong> A. See <a
-href="#legal-copyright-license-commercial-use">Legal · Copyright ·
-License · Commercial Use</a> below.</p>
-<p><strong>Q. I found a security vulnerability — where do I report
-it?</strong> A. Please open it on the GitHub repository’s Issues tab.
-For something sensitive, contacting the repository owner directly
-instead of a public issue is also an option.</p>
+<p><strong>Q. Can I use this commercially? Can I build and sell a product based on
+this code?</strong>
+A. See <a href="#legal-copyright-license-commercial-use">Legal · Copyright · License · Commercial Use</a> below.</p>
+<p><strong>Q. I found a security vulnerability — where do I report it?</strong>
+A. Please open it on the GitHub repository's Issues tab. For something
+sensitive, contacting the repository owner directly instead of a public
+issue is also an option.</p>
 <hr />
-<h2 id="legal-copyright-license-commercial-use">Legal · Copyright ·
-License · Commercial Use</h2>
-<p>This project is distributed under the <strong><a href="./LICENSE">MIT
-License</a></strong>. Copyright is held by <strong>SoDam AI
-Studio</strong> (© 2026).</p>
+<h2 id="legal-copyright-license-commercial-use">Legal · Copyright · License · Commercial Use</h2>
+<p>This project is distributed under the <strong><a href="./LICENSE">MIT License</a></strong>.
+Copyright is held by <strong>SoDam AI Studio</strong> (© 2026).</p>
 <p>The MIT License is a very permissive open-source license. In summary
-(<strong>the following is a general, plain-language explanation, not
-legal advice</strong> — always refer to the <a href="./LICENSE">full
-LICENSE text</a> for your exact rights and obligations):</p>
+(<strong>the following is a general, plain-language explanation, not legal
+advice</strong> — always refer to the <a href="./LICENSE">full LICENSE text</a> for your
+exact rights and obligations):</p>
 <ul>
-<li>✅ You may <strong>use it freely</strong> — personally or
-commercially.</li>
+<li>✅ You may <strong>use it freely</strong> — personally or commercially.</li>
 <li>✅ You may <strong>modify it freely</strong>.</li>
-<li>✅ You may <strong>redistribute it</strong>, whether for free or for
-a price.</li>
-<li>✅ You may use it <strong>commercially</strong> — the license itself
-permits building and selling a product based on this code.</li>
-<li>⚠️ When redistributing, you must <strong>include the original
-copyright notice and the full license text</strong> (i.e. ship the
-<code>LICENSE</code> file alongside it).</li>
-<li>⚠️ The software is provided <strong>“AS IS,” with no warranty of any
-kind</strong>. The copyright holder is not liable for any issues that
-arise from using it.</li>
+<li>✅ You may <strong>redistribute it</strong>, whether for free or for a price.</li>
+<li>✅ You may use it <strong>commercially</strong> — the license itself permits building
+and selling a product based on this code.</li>
+<li>⚠️ When redistributing, you must <strong>include the original copyright notice
+and the full license text</strong> (i.e. ship the <code>LICENSE</code> file alongside it).</li>
+<li>⚠️ The software is provided <strong>"AS IS," with no warranty of any kind</strong>. The
+copyright holder is not liable for any issues that arise from using it.</li>
 </ul>
-<p><strong>Privacy</strong>: this program itself does not collect any
-personal data from you — everything is stored locally only. However,
-bookmark URLs or note content that you type in yourself may contain
-personal information, so please review the contents yourself before
-sharing an exported backup file with anyone else.</p>
-<hr />
-<h2 id="original-project-acknowledgments">Original Project &amp;
-Acknowledgments</h2>
-<p>This project started from <strong>kinkos1234</strong>’s open-source
-repository, <strong><a
-href="https://github.com/kinkos1234/chrome-starting-page">chrome-starting-page</a></strong>.
-Deep thanks to the original author for the core new-tab-dashboard idea
-and the initial structure.</p>
-<p>Since then, this repository has gone through substantial changes —
-security hardening (CSRF protection, XSS-escaping hardening, URL scheme
-validation), auto-start reliability improvements (dual registration plus
-self-healing), data-integrity checks, an automated test suite, and a
-full documentation rewrite — and is now maintained separately by
-<strong>SoDam AI Studio</strong> at
-<code>sodam-ai/Chrome-Starting-Page</code>.</p>
-<p>The original repository had no license file specified, and
-<strong>personal, direct permission from the original author was
-obtained</strong> to continue, publish, and modify this project. (This
-paragraph is a factual disclosure, not legal advice. If you need a
-precise understanding of the copyright relationship, please consult the
-original author or a legal professional directly.)</p>
-<hr />
-<div data-align="center">
-<p><strong><a href="#table-of-contents">⬆ Back to Table of
-Contents</a></strong> · <a href="./README.md">한국어 버전</a></p>
+<h3 id="conditions-you-must-meet-for-commercial-use">Conditions you must meet for commercial use</h3>
+<p>The MIT License permitting commercial use <strong>does not mean there are no
+conditions.</strong> These are the minimum requirements when redistributing, selling,
+or deploying internally.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>What you want to do</th><th>Allowed?</th><th>What you must also do</th></tr></thead>
+<tbody>
+<tr><td>Install and use it for company work</td><td>Yes</td><td>Nothing — internal use is not distribution, so no notice obligation applies</td></tr>
+<tr><td>Modify the code and distribute it inside your company</td><td>Yes</td><td>Ship the <code>LICENSE</code> file (copyright notice + full license text) with the distribution</td></tr>
+<tr><td>Bundle it into a product you sell</td><td>Yes</td><td>Ship the <code>LICENSE</code> file. Keep the original copyright notice in your product docs or settings screen</td></tr>
+<tr><td>Rebrand it and redistribute as your own</td><td><strong>Conditionally</strong></td><td>The code itself may be rebranded, but <strong>the copyright notice and license text cannot be removed.</strong> Stripping them is a license violation</td></tr>
+<tr><td>Imply that "SoDam AI Studio endorses/sponsors this"</td><td><strong>No</strong></td><td>MIT grants no trademark, warranty, or endorsement rights. Do not use the copyright holder's name in promotion beyond the required notice</td></tr>
+<tr><td>Keep the software but drop the no-warranty clause</td><td><strong>No</strong></td><td>The warranty disclaimer (the all-caps paragraph) is part of the license text and must be kept intact</td></tr>
+</tbody>
+</table>
 </div>
-
-<p align="center">
-  <strong>If you like this project, please give it a star!</strong><br>
-  <em>You do not need to know how to code to have your own beautiful dashboard.</em>
-</p>
+<h3 id="what-this-license-does-not-cover">What this license does <strong>not</strong> cover</h3>
+<p>The MIT License applies <strong>only to the code in this repository.</strong> The following
+are separate.</p>
+<ul>
+<li><strong>The data you create</strong> (bookmarks, notes, to-dos, uploaded images): entirely
+yours, and unrelated to this license. The copyright holder claims no rights
+over it.</li>
+<li><strong>Background images and icons you upload</strong>: if you use someone else's work
+(photos, logos), the copyright of that image is your responsibility —
+especially if you distribute a backup file containing it.</li>
+<li><strong>External services and fonts</strong>: each is governed by its own terms, below.</li>
+</ul>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Component</th><th>Provider</th><th>Terms that apply</th></tr></thead>
+<tbody>
+<tr><td>IBM Plex Sans KR, JetBrains Mono fonts</td><td>Served via Google Fonts</td><td>Both are open fonts under SIL Open Font License–family terms. Commercial use is permitted, but check the font's own license before redistributing the font files themselves</td></tr>
+<tr><td>Bookmark icons (favicons)</td><td>Google, DuckDuckGo, icon.horse</td><td>Each provider's terms of service apply. High-volume automated calls or reuse inside a commercial service may breach those terms — verify each provider's terms before commercial distribution</td></tr>
+<tr><td>Weather data</td><td>OpenWeatherMap</td><td>Each user obtains and enters <strong>their own API key</strong>. Free/paid tiers, call limits, and redistribution rules follow OpenWeatherMap's terms</td></tr>
+<tr><td>Badge images (top of this document)</td><td>shields.io</td><td>Documentation display only; unrelated to program behavior</td></tr>
+<tr><td>Chrome, Google, Windows, macOS, etc.</td><td>Respective trademark owners</td><td>Product names used here are trademarks of their respective companies, mentioned only for compatibility and explanation. There is no affiliation, sponsorship, or endorsement of any kind</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="privacy-and-data-handling">Privacy and data handling</h3>
+<ul>
+<li>This program <strong>collects no personal data.</strong> There are no accounts, no logins,
+and no transmission features; everything is stored in the <code>data/</code> folder on
+the computer it runs on.</li>
+<li>However, <strong>an exported backup contains your bookmark URLs, notes, calendar
+entries, and the weather API key you entered.</strong> Check the contents before
+sending that file to anyone or uploading it to a public repository or cloud
+storage — and if a key was exposed, reissue it with the provider.</li>
+<li>As documented under "Outbound internet traffic" above, <strong>each bookmark's
+domain name is sent to third-party icon providers.</strong> If that is unacceptable
+in your environment (corporate network, confidential URLs), upload your own
+icons or block those domains.</li>
+<li>If you plan to deploy this to many people in a company or institution, inform
+your privacy officer about the third-party traffic described above and obtain
+approval first.</li>
+</ul>
+<blockquote><p><strong>Disclaimer</strong>: this section is general information to aid understanding and
+<strong>is not legal advice. No legal effect is guaranteed, and responsibility for
+actual use rests with you.</strong> For decisions with legal consequences, such as
+commercial distribution, read the <a href="./LICENSE">full LICENSE text</a> and each
+external service's terms directly, and consult a qualified professional such
+as a lawyer where appropriate.</p></blockquote>
+<hr />
+<h2 id="original-project-acknowledgments">Original Project &amp; Acknowledgments</h2>
+<p>This project started from <strong>kinkos1234</strong>'s open-source repository,
+<strong><a href="https://github.com/kinkos1234/chrome-starting-page">chrome-starting-page</a></strong>.
+Deep thanks to the original author for the core new-tab-dashboard idea and
+the initial structure.</p>
+<p>Since then, this repository has gone through substantial changes — security
+hardening (CSRF protection, XSS-escaping hardening, URL scheme validation),
+auto-start reliability improvements (dual registration plus self-healing),
+data-integrity checks, an automated test suite, and a full documentation
+rewrite — and is now maintained separately by <strong>SoDam AI Studio</strong> at
+<code>sodam-ai/Chrome-Starting-Page</code>.</p>
+<p>The original repository had no license file specified, and <strong>personal,
+direct permission from the original author was obtained</strong> to continue,
+publish, and modify this project. (This paragraph is a factual disclosure,
+not legal advice. If you need a precise understanding of the copyright
+relationship, please consult the original author or a legal professional
+directly.)</p>
+<hr />
+<div align="center">
+<p><strong><a href="#table-of-contents">⬆ Back to Table of Contents</a></strong> · <a href="./README.md">한국어 버전</a></p>
+</div>
 
 </div>
 </body>
