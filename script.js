@@ -2322,6 +2322,7 @@ async function doImport(){
         if(d.events?.items)stats.push(`일정: ${d.events.items.length}개`);
         if(d.ddays?.items)stats.push(`D-Day: ${d.ddays.items.length}개`);
         if(d.config)stats.push('설정 포함');
+        if(d._portConf)stats.push(`포트 설정: ${d._portConf}`);
         if(d._files){const fileCount=Object.keys(d._files).length;stats.push(`이미지/아이콘: ${fileCount}개`)}
         if(d._profiles){const profCount=Object.keys(d._profiles).length;stats.push(`프로필: ${profCount}개`)}
         const version=d._export_version||d._backup_version||'알 수 없음';
@@ -2339,9 +2340,10 @@ async function doImport(){
         const rd=await r.json();
         if(rd.success){
             const dropMsg=rd.bookmarksDroppedCount>0?` (URL 형식이 잘못된 북마크 ${rd.bookmarksDroppedCount}개는 건너뜀)`:'';
+            if(rd.portChanged)alert(`포트 설정(${rd.portChanged})도 함께 복원되었습니다.\n\n서버를 재시작(restart.bat)하면 주소가 http://localhost:${rd.portChanged} 로 바뀌니,\nChrome 시작 페이지 주소도 같이 바꿔주세요.`);
             showUndo(`가져오기 완료!${dropMsg} 새로고침합니다...`,null);setTimeout(()=>location.reload(),1000)
         }
-        else{alert('가져오기 실패')}
+        else{alert(r.status===413?'가져오기 실패: 백업 파일이 너무 큽니다 (최대 100MB)':'가져오기 실패: '+(rd.error||'서버 오류'))}
     }catch(e){alert('유효하지 않은 파일: '+e.message)}
     input.value='';
 }
@@ -2903,7 +2905,9 @@ function initImportDragDrop(){
             if(!d._export_version&&!d._backup_version)return;
             if(!confirm('드래그한 파일로 데이터를 교체할까요?'))return;
             const r=await fetch('/api/import',{method:'POST',headers:{'Content-Type':'application/json'},body:text});
-            if((await r.json()).success){alert('가져오기 완료!');location.reload()}}catch(e){alert('유효하지 않은 파일')}
+            const rd=await r.json();
+            if(rd.success){alert('가져오기 완료!'+(rd.portChanged?`\n\n포트 설정(${rd.portChanged})도 함께 복원되었습니다. 서버를 재시작(restart.bat)하면 주소가 http://localhost:${rd.portChanged} 로 바뀌니, Chrome 시작 페이지 주소도 같이 바꿔주세요.`:''));location.reload()}
+            else{alert(r.status===413?'가져오기 실패: 백업 파일이 너무 큽니다 (최대 100MB)':'가져오기 실패: '+(rd.error||'서버 오류'))}}catch(e){alert('유효하지 않은 파일')}
     });
 }
 

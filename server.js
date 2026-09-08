@@ -427,6 +427,15 @@ const server = http.createServer((req, res) => {
                 });
             }
         } catch {}
+        // Include custom port (if configured) so moving to a new folder/computer
+        // and importing this file also restores the port choice, not just the data.
+        try {
+            const portConfPath = path.join(DIR, 'port.conf');
+            if (fs.existsSync(portConfPath)) {
+                const p = parseInt(fs.readFileSync(portConfPath, 'utf8').trim());
+                if (p > 0 && p < 65536) data._portConf = p;
+            }
+        } catch {}
         // Include images as Base64 (full export only)
         if (full) {
             data._files = {};
@@ -514,6 +523,19 @@ const server = http.createServer((req, res) => {
                         } catch {}
                     });
                 }
+                // Restore custom port (needs a server restart to actually take effect —
+                // same as when set-port.bat writes this file directly). portChanged is
+                // reported back so the UI can warn that the dashboard URL will move.
+                let portChanged = null;
+                if (d._portConf) {
+                    const p = parseInt(d._portConf);
+                    if (p > 0 && p < 65536) {
+                        try {
+                            fs.writeFileSync(path.join(DIR, 'port.conf'), String(p));
+                            if (p !== PORT) portChanged = p;
+                        } catch (e) { console.error('[Import] port.conf write failed:', e.message); }
+                    }
+                }
                 // Restore images from Base64
                 if (d._files) {
                     const allowedDirs = [
@@ -542,9 +564,9 @@ const server = http.createServer((req, res) => {
                 }
                 // Clear file cache so restored images are served immediately
                 clearFileCache();
-                json(res, 200, { success:true, bookmarksDroppedCount });
+                json(res, 200, { success:true, bookmarksDroppedCount, ...(portChanged ? { portChanged } : {}) });
             } catch (e) { console.error('[Import]', e.message); json(res, 400, { error:'Import failed' }); }
-        });
+        }, MAX_IMPORT_BODY);
         return;
     }
 
