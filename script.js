@@ -295,6 +295,20 @@ function applyDefaults(){
         p.topCategories=(p.topCategories||[]).filter(c=>BM[c]);
         p.bottomCategories=(p.bottomCategories||[]).filter(c=>BM[c]);
     });
+    // Categories that no page lists are invisible: the bookmarks are still in
+    // bookmarks.json but nothing renders them, so the dashboard looks empty and the user
+    // assumes the data is gone. This happens whenever config.json and bookmarks.json come
+    // from different points in time — restoring an older backup, copying one file but not
+    // the other, or switching to a stale profile. Put the strays back on the first page
+    // (the pages themselves are the only place categories live; there is no hide feature).
+    const listedCats=new Set();
+    CFG.pages.forEach(p=>{[...(p.topCategories||[]),...(p.bottomCategories||[])].forEach(c=>listedCats.add(c))});
+    const orphanCats=Object.keys(BM).filter(c=>!listedCats.has(c));
+    if(orphanCats.length){
+        const firstPage=CFG.pages[0];
+        firstPage.bottomCategories=[...(firstPage.bottomCategories||[]),...orphanCats];
+        setTimeout(()=>{try{showUndo(`설정에 없던 카테고리 ${orphanCats.length}개를 "${firstPage.name}" 페이지에 복구했습니다`,null)}catch{}},1500);
+    }
     // Trim old completion dates (keep last 90 days)
     if(CFG.todoCompletionDates?.length>90){CFG.todoCompletionDates=CFG.todoCompletionDates.slice(-90)}
 

@@ -20,6 +20,11 @@ const MAX_PORT_ATTEMPTS = 10; // Try up to 10 consecutive ports
 const HOST = '127.0.0.1'; // Security: localhost only
 const DIR = __dirname;
 const MAX_BODY = 10 * 1024 * 1024;
+// /api/import only: a full export bundles every custom image as Base64 (each upload may be
+// up to MAX_BODY on its own), so two 4MB backgrounds already push the file past 10MB and
+// the app could no longer read its own backup. Localhost-only + same-origin check keeps
+// this a single-user limit, not an exposed surface.
+const MAX_IMPORT_BODY = 100 * 1024 * 1024;
 const MAX_ERROR_LOG = 10 * 1024 * 1024; // 10MB error log limit
 const DATA = path.join(DIR, 'data');
 const PID_FILE = path.join(DIR, '.server.pid');
@@ -99,7 +104,7 @@ function safePath(url) {
 function sanitizeFilename(name) {
     return name.replace(/[\/\\:*?"<>|]/g, '_').replace(/\.\./g, '_').slice(0, 100);
 }
-function readBody(req, cb) {
+function readBody(req, cb, limit = MAX_BODY) {
     // 2026-08-31 수정: req.destroy()를 즉시 호출하면 req/res가 공유하는 소켓 자체가
     // 끊겨, 바로 다음에 보내려던 413 JSON 응답이 클라이언트에 전혀 도달하지 못하고
     // 그냥 연결 리셋으로 보였다(실측: curl exit 56, 응답 바디 없음). 소켓을 끊지 않고
@@ -109,7 +114,7 @@ function readBody(req, cb) {
     req.on('data', c => {
         if (tooLarge) return;
         s += c.length;
-        if (s > MAX_BODY) { tooLarge = true; cb(new Error('Too large')); return; }
+        if (s > limit) { tooLarge = true; cb(new Error('Too large')); return; }
         chunks.push(c);
     });
     req.on('end', () => { if (!tooLarge) cb(null, Buffer.concat(chunks).toString('utf8')); });
@@ -469,6 +474,20 @@ const server = http.createServer((req, res) => {
                 if (!d._export_version && !d._backup_version) throw new Error('Not valid');
                 // Create safety backup before import
                 try { doBackup(); } catch {}
+                // Structural check of every present section BEFORE writing anything: a
+                // corrupted/hand-edited file with e.g. "bookmarks": "text" used to be
+                // "sanitized" down to {} and silently wipe every bookmark, and a bad section
+                // further down could leave the data half-replaced. Reuses the same shape
+                // validators the live CRUD endpoints enforce; bookmarks only checks the
+                // container here since bad individual entries are filtered, not rejected.
+                DATA_FILES.forEach(({ key }) => {
+                    if (!d[key]) return;
+                    const v = apis['/api/' + key] && apis['/api/' + key].v;
+                    const bad = key === 'bookmarks'
+                        ? (typeof d[key] !== 'object' || Array.isArray(d[key]))
+                        : (v ? !v(d[key]) : false);
+                    if (bad) throw new Error(key + ': invalid structure');
+                });
                 // Restore JSON data. bookmarks gets filtered (not rejected outright) —
                 // a backup made before URL validation existed could plausibly carry one
                 // stale/bad entry among hundreds of good ones (see sanitizeBookmarksForImport).
