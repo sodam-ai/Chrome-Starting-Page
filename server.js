@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const VERSION = '7.4.1';
+const VERSION = '7.5.0';
 
 // Port priority: command line arg > port.conf file > default 1111
 const PREFERRED_PORT = (() => {
@@ -20,6 +20,11 @@ const MAX_PORT_ATTEMPTS = 10; // Try up to 10 consecutive ports
 const HOST = '127.0.0.1'; // Security: localhost only
 const DIR = __dirname;
 const MAX_BODY = 10 * 1024 * 1024;
+// /api/import only: a full export bundles every custom image as Base64 (each upload may be
+// up to MAX_BODY on its own), so two 4MB backgrounds already push the file past 10MB and
+// the app could no longer read its own backup. Localhost-only + same-origin check keeps
+// this a single-user limit, not an exposed surface.
+const MAX_IMPORT_BODY = 100 * 1024 * 1024;
 const MAX_ERROR_LOG = 10 * 1024 * 1024; // 10MB error log limit
 const DATA = path.join(DIR, 'data');
 const PID_FILE = path.join(DIR, '.server.pid');
@@ -99,7 +104,7 @@ function safePath(url) {
 function sanitizeFilename(name) {
     return name.replace(/[\/\\:*?"<>|]/g, '_').replace(/\.\./g, '_').slice(0, 100);
 }
-function readBody(req, cb) {
+function readBody(req, cb, limit = MAX_BODY) {
     // 2026-08-31 수정: req.destroy()를 즉시 호출하면 req/res가 공유하는 소켓 자체가
     // 끊겨, 바로 다음에 보내려던 413 JSON 응답이 클라이언트에 전혀 도달하지 못하고
     // 그냥 연결 리셋으로 보였다(실측: curl exit 56, 응답 바디 없음). 소켓을 끊지 않고
@@ -109,7 +114,7 @@ function readBody(req, cb) {
     req.on('data', c => {
         if (tooLarge) return;
         s += c.length;
-        if (s > MAX_BODY) { tooLarge = true; cb(new Error('Too large')); return; }
+        if (s > limit) { tooLarge = true; cb(new Error('Too large')); return; }
         chunks.push(c);
     });
     req.on('end', () => { if (!tooLarge) cb(null, Buffer.concat(chunks).toString('utf8')); });
@@ -422,6 +427,15 @@ const server = http.createServer((req, res) => {
                 });
             }
         } catch {}
+        // Include custom port (if configured) so moving to a new folder/computer
+        // and importing this file also restores the port choice, not just the data.
+        try {
+            const portConfPath = path.join(DIR, 'port.conf');
+            if (fs.existsSync(portConfPath)) {
+                const p = parseInt(fs.readFileSync(portConfPath, 'utf8').trim());
+                if (p > 0 && p < 65536) data._portConf = p;
+            }
+        } catch {}
         // Include images as Base64 (full export only)
         if (full) {
             data._files = {};
@@ -469,6 +483,20 @@ const server = http.createServer((req, res) => {
                 if (!d._export_version && !d._backup_version) throw new Error('Not valid');
                 // Create safety backup before import
                 try { doBackup(); } catch {}
+                // Structural check of every present section BEFORE writing anything: a
+                // corrupted/hand-edited file with e.g. "bookmarks": "text" used to be
+                // "sanitized" down to {} and silently wipe every bookmark, and a bad section
+                // further down could leave the data half-replaced. Reuses the same shape
+                // validators the live CRUD endpoints enforce; bookmarks only checks the
+                // container here since bad individual entries are filtered, not rejected.
+                DATA_FILES.forEach(({ key }) => {
+                    if (!d[key]) return;
+                    const v = apis['/api/' + key] && apis['/api/' + key].v;
+                    const bad = key === 'bookmarks'
+                        ? (typeof d[key] !== 'object' || Array.isArray(d[key]))
+                        : (v ? !v(d[key]) : false);
+                    if (bad) throw new Error(key + ': invalid structure');
+                });
                 // Restore JSON data. bookmarks gets filtered (not rejected outright) —
                 // a backup made before URL validation existed could plausibly carry one
                 // stale/bad entry among hundreds of good ones (see sanitizeBookmarksForImport).
@@ -494,6 +522,19 @@ const server = http.createServer((req, res) => {
                             }
                         } catch {}
                     });
+                }
+                // Restore custom port (needs a server restart to actually take effect —
+                // same as when set-port.bat writes this file directly). portChanged is
+                // reported back so the UI can warn that the dashboard URL will move.
+                let portChanged = null;
+                if (d._portConf) {
+                    const p = parseInt(d._portConf);
+                    if (p > 0 && p < 65536) {
+                        try {
+                            fs.writeFileSync(path.join(DIR, 'port.conf'), String(p));
+                            if (p !== PORT) portChanged = p;
+                        } catch (e) { console.error('[Import] port.conf write failed:', e.message); }
+                    }
                 }
                 // Restore images from Base64
                 if (d._files) {
@@ -523,9 +564,9 @@ const server = http.createServer((req, res) => {
                 }
                 // Clear file cache so restored images are served immediately
                 clearFileCache();
-                json(res, 200, { success:true, bookmarksDroppedCount });
+                json(res, 200, { success:true, bookmarksDroppedCount, ...(portChanged ? { portChanged } : {}) });
             } catch (e) { console.error('[Import]', e.message); json(res, 400, { error:'Import failed' }); }
-        });
+        }, MAX_IMPORT_BODY);
         return;
     }
 
@@ -767,6 +808,16 @@ const server = http.createServer((req, res) => {
     // === Static Files (cached + pre-gzip + ETag) ===
     const fp = safePath(url === '/' ? '/index.html' : url);
     if (!fp) { res.writeHead(403); res.end('Forbidden'); return; }
+    // safePath() only stops escaping the app folder — everything inside it was still
+    // served raw, including data/config.json (holds the user's weather API key),
+    // data/bookmarks.json and every file under data/backups/. The page never requests
+    // those directly (it reads them through /api/*), so serving them only widened what a
+    // browser extension or another local program could pull straight off the port.
+    // Custom images under data/icons/ stay served — bookmarks reference them by URL.
+    const rel = path.relative(DIR, fp).replace(/\\/g, '/');
+    const isDotFile = rel.split('/').some(seg => seg.startsWith('.'));
+    const isDataJson = rel.toLowerCase().startsWith('data/') && rel.toLowerCase().endsWith('.json');
+    if (isDotFile || isDataJson) { res.writeHead(403); res.end('Forbidden'); return; }
     const ct = MIME[path.extname(fp).toLowerCase()] || 'application/octet-stream';
     const ae = req.headers['accept-encoding'] || '';
     const wantGzip = ae.includes('gzip');
